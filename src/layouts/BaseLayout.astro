@@ -1,0 +1,18 @@
+---
+import '../styles/global.css';
+
+interface Props { title?: string; description?: string; }
+const { title = 'Base técnica · Centro Spai', description = 'Esqueleto técnico del rediseño de Centro Spai.' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <title>{title}</title>
+  </head>
+  <body><slot /></body>
+</html>
