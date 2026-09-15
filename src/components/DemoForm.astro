@@ -4,6 +4,7 @@ import { ROUTES, withBase } from '../lib/site';
 ---
 
 <form class="demo-form" novalidate data-demo-form data-tone="infantil" aria-describedby="demo-form-note">
+  <div class="demo-form__step" data-step="form">
   <p class="demo-form__note" id="demo-form-note">
     <Icon name="info" size={20} />
     <span><strong>Formulario demostrativo.</strong> No envía ni guarda datos; sirve para mostrar el flujo de solicitud.</span>
@@ -101,23 +102,46 @@ import { ROUTES, withBase } from '../lib/site';
 
   <div class="demo-form__footer">
     <button type="submit" class="btn btn--lg" data-submit>
-      <span data-submit-label>Enviar solicitud de cita</span>
+      <span data-submit-label>Revisar solicitud</span>
       <Icon name="arrow-right" />
     </button>
     <p class="field-hint"><span class="req" aria-hidden="true">*</span> Campos obligatorios</p>
   </div>
+
+  </div>
+
+  <section class="summary" data-step="summary" aria-labelledby="summary-title" hidden>
+    <h3 class="summary__title" id="summary-title" tabindex="-1">Revisa tu solicitud</h3>
+    <p class="summary__intro">
+      Comprueba que los datos son correctos antes de confirmar. Todavía no se ha enviado nada.
+    </p>
+    <dl class="summary__list" data-summary></dl>
+    <div class="summary__actions">
+      <button type="button" class="btn btn--secondary" data-edit>Editar datos</button>
+      <button type="button" class="btn btn--lg" data-confirm>
+        <span data-confirm-label>Confirmar solicitud</span>
+        <Icon name="check" size={20} />
+      </button>
+    </div>
+  </section>
 
   <div class="demo-form__status" role="status" aria-live="polite" tabindex="-1" data-status hidden>
     <Icon name="check" size={22} />
     <div>
       <p><strong>Solicitud demostrativa: en la web real este formulario conectará con el equipo.</strong></p>
       <p>No se ha enviado ningún dato. En la versión publicada, aquí se confirmaría cómo y cuándo contactará Spai.</p>
+      <button type="button" class="btn btn--secondary demo-form__restart" data-restart>Hacer otra solicitud</button>
     </div>
   </div>
 </form>
 
 <style>
   .demo-form {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .demo-form__step {
     display: grid;
     gap: var(--space-5);
   }
@@ -462,8 +486,93 @@ import { ROUTES, withBase } from '../lib/site';
     }
   }
 
-  [data-only][hidden] {
+  [data-only][hidden],
+  [data-step][hidden] {
     display: none;
+  }
+
+  /* Paso de resumen previo a confirmar */
+  .summary {
+    display: grid;
+    gap: var(--space-4);
+    padding: clamp(1.25rem, 1rem + 1.5vw, 2rem);
+    border-radius: 16px;
+    border: 1.5px solid var(--line);
+    background: var(--white);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .summary:not([hidden]) {
+      animation: status-in var(--dur-slow) var(--ease-out);
+    }
+  }
+
+  .summary__title {
+    font-size: var(--fs-h3);
+  }
+
+  .summary__title:focus {
+    outline: none;
+  }
+
+  .summary__intro {
+    color: var(--text-muted);
+    font-size: var(--fs-small);
+  }
+
+  .summary__list {
+    display: grid;
+    margin: 0;
+  }
+
+  .summary__list :global(div) {
+    display: grid;
+    gap: 0.15rem;
+    padding-block: var(--space-3);
+    border-top: 1px solid var(--line-soft);
+  }
+
+  @media (min-width: 30rem) {
+    .summary__list :global(div) {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      gap: var(--space-4);
+      align-items: baseline;
+    }
+  }
+
+  .summary__list :global(dt) {
+    font-size: var(--fs-small);
+    font-weight: 700;
+    color: var(--ink-600);
+  }
+
+  .summary__list :global(dd) {
+    margin: 0;
+    color: var(--ink-900);
+    overflow-wrap: anywhere;
+  }
+
+  .summary__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .demo-form[data-tone='adulto'] [data-confirm] {
+    --btn-bg: var(--sage-800);
+    --btn-border: var(--sage-800);
+  }
+
+  .demo-form__restart {
+    justify-self: start;
+    margin-top: var(--space-3);
+  }
+
+  @media (max-width: 35.99rem) {
+    .summary__actions .btn {
+      width: 100%;
+    }
   }
 </style>
 
@@ -473,8 +582,6 @@ import { ROUTES, withBase } from '../lib/site';
   if (form) {
     const select = form.querySelector<HTMLSelectElement>('#motivo')!;
     const status = form.querySelector<HTMLElement>('[data-status]')!;
-    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
-    const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]')!;
     const radios = form.querySelectorAll<HTMLInputElement>('input[name="tipo"]');
     const onlyInfantil = form.querySelectorAll<HTMLElement>('[data-only="infantil"]');
 
@@ -555,22 +662,93 @@ import { ROUTES, withBase } from '../lib/site';
       if (target.getAttribute('aria-invalid') === 'true') validate();
     });
 
+    const stepForm = form.querySelector<HTMLElement>('[data-step="form"]')!;
+    const stepSummary = form.querySelector<HTMLElement>('[data-step="summary"]')!;
+    const summaryList = form.querySelector<HTMLElement>('[data-summary]')!;
+    const summaryTitle = form.querySelector<HTMLElement>('#summary-title')!;
+    const confirmBtn = form.querySelector<HTMLButtonElement>('[data-confirm]')!;
+    const confirmLabel = form.querySelector<HTMLElement>('[data-confirm-label]')!;
+    const editBtn = form.querySelector<HTMLButtonElement>('[data-edit]')!;
+    const restartBtn = form.querySelector<HTMLButtonElement>('[data-restart]')!;
+
+    const value = (id: string) =>
+      (form.querySelector<HTMLInputElement | HTMLTextAreaElement>(`#${id}`)?.value ?? '').trim();
+
+    const showStep = (step: 'form' | 'summary') => {
+      stepForm.hidden = step !== 'form';
+      stepSummary.hidden = step !== 'summary';
+    };
+
+    const buildSummary = () => {
+      const tipo = form.querySelector<HTMLInputElement>('input[name="tipo"]:checked')?.value;
+      const rows: [string, string][] = [
+        [
+          'Tipo de cita',
+          tipo === 'adulto' ? 'Para mí · adultos y bienestar' : 'Para mi bebé o niño · infantil',
+        ],
+        ['Motivo', select.value],
+      ];
+      if (tipo !== 'adulto' && value('edad')) rows.push(['Edad aproximada', value('edad')]);
+      rows.push(['Nombre', value('nombre')], ['Teléfono o email', value('contacto')]);
+      if (value('mensaje')) rows.push(['Comentario', value('mensaje')]);
+      rows.push(['Consentimiento', 'Aceptado']);
+
+      summaryList.textContent = '';
+      for (const [label, text] of rows) {
+        const row = document.createElement('div');
+        const dt = document.createElement('dt');
+        dt.textContent = label;
+        const dd = document.createElement('dd');
+        dd.textContent = text;
+        row.append(dt, dd);
+        summaryList.append(row);
+      }
+    };
+
+    // Paso 1: validar y mostrar el resumen. Nunca se envían datos.
     form.addEventListener('submit', (event) => {
-      event.preventDefault(); // Nunca se envían datos
+      event.preventDefault();
       status.hidden = true;
       const firstInvalid = validate();
       if (firstInvalid) {
         firstInvalid.focus();
         return;
       }
-      submit.disabled = true;
-      submitLabel.textContent = 'Procesando…';
+      buildSummary();
+      showStep('summary');
+      summaryTitle.focus();
+    });
+
+    // Volver a editar sin perder lo escrito
+    editBtn.addEventListener('click', () => {
+      status.hidden = true;
+      showStep('form');
+      select.focus();
+    });
+
+    // Paso 2: confirmar (sigue siendo demostrativo)
+    confirmBtn.addEventListener('click', () => {
+      confirmBtn.disabled = true;
+      confirmLabel.textContent = 'Procesando…';
       window.setTimeout(() => {
-        submit.disabled = false;
-        submitLabel.textContent = 'Enviar solicitud de cita';
+        confirmBtn.disabled = false;
+        confirmLabel.textContent = 'Confirmar solicitud';
+        stepSummary.hidden = true;
         status.hidden = false;
         status.focus();
       }, 600);
+    });
+
+    // Empezar otra solicitud desde cero
+    restartBtn.addEventListener('click', () => {
+      status.hidden = true;
+      form.reset();
+      radios.forEach((r) => (r.checked = r.value === initial));
+      applyType(initial);
+      form.querySelectorAll('[aria-invalid="true"]').forEach((el) => el.setAttribute('aria-invalid', 'false'));
+      form.querySelectorAll<HTMLElement>('.field-error').forEach((el) => (el.hidden = true));
+      showStep('form');
+      select.focus();
     });
   }
 </script>

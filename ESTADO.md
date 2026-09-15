@@ -53,7 +53,7 @@ No copiadas por no usarse: `logo-centro-spai-movil.png`, `bienestar-y-relax-movi
 - **`equipo-centro-spai.jpg`** no muestra un equipo (es un bebé), por eso se usa en osteopatía con un alt descriptivo real.
 - **JSON-LD** solo con `WebSite`, `WebPage`, `BreadcrumbList`, `Service` y `MedicalBusiness` con nombre y ámbito; sin NAP, `FAQPage` (FAQs pendientes de revisión clínica), personas ni reseñas.
 - **Talleres y legales** con `noindex` y fuera del sitemap hasta tener información real (criterio de `seo-propuesto.md`).
-- **Formulario**: `?tipo=infantil|adulto` preselecciona el tipo; validación inline; `preventDefault` siempre y mensaje "Solicitud demostrativa…".
+- **Formulario en tres pasos** (selección → resumen → éxito), como pide la arquitectura de pantallas de reserva: `?tipo=infantil|adulto` preselecciona el tipo; validación inline con foco al primer error; el resumen permite volver a editar sin perder datos; `preventDefault` siempre, mensaje "Solicitud demostrativa…" y botón para empezar otra solicitud. Nunca se envían datos.
 - **Imágenes**: se sirven los originales (≤ 290 KB) con `width`/`height`, `loading="lazy"` fuera del hero y `preload` + `fetchpriority="high"` solo en el hero. No se generan AVIF/WebP para no añadir pipeline sobre `public/`.
 - **Fuentes**: Google Fonts (Fraunces variable + Source Sans 3) con `preconnect` y `display=swap`.
 - `robots.txt` y `sitemap.xml` estáticos en `public/`. Como el sitio vive en un subdirectorio, `robots.txt` no será efectivo hasta tener dominio propio.
