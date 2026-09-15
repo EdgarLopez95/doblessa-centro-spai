@@ -12,6 +12,7 @@ export function withBase(path = '/'): string {
 }
 
 export const img = (path: string) => withBase(`images/${path}`);
+export const imgWebp = (path: string) => withBase(`images/${path.replace(/\.(jpg|jpeg|png)$/i, '.webp')}`);
 
 export type Tone = 'infantil' | 'adultos' | 'neutral';
 

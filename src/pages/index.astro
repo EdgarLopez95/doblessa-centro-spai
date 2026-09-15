@@ -6,6 +6,7 @@ import Timeline from '../components/Timeline.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Chips from '../components/Chips.astro';
 import Icon from '../components/Icon.astro';
+import Picture from '../components/Picture.astro';
 import { ROUTES, SITE, citaHref, img, withBase } from '../lib/site';
 
 const needs = [
@@ -112,13 +113,14 @@ const businessSchema = {
         </div>
       </div>
       <figure class="home-hero__media">
-        <img
-          src={img('inicio/hero-centro-spai.jpg')}
+        <Picture
+          src="inicio/hero-centro-spai.jpg"
           alt="Bebé sonriente tumbado sobre una manta blanca"
-          width="1920"
-          height="699"
+          width={1920}
+          height={699}
           fetchpriority="high"
           decoding="async"
+          loading="eager"
         />
         <figcaption class="home-hero__badge">
           <span class="home-hero__badge-icon"><Icon name="heart" size={20} /></span>
@@ -160,12 +162,12 @@ const businessSchema = {
     <div class="container">
       <div class="colic" data-reveal>
         <div class="colic__media">
-          <img
-            src={img('infantil/colicos-del-lactante.png')}
+          <Picture
+            src="infantil/colicos-del-lactante.png"
             alt="Ilustración de un bebé llorando"
             class="illus"
-            width="345"
-            height="253"
+            width={345}
+            height={253}
             loading="lazy"
             decoding="async"
           />
@@ -250,11 +252,11 @@ const businessSchema = {
   <section class="section" aria-labelledby="centro-title">
     <div class="container place">
       <figure class="place__media" data-reveal>
-        <img
-          src={img('centro/instalaciones-centro-spai-01.jpg')}
+        <Picture
+          src="centro/instalaciones-centro-spai-01.jpg"
           alt="Fachada de Centro Spai con su rótulo violeta y la entrada acristalada"
-          width="434"
-          height="579"
+          width={434}
+          height={579}
           loading="lazy"
           decoding="async"
         />
@@ -307,11 +309,11 @@ const businessSchema = {
         </div>
       </div>
       <figure class="adults__media" data-reveal>
-        <img
-          src={img('adultos-bienestar/bienestar-y-relax.jpg')}
+        <Picture
+          src="adultos-bienestar/bienestar-y-relax.jpg"
           alt="Fisioterapeuta colocando las manos sobre el hombro y la espalda de una paciente"
-          width="1920"
-          height="699"
+          width={1920}
+          height={699}
           loading="lazy"
           decoding="async"
         />
@@ -482,30 +484,45 @@ const businessSchema = {
 
     .needs-grid :global(.need-card) {
       display: grid;
-      grid-template-columns: auto 1fr;
-      align-items: center;
-      gap: 0 var(--space-4);
+      grid-template-columns: 2.75rem 1fr;
+      align-items: start;
+      gap: 0.25rem var(--space-3);
       padding: var(--space-3) var(--space-4);
       border-radius: 16px;
     }
 
     .needs-grid :global(.need-card__top) {
-      grid-row: span 2;
+      grid-row: 1 / 4;
       margin: 0;
+      align-self: start;
+      padding-top: 2px;
     }
 
-    .needs-grid :global(.need-card__tag),
-    .needs-grid :global(.need-card__text) {
-      display: none;
+    .needs-grid :global(.need-card__icon) {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 12px;
     }
 
     .needs-grid :global(.need-card__title) {
-      font-size: 1.125rem;
+      font-size: 1.0625rem;
+      line-height: 1.3;
+    }
+
+    .needs-grid :global(.need-card__text) {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: var(--fs-small);
+      color: var(--text-muted);
+      line-height: 1.35;
+      margin: 0;
     }
 
     .needs-grid :global(.need-card__link) {
-      min-height: 30px;
-      padding-top: 0;
+      min-height: 32px;
+      padding-top: var(--space-1);
       font-size: 0.9375rem;
     }
   }
@@ -547,11 +564,19 @@ const businessSchema = {
   }
 
   @media (max-width: 39.99rem) {
-    .colic__media,
-    .adults__media {
-      display: none;
+    .colic {
+      padding: var(--space-5) var(--space-4);
+      gap: var(--space-5);
     }
 
+    .colic__media {
+      margin-inline: auto;
+      max-width: 14rem;
+    }
+
+    .colic__media img {
+      --illus-size: 10.5rem;
+    }
   }
 
   @media (max-width: 55.99rem) {

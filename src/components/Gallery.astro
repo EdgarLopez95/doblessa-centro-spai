@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import Picture from './Picture.astro';
 import { img } from '../lib/site';
 
 export interface GalleryImage {
@@ -29,8 +30,8 @@ const { images, label } = Astro.props;
             data-gallery-open={i}
             aria-haspopup="dialog"
           >
-            <img
-              src={img(image.src)}
+            <Picture
+              src={image.src}
               alt={image.alt}
               width={image.width}
               height={image.height}

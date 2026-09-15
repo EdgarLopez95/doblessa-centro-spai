@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
-import { NAV, ROUTES, citaHref, img, isActive, withBase, type Tone } from '../lib/site';
+import Picture from './Picture.astro';
+import { NAV, ROUTES, citaHref, isActive, withBase, type Tone } from '../lib/site';
 
 interface Props {
   currentPath: string;
@@ -16,18 +17,49 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
     <a class="brand" href={withBase(ROUTES.home)} aria-label="Centro Spai, ir al inicio">
       <span class="brand__plate">
         <span class="brand__crop">
-          <img src={img('marca/logo-centro-spai.png')} alt="" width="346" height="103" />
+          <Picture src="marca/logo-centro-spai.png" alt="" width="346" height="103" loading="eager" decoding="sync" />
         </span>
       </span>
     </a>
 
     <nav class="nav-desktop" aria-label="Principal">
-      <ul>
+      <ul class="nav-desktop__list">
         {
           NAV.map((item) => {
             const active = isActive(currentPath, item.match);
+            if (item.children && item.children.length > 0) {
+              return (
+                <li class="nav-item nav-item--dropdown" data-dropdown>
+                  <button
+                    type="button"
+                    class:list={['nav-link', 'nav-dropdown__btn', { 'is-active': active }]}
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    data-dropdown-toggle
+                  >
+                    <span>{item.label}</span>
+                    <Icon name="chevron-down" size={15} class="nav-chevron" />
+                  </button>
+                  <div class="nav-dropdown" data-dropdown-panel hidden>
+                    <ul class="nav-dropdown__list">
+                      {item.children.map((child) => (
+                        <li>
+                          <a
+                            href={withBase(child.href)}
+                            class:list={['nav-dropdown__link', { 'is-active': isActive(currentPath, [child.href]) }]}
+                            aria-current={isActive(currentPath, [child.href]) ? 'page' : undefined}
+                          >
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              );
+            }
             return (
-              <li>
+              <li class="nav-item">
                 <a
                   href={withBase(item.href)}
                   class:list={['nav-link', { 'is-active': active }]}
@@ -77,7 +109,7 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
               </a>
               {item.children && (
                 <ul class="mobile-menu__sub">
-                  {item.children.slice(1).map((child) => (
+                  {item.children.map((child) => (
                     <li>
                       <a
                         href={withBase(child.href)}
@@ -388,6 +420,79 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
       display: none;
     }
   }
+
+  /* Desplegables accesibles en escritorio */
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-dropdown__btn {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    gap: 0.35rem;
+  }
+
+  .nav-chevron {
+    color: var(--spai-500);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .nav-dropdown__btn[aria-expanded='true'] .nav-chevron {
+    transform: rotate(180deg);
+  }
+
+  .nav-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 15rem;
+    padding: var(--space-2);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-lift);
+    z-index: 60;
+  }
+
+  .nav-dropdown[hidden] {
+    display: none;
+  }
+
+  .nav-dropdown__list {
+    list-style: none;
+    display: grid;
+    gap: 2px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-dropdown__link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.5rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--ink-900);
+    text-decoration: none;
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .nav-dropdown__link:hover {
+    background: var(--lilac-100);
+    color: var(--spai-700);
+  }
+
+  .nav-dropdown__link.is-active {
+    background: var(--lilac-50);
+    color: var(--spai-700);
+    font-weight: 700;
+  }
 </style>
 
 <script>
@@ -395,6 +500,7 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
   const menu = document.querySelector<HTMLElement>('[data-menu]');
   const label = document.querySelector<HTMLElement>('[data-menu-label]');
+  const dropdowns = document.querySelectorAll<HTMLElement>('[data-dropdown]');
 
   if (header) {
     const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
@@ -410,6 +516,7 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
       toggle.setAttribute('aria-expanded', String(open));
       label.textContent = open ? 'Cerrar menú' : 'Abrir menú';
       document.documentElement.style.overflow = open ? 'hidden' : '';
+      document.body.style.overflow = open ? 'hidden' : '';
       if (open) {
         menu.hidden = false;
         requestAnimationFrame(() => menu.classList.add('is-open'));
@@ -445,6 +552,92 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
 
     window.matchMedia('(min-width: 64rem)').addEventListener('change', (e) => {
       if (e.matches) setOpen(false);
+      dropdowns.forEach((item) => {
+        const btn = item.querySelector<HTMLButtonElement>('[data-dropdown-toggle]');
+        const panel = item.querySelector<HTMLElement>('[data-dropdown-panel]');
+        btn?.setAttribute('aria-expanded', 'false');
+        if (panel) panel.hidden = true;
+      });
     });
   }
+
+  // Desplegables accesibles en escritorio (Infantil, Adultos)
+  dropdowns.forEach((item) => {
+    const btn = item.querySelector<HTMLButtonElement>('[data-dropdown-toggle]');
+    const panel = item.querySelector<HTMLElement>('[data-dropdown-panel]');
+    if (!btn || !panel) return;
+
+    let timer: number | undefined;
+    let hoverOpenedAt = 0;
+
+    const setDropdown = (open: boolean) => {
+      btn.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      if (open) {
+        dropdowns.forEach((other) => {
+          if (other !== item) {
+            const ob = other.querySelector<HTMLButtonElement>('[data-dropdown-toggle]');
+            const op = other.querySelector<HTMLElement>('[data-dropdown-panel]');
+            ob?.setAttribute('aria-expanded', 'false');
+            if (op) op.hidden = true;
+          }
+        });
+      }
+    };
+
+    btn.addEventListener('click', () => {
+      const now = Date.now();
+      if (now - hoverOpenedAt < 400 && btn.getAttribute('aria-expanded') === 'true') {
+        return;
+      }
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      setDropdown(!isOpen);
+    });
+
+    item.addEventListener('mouseenter', () => {
+      if (window.matchMedia('(min-width: 64rem)').matches) {
+        clearTimeout(timer);
+        hoverOpenedAt = Date.now();
+        setDropdown(true);
+      }
+    });
+
+    item.addEventListener('mouseleave', () => {
+      if (window.matchMedia('(min-width: 64rem)').matches) {
+        timer = window.setTimeout(() => {
+          setDropdown(false);
+          hoverOpenedAt = 0;
+        }, 150);
+      }
+    });
+
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        setDropdown(false);
+        btn.focus();
+      } else if (e.key === 'ArrowDown' && document.activeElement === btn) {
+        e.preventDefault();
+        setDropdown(true);
+        const firstLink = panel.querySelector<HTMLAnchorElement>('a');
+        firstLink?.focus();
+      }
+    });
+
+    item.addEventListener('focusout', (e) => {
+      if (!item.contains(e.relatedTarget as Node)) {
+        setDropdown(false);
+      }
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    dropdowns.forEach((item) => {
+      if (!item.contains(e.target as Node)) {
+        const btn = item.querySelector<HTMLButtonElement>('[data-dropdown-toggle]');
+        const panel = item.querySelector<HTMLElement>('[data-dropdown-panel]');
+        btn?.setAttribute('aria-expanded', 'false');
+        if (panel) panel.hidden = true;
+      }
+    });
+  });
 </script>

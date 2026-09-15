@@ -1,7 +1,8 @@
 ---
 import Breadcrumbs from './Breadcrumbs.astro';
+import Picture from './Picture.astro';
 import type { Crumb } from './Seo.astro';
-import { img, type Tone } from '../lib/site';
+import { type Tone } from '../lib/site';
 
 interface HeroImage {
   src: string;
@@ -45,13 +46,14 @@ const { tone = 'neutral', eyebrow, lead, breadcrumbs, image, note } = Astro.prop
       {
         image && (
           <figure class:list={['page-hero__media', `page-hero__media--${image.fit ?? 'cover'}`]}>
-            <img
-              src={img(image.src)}
+            <Picture
+              src={image.src}
               alt={image.alt}
               width={image.width}
               height={image.height}
               fetchpriority="high"
               decoding="async"
+              loading="eager"
               class:list={{ 'is-enhanced': image.enhance, illus: image.fit === 'contain' }}
               style={image.position ? `object-position:${image.position}` : undefined}
             />

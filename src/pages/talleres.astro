@@ -4,7 +4,8 @@ import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Chips from '../components/Chips.astro';
 import Icon from '../components/Icon.astro';
-import { ROUTES, citaHref, img, withBase } from '../lib/site';
+import Picture from '../components/Picture.astro';
+import { ROUTES, citaHref, withBase } from '../lib/site';
 
 const path = ROUTES.talleres;
 const title = 'Talleres y recursos para familias | Centro Spai';
@@ -48,11 +49,11 @@ const breadcrumbs = [
     <div class="container">
       <article class="workshop" data-reveal>
         <figure class="workshop__media">
-          <img
-            src={img('talleres-app/taller-moquitos.jpg')}
+          <Picture
+            src="talleres-app/taller-moquitos.jpg"
             alt="Niña con coletas sonándose la nariz con un pañuelo"
-            width="1920"
-            height="699"
+            width={1920}
+            height={699}
             loading="lazy"
             decoding="async"
           />
@@ -108,11 +109,11 @@ const breadcrumbs = [
         </p>
         <ul class="app-list">
           <li class="app">
-            <img
-              src={img('talleres-app/app-centro-spai-pantalla-01.jpg')}
+            <Picture
+              src="talleres-app/app-centro-spai-pantalla-01.jpg"
               alt=""
-              width="180"
-              height="180"
+              width={180}
+              height={180}
               loading="lazy"
               decoding="async"
             />
@@ -138,11 +139,11 @@ const breadcrumbs = [
         </p>
       </div>
       <figure class="apps__media" data-reveal>
-        <img
-          src={img('talleres-app/app-centro-spai-presentacion.png')}
+        <Picture
+          src="talleres-app/app-centro-spai-presentacion.png"
           alt="Aplicación No más Cólicos de Centro Spai mostrada en un teléfono y una tableta"
-          width="790"
-          height="511"
+          width={790}
+          height={511}
           loading="lazy"
           decoding="async"
         />

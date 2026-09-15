@@ -1,0 +1,52 @@
+---
+import { img, imgWebp } from '../lib/site';
+
+interface Props {
+  src: string;
+  alt: string;
+  width?: number | string;
+  height?: number | string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  style?: string;
+  pictureClass?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  class: className,
+  loading = 'lazy',
+  decoding = 'async',
+  fetchpriority,
+  style,
+  pictureClass,
+} = Astro.props;
+
+const isRaster = /\.(jpg|jpeg|png)$/i.test(src);
+---
+
+<picture class:list={['spai-picture', pictureClass]}>
+  {isRaster && <source srcset={imgWebp(src)} type="image/webp" />}
+  <img
+    src={img(src)}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding={decoding}
+    fetchpriority={fetchpriority}
+    class={className}
+    style={style}
+  />
+</picture>
+
+<style>
+  picture.spai-picture {
+    display: contents;
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
-import { ROUTES, SITE, citaHref, img, withBase } from '../lib/site';
+import Picture from './Picture.astro';
+import { ROUTES, SITE, citaHref, withBase } from '../lib/site';
 
 const year = 2026;
 const columns = [
@@ -35,7 +36,7 @@ const columns = [
     <div class="site-footer__top">
       <div class="site-footer__brand">
         <a href={withBase(ROUTES.home)} class="site-footer__logo" aria-label="Centro Spai, ir al inicio">
-          <img src={img('marca/logo-centro-spai.png')} alt="" width="346" height="103" loading="lazy" />
+          <Picture src="marca/logo-centro-spai.png" alt="" width={346} height={103} loading="lazy" decoding="async" />
         </a>
         <p class="site-footer__claim">Cuidado experto, <em>desde el primer día.</em></p>
         <p class="site-footer__text">
@@ -78,6 +79,9 @@ const columns = [
           </span>
         </address>
         <span class="site-footer__pending">Datos por validar con el centro</span>
+        <p class="site-footer__domain-note">
+          El dominio público actual es centro-espai.com. El nombre de marca de esta propuesta es Centro Spai. La grafía definitiva la confirmará el cliente.
+        </p>
       </div>
     </div>
 
@@ -231,6 +235,13 @@ const columns = [
     border-radius: var(--radius-pill);
     font-size: 0.8125rem;
     color: #efe9f6;
+  }
+
+  .site-footer__domain-note {
+    margin-top: var(--space-3);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: #ddd3ea;
   }
 
   .site-footer__bottom {

@@ -51,7 +51,17 @@ const {
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,480..620;1,9..144,480&family=Source+Sans+3:wght@400..700&display=swap"
     />
-    {preloadImage && <link rel="preload" as="image" href={withBase(preloadImage)} fetchpriority="high" />}
+    {
+      preloadImage && (
+        <link
+          rel="preload"
+          as="image"
+          type="image/webp"
+          href={withBase(preloadImage.replace(/\.(jpg|jpeg|png)$/i, '.webp'))}
+          fetchpriority="high"
+        />
+      )
+    }
     <Seo
       title={title}
       description={description}

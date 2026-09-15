@@ -6,6 +6,7 @@ import Timeline from '../components/Timeline.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Icon from '../components/Icon.astro';
+import Picture from '../components/Picture.astro';
 import { INFANTIL_NAV, ROUTES, citaHref, img, serviceSchema, withBase } from '../lib/site';
 
 const path = ROUTES.colicos;
@@ -182,11 +183,11 @@ const faqs = [
           </ol>
         </div>
         <a class="resource" href={withBase(ROUTES.talleres)} data-reveal>
-          <img
-            src={img('talleres-app/app-centro-spai-pantalla-01.jpg')}
+          <Picture
+            src="talleres-app/app-centro-spai-pantalla-01.jpg"
             alt=""
-            width="180"
-            height="180"
+            width={180}
+            height={180}
             loading="lazy"
             decoding="async"
           />

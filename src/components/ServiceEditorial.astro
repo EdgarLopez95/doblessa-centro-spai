@@ -1,5 +1,6 @@
 ---
-import { img, type Tone } from '../lib/site';
+import Picture from './Picture.astro';
+import { type Tone } from '../lib/site';
 
 interface Props {
   id?: string;
@@ -25,8 +26,8 @@ const { id, eyebrow, tone = 'infantil', reverse = false, image, surface = 'kids'
   <div class:list={['editorial__media', `editorial__media--${surface}`, { 'is-contain': image?.fit === 'contain' }]}>
     {
       image ? (
-        <img
-          src={img(image.src)}
+        <Picture
+          src={image.src}
           alt={image.alt}
           width={image.width}
           height={image.height}

@@ -7,6 +7,7 @@ import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Chips from '../components/Chips.astro';
 import Icon from '../components/Icon.astro';
+import Picture from '../components/Picture.astro';
 import { ADULTOS_NAV, ROUTES, citaHref, img, serviceSchema, withBase } from '../lib/site';
 
 const path = ROUTES.adultos;
@@ -25,7 +26,11 @@ const groups = [
     title: 'Aliviar molestias y recuperar confianza',
     text: 'Para dolor de espalda, cuello o articulaciones, tensión muscular o la recuperación tras una lesión.',
     chips: ['Terapia manual', 'Osteopatía', 'Punción seca', 'Indiba'],
-    image: { src: 'adultos-bienestar/fisioterapia-estetica.png', alt: 'Ilustración de una fisioterapeuta realizando un masaje en camilla' },
+    image: {
+      src: 'adultos-bienestar/fisioterapia-adultos.png',
+      alt: 'Ilustración de una persona realizando estiramientos sobre una pelota de ejercicio',
+      isPhoto: false,
+    },
   },
   {
     id: 'movimiento',
@@ -33,7 +38,11 @@ const groups = [
     title: 'Moverte mejor en tu día a día',
     text: 'Ejercicio guiado para ganar movilidad, trabajar la postura y sentirte más fuerte, a tu ritmo.',
     chips: ['Pilates', 'Movilidad', 'Postura'],
-    image: { src: 'adultos-bienestar/fisioterapia-adultos.png', alt: 'Ilustración de una mujer estirándose sobre una pelota de ejercicio' },
+    image: {
+      src: 'adultos-bienestar/bienestar-y-relax.jpg',
+      alt: 'Fisioterapeuta realizando una valoración postural y tratamiento manual a una paciente',
+      isPhoto: true,
+    },
   },
   {
     id: 'bienestar',
@@ -41,7 +50,11 @@ const groups = [
     title: 'Un momento para bajar el ritmo',
     text: 'Terapias orientadas al descanso y al bienestar general. Te explicamos el alcance de cada una en consulta.',
     chips: ['Terapias de relax', 'Drenaje', 'Medicina tradicional china', 'Fisioestética'],
-    image: { src: 'adultos-bienestar/medicina-tradicional-china.png', alt: 'Ilustración de un terapeuta aplicando ventosas en la espalda de un paciente' },
+    image: {
+      src: 'adultos-bienestar/terapias-de-relax.png',
+      alt: 'Ilustración de una persona en postura de relajación y meditación',
+      isPhoto: false,
+    },
   },
 ];
 
@@ -120,7 +133,29 @@ const faqs = [
           groups.map((g, i) => (
             <article class:list={['group', { 'group--reverse': i % 2 === 1 }]} id={g.id} data-reveal>
               <div class="group__media">
-                <img class="illus" src={img(g.image.src)} alt={g.image.alt} width="345" height="253" loading="lazy" decoding="async" />
+                {g.image.isPhoto ? (
+                  <div class="group__photo-frame">
+                    <Picture
+                      src={g.image.src}
+                      alt={g.image.alt}
+                      width={434}
+                      height={320}
+                      loading="lazy"
+                      decoding="async"
+                      class="group__photo"
+                    />
+                  </div>
+                ) : (
+                  <Picture
+                    src={g.image.src}
+                    alt={g.image.alt}
+                    width={345}
+                    height={253}
+                    loading="lazy"
+                    decoding="async"
+                    class="illus"
+                  />
+                )}
               </div>
               <div class="group__body">
                 <span class="group__kicker">{g.kicker}</span>
@@ -158,7 +193,7 @@ const faqs = [
     <div class="container">
       <div class="section-head" data-reveal>
         <span class="eyebrow eyebrow--well">Cómo trabajamos</span>
-        <h2 id="proceso-title">Un plan claro, <em class="well">desde la primera sesión</em></h2>
+        <h2 id="proceso-title">Un plan claro, <em class="well">desde el primer encuentro</em></h2>
       </div>
       <Timeline
         tone="adultos"
@@ -257,10 +292,28 @@ const faqs = [
     box-shadow: 0 0 0 1px var(--sage-200), var(--shadow-soft);
   }
 
-  .group__media img {
+  .group__media img.illus {
     --illus-size: 13rem;
     padding: 0;
     object-fit: cover;
+  }
+
+  .group__photo-frame {
+    width: 100%;
+    max-width: 14.5rem;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--sage-200), var(--shadow-soft);
+    background: var(--cloud-100);
+  }
+
+  .group__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 24% 28%;
+    box-shadow: none !important;
   }
 
   .group__body {

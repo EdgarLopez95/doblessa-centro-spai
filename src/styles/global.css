@@ -41,6 +41,10 @@ picture {
   max-width: 100%;
 }
 
+picture.spai-picture {
+  display: contents;
+}
+
 img {
   height: auto;
 }
