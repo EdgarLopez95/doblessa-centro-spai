@@ -42,7 +42,7 @@ const breadcrumbs = [
           <h2 id="datos-title" class="info-card__title">Datos del centro</h2>
           <ul class="info-list">
             <li>
-              <img src={img('ui/icono-direccion.png')} alt="" width="61" height="61" loading="lazy" />
+              <span class="info-list__icon" aria-hidden="true"><Icon name="pin" size={22} /></span>
               <div>
                 <span class="info-list__label">Dirección</span>
                 <address>
@@ -53,14 +53,14 @@ const breadcrumbs = [
               </div>
             </li>
             <li>
-              <img src={img('ui/icono-telefono.png')} alt="" width="61" height="61" loading="lazy" />
+              <span class="info-list__icon" aria-hidden="true"><Icon name="phone" size={22} /></span>
               <div>
                 <span class="info-list__label">Teléfono</span>
                 <p class="info-list__missing">Pendiente de confirmar por el centro</p>
               </div>
             </li>
             <li>
-              <img src={img('ui/icono-email.png')} alt="" width="61" height="61" loading="lazy" />
+              <span class="info-list__icon" aria-hidden="true"><Icon name="mail" size={22} /></span>
               <div>
                 <span class="info-list__label">Email</span>
                 <p class="info-list__missing">Pendiente de confirmar por el centro</p>
@@ -224,7 +224,6 @@ const breadcrumbs = [
     padding-top: 0;
   }
 
-  .info-list img,
   .info-list__icon {
     width: 2.5rem;
     height: 2.5rem;
@@ -242,8 +241,7 @@ const breadcrumbs = [
     display: block;
     font-size: 0.8125rem;
     font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    letter-spacing: 0.01em;
     color: var(--ink-600);
   }
 

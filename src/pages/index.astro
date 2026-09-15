@@ -11,7 +11,6 @@ import { ROUTES, SITE, citaHref, img, withBase } from '../lib/site';
 const needs = [
   {
     icon: 'moon',
-    tag: 'Cólicos',
     title: 'Llora mucho y cuesta calmarle',
     text: 'Cuando el llanto se repite y estáis agotados, os ayudamos a entender qué ocurre y cómo acompañarle.',
     href: ROUTES.colicos,
@@ -19,7 +18,6 @@ const needs = [
   },
   {
     icon: 'sprout',
-    tag: 'Desarrollo',
     title: 'Queremos acompañar cómo se mueve',
     text: 'Postura, volteo, gateo o primeros pasos: observamos cada etapa con calma y os damos pautas claras.',
     href: `${ROUTES.infantil}#desarrollo`,
@@ -27,7 +25,6 @@ const needs = [
   },
   {
     icon: 'wind',
-    tag: 'Respiratorio',
     title: 'Días de mocos y congestión',
     text: 'Fisioterapia respiratoria infantil y recursos para que en casa sepáis cómo ayudarle.',
     href: `${ROUTES.infantil}#respiratorio`,
@@ -35,7 +32,6 @@ const needs = [
   },
   {
     icon: 'hands',
-    tag: 'Osteopatía',
     title: 'Un abordaje manual y suave',
     text: 'Osteopatía para bebés con un trato respetuoso, adaptado a su edad y a su momento.',
     href: ROUTES.osteopatia,
@@ -43,7 +39,6 @@ const needs = [
   },
   {
     icon: 'heart',
-    tag: 'Familias',
     title: 'Rutinas, masaje y crianza',
     text: 'Orientación sobre hábitos, masaje infantil y las dudas del día a día con vuestro bebé.',
     href: `${ROUTES.infantil}#orientacion`,
@@ -51,7 +46,6 @@ const needs = [
   },
   {
     icon: 'users',
-    tag: 'Talleres',
     title: 'Aprender juntos',
     text: 'Espacios prácticos para familias, como el Taller Moquitos, para resolver dudas con calma.',
     href: ROUTES.talleres,
@@ -169,6 +163,7 @@ const businessSchema = {
           <img
             src={img('infantil/colicos-del-lactante.png')}
             alt="Ilustración de un bebé llorando"
+            class="illus"
             width="345"
             height="253"
             loading="lazy"
@@ -542,14 +537,52 @@ const businessSchema = {
   }
 
   .colic__media img {
-    width: 100%;
-    max-width: 24rem;
-    mix-blend-mode: multiply;
+    --illus-size: 24rem;
   }
 
   @media (max-width: 55.99rem) {
     .colic__media img {
-      max-width: 15rem;
+      --illus-size: 13rem;
+    }
+  }
+
+  /* Confianza compacta en móvil */
+  @media (max-width: 39.99rem) {
+    .trust {
+      gap: var(--space-5);
+    }
+
+    .trust__item {
+      grid-template-columns: auto 1fr;
+      column-gap: var(--space-3);
+      padding-block: var(--space-4);
+    }
+
+    .trust__icon {
+      grid-row: span 2;
+      margin: 0;
+    }
+
+    .trust__item h3 {
+      font-size: 1.125rem;
+    }
+
+    .trust__item p {
+      font-size: var(--fs-small);
+    }
+
+    .place__media {
+      max-width: 18rem;
+    }
+
+    .place__media img {
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: 50% 20%;
+    }
+
+    .adults__media {
+      aspect-ratio: 16 / 10;
     }
   }
 

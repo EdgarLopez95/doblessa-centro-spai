@@ -52,7 +52,7 @@ const { tone = 'neutral', eyebrow, lead, breadcrumbs, image, note } = Astro.prop
               height={image.height}
               fetchpriority="high"
               decoding="async"
-              class:list={{ 'is-enhanced': image.enhance }}
+              class:list={{ 'is-enhanced': image.enhance, illus: image.fit === 'contain' }}
               style={image.position ? `object-position:${image.position}` : undefined}
             />
           </figure>
@@ -66,7 +66,7 @@ const { tone = 'neutral', eyebrow, lead, breadcrumbs, image, note } = Astro.prop
 <style>
   .page-hero {
     position: relative;
-    padding-block: var(--space-4) var(--section-y);
+    padding-block: var(--space-4) clamp(3rem, 2rem + 3.5vw, 5rem);
     overflow: hidden;
   }
 
@@ -168,11 +168,25 @@ const { tone = 'neutral', eyebrow, lead, breadcrumbs, image, note } = Astro.prop
     display: none;
   }
 
+  .page-hero__media--contain {
+    aspect-ratio: auto;
+    max-height: none;
+    overflow: visible;
+    padding: var(--space-4);
+  }
+
   .page-hero__media--contain img {
-    object-fit: contain;
-    height: auto;
-    max-width: 30rem;
-    mix-blend-mode: multiply;
+    --illus-size: 27rem;
+  }
+
+  @media (max-width: 55.99rem) {
+    .page-hero__media--contain {
+      aspect-ratio: auto;
+    }
+
+    .page-hero__media--contain img {
+      --illus-size: 15rem;
+    }
   }
 
   .is-enhanced {

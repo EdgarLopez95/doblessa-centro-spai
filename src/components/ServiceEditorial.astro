@@ -32,6 +32,7 @@ const { id, eyebrow, tone = 'infantil', reverse = false, image, surface = 'kids'
           height={image.height}
           loading="lazy"
           decoding="async"
+          class:list={{ illus: image.fit === 'contain' }}
           style={image.position ? `object-position:${image.position}` : undefined}
         />
       ) : (
@@ -99,11 +100,7 @@ const { id, eyebrow, tone = 'infantil', reverse = false, image, surface = 'kids'
   }
 
   .editorial__media.is-contain img {
-    height: auto;
-    object-fit: contain;
-    border-radius: 18px;
-    background: var(--white);
-    box-shadow: var(--shadow-soft);
+    --illus-size: 20rem;
   }
 
   .editorial__body {
