@@ -13,7 +13,8 @@ Esqueleto Astro inicializado. No hay diseño, componentes de marca ni páginas d
 
 ## Último cambio
 
-- Inicialización técnica con despliegue GitHub Pages. El hash del commit inicial se completa tras la primera publicación.
+- Inicialización técnica publicada en GitHub Pages.
+- Commit inicial: `3a2179d` — `chore: initialize Astro skeleton`.
 
 ## Próxima acción
 
