@@ -67,7 +67,7 @@ const commitments = [
   },
   {
     icon: 'hands',
-    title: 'Manos expertas, ritmo suave',
+    title: 'Atención cuidadosa, ritmo suave',
     text: 'Cada sesión se adapta a la edad, al momento y a cómo se siente el bebé ese día.',
   },
   {
@@ -162,7 +162,7 @@ const businessSchema = {
   </section>
 
   <!-- Cólicos destacado -->
-  <section class="section section--tight" aria-labelledby="colicos-title">
+  <section class="section section--tight colic-section" aria-labelledby="colicos-title">
     <div class="container">
       <div class="colic" data-reveal>
         <div class="colic__media">
@@ -268,8 +268,8 @@ const businessSchema = {
         <span class="eyebrow">El centro</span>
         <h2 id="centro-title">Un espacio propio en Burriana, <em>pensado para familias</em></h2>
         <p>
-          Spai nació como un lugar donde la salud y la calma van de la mano. Salas luminosas, un rincón para los
-          más pequeños y un equipo que conoce a las familias por su nombre.
+          Un centro con un concepto propio: bienestar, salud y relajación bajo el mismo techo. Salas de tratamiento,
+          un rincón para los más pequeños y un trato cercano desde la primera llamada.
         </p>
         <p class="place__address">
           <Icon name="pin" size={20} />
@@ -291,8 +291,8 @@ const businessSchema = {
         <span class="eyebrow eyebrow--well">Adultos y bienestar</span>
         <h2 id="adultos-title">Y también, <em>para ti</em></h2>
         <p>
-          Muchas familias que confían en nosotros para sus hijos encuentran aquí su propio espacio: fisioterapia,
-          osteopatía, acompañamiento en el embarazo y el posparto, y terapias para bajar el ritmo.
+          Si ya venís con vuestros hijos, aquí también hay un espacio para vosotros: fisioterapia, osteopatía,
+          acompañamiento en el embarazo y el posparto, y terapias para bajar el ritmo.
         </p>
         <Chips
           tone="adultos"
@@ -442,7 +442,7 @@ const businessSchema = {
 
   @media (max-width: 35.99rem) {
     .home-hero__media {
-      aspect-ratio: 1 / 0.85;
+      aspect-ratio: 16 / 11;
     }
 
     .home-hero__media img {
@@ -479,11 +479,51 @@ const businessSchema = {
     }
   }
 
+  /* Necesidades en lista compacta en móvil */
+  @media (max-width: 39.99rem) {
+    .needs-grid {
+      gap: var(--space-2);
+    }
+
+    .needs-grid :global(.need-card) {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 0 var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      border-radius: 16px;
+    }
+
+    .needs-grid :global(.need-card__top) {
+      grid-row: span 2;
+      margin: 0;
+    }
+
+    .needs-grid :global(.need-card__tag),
+    .needs-grid :global(.need-card__text) {
+      display: none;
+    }
+
+    .needs-grid :global(.need-card__title) {
+      font-size: 1.125rem;
+    }
+
+    .needs-grid :global(.need-card__link) {
+      min-height: 30px;
+      padding-top: 0;
+      font-size: 0.9375rem;
+    }
+  }
+
   /* Cólicos */
+  .colic-section {
+    padding-top: 0;
+  }
+
   .colic {
     display: grid;
     gap: var(--space-6);
-    padding: clamp(1.5rem, 0.8rem + 3.5vw, 4rem);
+    padding: clamp(1.5rem, 0.8rem + 3vw, 3.5rem);
     border-radius: var(--radius-panel);
     background: var(--blush-100);
     align-items: center;
@@ -499,15 +539,18 @@ const businessSchema = {
   .colic__media {
     display: grid;
     place-items: center;
-    padding: clamp(1rem, 3vw, 2.5rem);
-    border-radius: 20px;
-    background: var(--white);
-    aspect-ratio: 1 / 0.9;
   }
 
   .colic__media img {
     width: 100%;
-    max-width: 22rem;
+    max-width: 24rem;
+    mix-blend-mode: multiply;
+  }
+
+  @media (max-width: 55.99rem) {
+    .colic__media img {
+      max-width: 15rem;
+    }
   }
 
   .colic__body {
@@ -555,6 +598,7 @@ const businessSchema = {
   .trust__list {
     list-style: none;
     display: grid;
+    align-items: start;
     gap: 0 var(--space-6);
   }
 
@@ -661,6 +705,7 @@ const businessSchema = {
     justify-items: start;
   }
 
+  .adults__body h2,
   .adults__body h2 em {
     color: var(--sage-800);
   }

@@ -15,7 +15,9 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
   <div class="container site-header__inner">
     <a class="brand" href={withBase(ROUTES.home)} aria-label="Centro Spai, ir al inicio">
       <span class="brand__plate">
-        <img src={img('marca/logo-centro-spai.png')} alt="" width="346" height="103" />
+        <span class="brand__crop">
+          <img src={img('marca/logo-centro-spai.png')} alt="" width="346" height="103" />
+        </span>
       </span>
     </a>
 
@@ -148,9 +150,19 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
     background: var(--spai-800);
   }
 
+  /* Recorte del lema (ilegible a este tamaño); el logo completo va en el footer */
+  .brand__crop {
+    --logo-h: 46px;
+    display: block;
+    width: calc(var(--logo-h) * 200 / 103);
+    height: var(--logo-h);
+    overflow: hidden;
+  }
+
   .brand img {
     width: auto;
-    height: 46px;
+    max-width: none;
+    height: var(--logo-h);
   }
 
   .brand:focus-visible {
@@ -328,8 +340,8 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
       display: grid;
     }
 
-    .brand img {
-      height: 38px;
+    .brand__crop {
+      --logo-h: 40px;
     }
 
     .brand__plate {

@@ -76,20 +76,13 @@ const breadcrumbs = [
           </ul>
 
           <div class="quick">
-            <p class="quick__title">Contacto directo</p>
-            <div class="quick__buttons">
-              <button type="button" class="btn btn--secondary" disabled aria-describedby="quick-note">
-                <Icon name="phone" size={18} />
-                Llamar
-              </button>
-              <button type="button" class="btn btn--secondary" disabled aria-describedby="quick-note">
-                <Icon name="chat" size={18} />
-                WhatsApp
-              </button>
-            </div>
-            <p class="quick__note" id="quick-note">
-              Botones visuales: se activarán cuando el centro confirme sus números. Habrá teléfonos diferenciados para
-              cita infantil y de adultos.
+            <p class="quick__title">Llamada y WhatsApp</p>
+            <p class="quick__note">
+              <Icon name="chat" size={20} />
+              <span>
+                En la web publicada habrá acceso directo por teléfono y WhatsApp, con líneas diferenciadas para cita
+                infantil y de adultos, en cuanto el centro confirme sus números.
+              </span>
             </p>
           </div>
         </div>
@@ -276,16 +269,19 @@ const breadcrumbs = [
     margin-bottom: var(--space-3);
   }
 
-  .quick__buttons {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-2);
+  .quick__note {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-control);
+    background: var(--sky-100);
+    font-size: 0.9375rem;
+    color: var(--sky-800);
   }
 
-  .quick__note {
-    margin-top: var(--space-3);
-    font-size: 0.875rem;
-    color: var(--ink-600);
+  .quick__note :global(svg) {
+    flex: none;
+    margin-top: 2px;
   }
 
   .map {

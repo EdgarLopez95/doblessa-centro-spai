@@ -134,12 +134,29 @@ const routes = [
     --card-band: var(--blush-300);
     --card-soft: var(--lilac-100);
     --card-ink: var(--spai-700);
+    background: var(--lilac-100);
+    border-color: var(--lilac-200);
   }
 
   .audience-card--adultos {
-    --card-band: var(--sage-200);
+    --card-band: #9fbfa7;
     --card-soft: var(--sage-100);
     --card-ink: var(--sage-800);
+    background: var(--sage-100);
+    border-color: var(--sage-200);
+  }
+
+  .audience-card--adultos .audience-card__link {
+    color: var(--sage-800);
+  }
+
+  .audience-card .audience-card__icon,
+  .audience-card .audience-card__arrow {
+    background: var(--white);
+  }
+
+  .audience-card p {
+    color: var(--ink-600);
   }
 
   .audience-card:hover {
@@ -199,10 +216,6 @@ const routes = [
   .audience-card__link:focus-visible::after {
     outline: 3px solid var(--focus-ring);
     outline-offset: 3px;
-  }
-
-  .audience-card p {
-    color: var(--text-muted);
   }
 
   .audience-card__arrow {

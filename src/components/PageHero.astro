@@ -155,15 +155,24 @@ const { tone = 'neutral', eyebrow, lead, breadcrumbs, image, note } = Astro.prop
     object-fit: cover;
   }
 
+  /* Ilustraciones: integradas en el fondo, sin caja blanca */
   .page-hero__media--contain {
     display: grid;
     place-items: center;
     padding: var(--space-6);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .page-hero__media--contain::after {
+    display: none;
   }
 
   .page-hero__media--contain img {
     object-fit: contain;
     height: auto;
+    max-width: 30rem;
+    mix-blend-mode: multiply;
   }
 
   .is-enhanced {

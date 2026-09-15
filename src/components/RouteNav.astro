@@ -49,6 +49,15 @@ const { currentPath, tone, label, items } = Astro.props;
     display: none;
   }
 
+  /* Pista de desplazamiento en pantallas estrechas */
+  @media (max-width: 47.99rem) {
+    .route-nav__inner {
+      -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent);
+      mask-image: linear-gradient(90deg, #000 82%, transparent);
+      padding-right: 3rem;
+    }
+  }
+
   .route-nav__label {
     flex: none;
     font-size: 0.8125rem;
