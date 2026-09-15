@@ -54,6 +54,11 @@ const { tone = 'neutral', title, text, eyebrow = 'Primer paso' } = Astro.props;
     padding-block: var(--section-y);
   }
 
+  :global(.faq-section) + .cta-band,
+  :global(.section:not([class*='surface'])) + .cta-band {
+    padding-top: 0;
+  }
+
   .cta-band__panel {
     position: relative;
     display: grid;

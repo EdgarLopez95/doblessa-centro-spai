@@ -251,9 +251,10 @@ const faqs = [
   .group__media {
     display: grid;
     place-items: center;
-    padding: var(--space-4);
-    border-radius: 18px;
-    background: var(--sage-100);
+  }
+
+  .group__media img {
+    box-shadow: 0 0 0 1px var(--sage-200), var(--shadow-soft);
   }
 
   .group__media img {
@@ -267,7 +268,7 @@ const faqs = [
   }
 
   .group__kicker {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     font-weight: 700;
     letter-spacing: 0.01em;
     color: var(--sage-800);

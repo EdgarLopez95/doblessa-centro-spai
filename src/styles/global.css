@@ -550,13 +550,13 @@ strong {
   height: auto;
   aspect-ratio: 1;
   margin-inline: auto;
-  padding: 4%;
+  padding: 10%;
   object-fit: contain;
   border-radius: 50%;
   background: var(--white);
-  box-shadow:
-    0 0 0 10px rgb(255 255 255 / 0.45),
-    var(--shadow-soft);
+  box-shadow: var(--shadow-soft);
+  /* Aclara la mancha gris de fondo de las ilustraciones originales */
+  filter: brightness(1.055) saturate(1.06);
 }
 
 /* ==========================================================================
