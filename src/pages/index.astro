@@ -552,18 +552,11 @@ const businessSchema = {
       display: none;
     }
 
-    .trust__list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: var(--space-4);
-    }
+  }
 
-    .trust__item {
-      grid-template-columns: 1fr !important;
-      gap: var(--space-2);
-    }
-
-    .trust__item p {
-      display: none;
+  @media (max-width: 55.99rem) {
+    .adults__media {
+      aspect-ratio: 16 / 10;
     }
   }
 

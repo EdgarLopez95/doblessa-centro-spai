@@ -62,6 +62,10 @@ No copiadas por no usarse: `logo-centro-spai-movil.png`, `bienestar-y-relax-movi
 
 `npm run build` → 12 páginas generadas sin errores ni avisos. Verificación con script: todos los enlaces y assets bajo `/doblessa-centro-spai/`, anclas existentes, 1 H1 por página, sin `href="#"`. Capturas en 360/390/768/1024/1280/1440 sin errores de consola, sin 4xx y sin overflow horizontal.
 
+## Crítica de diseño independiente
+
+Cuatro rondas con el agente `design-critic` (informes en `design/critiques/`): 73,5 → 78 → 80 → **81/100**, sin bloqueantes. No se alcanza el umbral interno de 85 (responsive y originalidad en 7,5), sobre todo por límites del alcance: imágenes de stock e ilustraciones obligatorias, longitud de la home móvil por la arquitectura pedida y datos o perfiles pendientes. Tras la ronda 4 se aplicaron ajustes menores sin nueva ronda de crítica.
+
 ## Último cambio
 
 Implementación completa del rediseño y correcciones de la crítica independiente. Ver `git log`.
