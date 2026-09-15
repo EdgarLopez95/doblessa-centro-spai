@@ -1,0 +1,51 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { ROUTES } from '../lib/site';
+---
+
+<LegalPage
+  title="Aviso legal | Centro Spai"
+  heading="Aviso legal"
+  description="Aviso legal y condiciones de uso de la web de Centro Spai. Contenido pendiente de validación legal."
+  path={ROUTES.avisoLegal}
+>
+  <h2>1. Datos identificativos</h2>
+  <p>
+    Titular del sitio web: <span class="placeholder">[Razón social pendiente]</span>. NIF:
+    <span class="placeholder">[pendiente]</span>. Domicilio: <span class="placeholder">[pendiente de validar]</span>.
+    Datos registrales y, en su caso, colegiales: <span class="placeholder">[pendientes]</span>.
+  </p>
+
+  <h2>2. Objeto</h2>
+  <p>
+    Este sitio web ofrece información sobre los servicios de fisioterapia, osteopatía y bienestar de Centro Spai y
+    permite solicitar información o cita.
+  </p>
+
+  <h2>3. Información sanitaria</h2>
+  <p>
+    Los contenidos tienen carácter informativo y no sustituyen la valoración de un profesional sanitario. No deben
+    utilizarse para realizar diagnósticos ni para decidir tratamientos sin consulta profesional.
+  </p>
+
+  <h2>4. Condiciones de uso</h2>
+  <p>
+    La persona usuaria se compromete a hacer un uso adecuado de los contenidos y a no emplearlos para actividades
+    ilícitas o contrarias a la buena fe.
+  </p>
+
+  <h2>5. Propiedad intelectual</h2>
+  <p>
+    Los textos, imágenes, logotipos y demás elementos del sitio pertenecen a su titular o se usan con autorización.
+    Queda prohibida su reproducción sin permiso: <span class="placeholder">[revisar derechos de imágenes]</span>.
+  </p>
+
+  <h2>6. Responsabilidad</h2>
+  <p>
+    El titular no se hace responsable del mal uso de los contenidos ni de posibles interrupciones del servicio ajenas
+    a su control.
+  </p>
+
+  <h2>7. Legislación aplicable</h2>
+  <p>La relación se rige por la normativa española vigente.</p>
+</LegalPage>

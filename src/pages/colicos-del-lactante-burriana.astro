@@ -1,0 +1,566 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import RouteNav from '../components/RouteNav.astro';
+import Timeline from '../components/Timeline.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { INFANTIL_NAV, ROUTES, citaHref, img, serviceSchema, withBase } from '../lib/site';
+
+const path = ROUTES.colicos;
+const title = 'Cólicos del lactante en Burriana | Centro Spai';
+const description =
+  'Información y acompañamiento profesional para familias con cólicos del lactante en Burriana. Consulta una primera cita.';
+const breadcrumbs = [
+  { label: 'Inicio', href: ROUTES.home },
+  { label: 'Fisioterapia infantil', href: ROUTES.infantil },
+  { label: 'Cólicos del lactante', href: path },
+];
+
+const toc = [
+  { href: '#que-observar', label: 'Qué podéis observar' },
+  { href: '#como-acompanamos', label: 'Cómo os acompañamos' },
+  { href: '#primera-visita', label: 'La primera visita' },
+  { href: '#cuando-consultar', label: 'Cuándo consultar' },
+  { href: '#preguntas', label: 'Preguntas frecuentes' },
+];
+
+const signs = [
+  {
+    icon: 'moon',
+    title: 'Llanto intenso y repetido',
+    text: 'Episodios de llanto que se repiten varios días, a menudo en la misma franja, por la tarde o la noche.',
+  },
+  {
+    icon: 'heart',
+    title: 'Cuesta mucho calmarle',
+    text: 'Aunque haya comido, esté limpio y en brazos, parece difícil que se tranquilice.',
+  },
+  {
+    icon: 'baby',
+    title: 'Gestos de incomodidad',
+    text: 'Encoge las piernas, se pone rojo, arquea el cuerpo o aprieta los puños mientras llora.',
+  },
+  {
+    icon: 'clock',
+    title: 'Entre episodios, está bien',
+    text: 'Fuera de esos momentos come, se relaja y parece estar a gusto.',
+  },
+] as const;
+
+const redFlags = [
+  'Fiebre, sobre todo en bebés de pocos meses.',
+  'Vómitos repetidos o con sangre, o deposiciones con sangre.',
+  'Rechaza las tomas o no gana peso.',
+  'Está decaído, muy dormido o con un llanto muy distinto al habitual.',
+  'Respira con dificultad o cambia de color.',
+];
+
+const faqs = [
+  {
+    q: '¿La fisioterapia “cura” los cólicos?',
+    a: 'No hablamos de curar. Los cólicos suelen mejorar con el tiempo y cada bebé es distinto. Lo que hacemos es valorar al bebé, aplicar técnicas suaves que pueden ayudarle a estar más cómodo y enseñaros pautas para acompañarle en casa.',
+  },
+  {
+    q: '¿Es seguro para un bebé tan pequeño?',
+    a: 'Trabajamos con técnicas manuales muy suaves, adaptadas a la edad y a la respuesta del bebé, y paramos cuando lo necesita. Antes de empezar descartamos con vosotros señales que requieran valoración médica.',
+  },
+  {
+    q: '¿Tengo que ir antes al pediatra?',
+    a: 'Recomendamos que el pediatra conozca el llanto del bebé, especialmente para descartar otras causas. La fisioterapia es un acompañamiento complementario, nunca un sustituto del seguimiento pediátrico.',
+  },
+  {
+    q: '¿Qué hago en casa mientras tanto?',
+    a: 'Mantened rutinas tranquilas, contacto piel con piel y turnos para descansar. En la primera visita os enseñaremos posturas y masaje adaptados a vuestro bebé.',
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  tone="infantil"
+  image="images/infantil/colicos-del-lactante.png"
+  imageAlt="Ilustración de un bebé llorando"
+  breadcrumbs={breadcrumbs}
+  jsonLd={[serviceSchema('Acompañamiento para cólicos del lactante', description)]}
+>
+  <PageHero
+    tone="infantil"
+    eyebrow="Ruta infantil · Primeros meses"
+    lead="Cuando el llanto no da tregua, necesitáis información clara y a alguien que os escuche. Os explicamos qué suele ocurrir, cómo podemos acompañaros y cuándo conviene consultar al pediatra."
+    breadcrumbs={breadcrumbs}
+    image={{
+      src: 'infantil/colicos-del-lactante.png',
+      alt: 'Ilustración de un bebé llorando',
+      width: 345,
+      height: 253,
+      fit: 'contain',
+    }}
+  >
+    <Fragment slot="title">Acompañamiento para cólicos del lactante <em>en Burriana</em></Fragment>
+    <Fragment slot="actions">
+      <a class="btn btn--lg" href={citaHref('infantil')}>
+        Consultar una cita
+        <Icon name="arrow-right" />
+      </a>
+      <a class="btn btn--secondary btn--lg" href="#cuando-consultar">Cuándo consultar</a>
+    </Fragment>
+  </PageHero>
+
+  <RouteNav currentPath={path} tone="infantil" label="Ruta infantil" items={INFANTIL_NAV} />
+
+  <div class="container colic-layout">
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc__title" id="toc-title">En esta página</p>
+      <ol>
+        {
+          toc.map((t) => (
+            <li>
+              <a href={t.href}>{t.label}</a>
+            </li>
+          ))
+        }
+      </ol>
+    </aside>
+
+    <div class="colic-content">
+      <!-- Qué observar -->
+      <section class="block" id="que-observar" aria-labelledby="observar-title">
+        <div class="block__head" data-reveal>
+          <span class="eyebrow">01 · Señales frecuentes</span>
+          <h2 id="observar-title">Qué pueden <em>observar las familias</em></h2>
+          <p class="lead">
+            Estas señales son habituales cuando se habla de cólicos del lactante. No sirven para diagnosticar: son
+            una guía para poner palabras a lo que estáis viviendo.
+          </p>
+        </div>
+        <ul class="signs">
+          {
+            signs.map((s, i) => (
+              <li class="sign" data-reveal style={`--reveal-i:${i}`}>
+                <span class="sign__icon">
+                  <Icon name={s.icon} size={24} />
+                </span>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <!-- Cómo acompañamos -->
+      <section class="block" id="como-acompanamos" aria-labelledby="acompanamos-title">
+        <div class="accompany" data-reveal>
+          <div class="accompany__text">
+            <span class="eyebrow">02 · Nuestro papel</span>
+            <h2 id="acompanamos-title">Cómo os <em>acompaña el centro</em></h2>
+            <p>
+              No existe una solución única para todos los bebés. Por eso empezamos escuchando y observando, y
+              construimos con vosotros un acompañamiento a vuestra medida.
+            </p>
+          </div>
+          <ol class="accompany__list">
+            <li>
+              <strong>Escucha sin prisas.</strong> Cómo son las tomas, el sueño, los momentos de llanto y cómo estáis
+              vosotros.
+            </li>
+            <li>
+              <strong>Valoración suave del bebé.</strong> Observamos su postura, su movimiento y cómo responde al
+              contacto.
+            </li>
+            <li>
+              <strong>Técnicas manuales adaptadas.</strong> Maniobras delicadas que pueden ayudarle a estar más
+              cómodo.
+            </li>
+            <li>
+              <strong>Pautas para casa.</strong> Posturas, masaje y rutinas que podéis aplicar entre sesiones.
+            </li>
+          </ol>
+        </div>
+        <a class="resource" href={withBase(ROUTES.talleres)} data-reveal>
+          <img
+            src={img('talleres-app/app-centro-spai-pantalla-01.jpg')}
+            alt=""
+            width="180"
+            height="180"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="resource__text">
+            <span class="resource__kicker">Recurso para familias</span>
+            <span class="resource__title">Conoce las apps y talleres de Spai sobre cólicos</span>
+          </span>
+          <Icon name="arrow-right" />
+        </a>
+      </section>
+
+      <!-- Primera visita -->
+      <section class="block" id="primera-visita" aria-labelledby="primera-title">
+        <div class="block__head" data-reveal>
+          <span class="eyebrow">03 · Qué esperar</span>
+          <h2 id="primera-title">La primera visita, <em>paso a paso</em></h2>
+        </div>
+        <div class="visit-panel">
+          <Timeline
+            steps={[
+              {
+                icon: 'chat',
+                title: 'Nos contáis',
+                text: 'Cuándo empezó el llanto, cómo son sus días y qué habéis probado.',
+              },
+              {
+                icon: 'clipboard',
+                title: 'Valoramos',
+                text: 'Con el bebé tranquilo y en vuestra compañía, a su ritmo.',
+              },
+              {
+                icon: 'path',
+                title: 'Os llevamos pautas',
+                text: 'Una orientación clara y lo que podéis hacer en casa desde hoy.',
+              },
+            ]}
+          />
+          <p class="visit-panel__tip" data-reveal>
+            <Icon name="info" size={20} />
+            <span>
+              Consejo: si podéis, venid en un momento en que el bebé no tenga mucha hambre y traed lo que suele
+              calmarle.
+            </span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Cuándo consultar -->
+      <section class="block" id="cuando-consultar" aria-labelledby="consultar-title">
+        <div class="alert" data-reveal>
+          <div class="alert__head">
+            <span class="alert__icon"><Icon name="shield" size={28} /></span>
+            <div>
+              <span class="eyebrow">04 · Importante</span>
+              <h2 id="consultar-title">Cuándo consultar <em>antes con el pediatra</em></h2>
+            </div>
+          </div>
+          <p>
+            El llanto de un bebé puede tener muchas causas. Acude a tu pediatra, o a urgencias si es necesario,
+            cuando notes cualquiera de estas señales:
+          </p>
+          <ul class="alert__list">{redFlags.map((f) => <li>{f}</li>)}</ul>
+          <p class="alert__foot">
+            Esta lista es orientativa y no sustituye la valoración médica. Ante la duda, consultad siempre.
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <Faq items={faqs} tone="infantil" title="Preguntas sobre cólicos" />
+
+  <CtaBand
+    tone="infantil"
+    title="No tenéis que pasarlo solos"
+    text="Pide una primera cita infantil y cuéntanos cómo están siendo estos días."
+  />
+</BaseLayout>
+
+<style>
+  .colic-layout {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--section-y) 0;
+  }
+
+  @media (min-width: 64rem) {
+    .colic-layout {
+      grid-template-columns: 15rem minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+  }
+
+  .toc {
+    align-self: start;
+    padding: var(--space-5);
+    border-radius: var(--radius-card);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+
+  @media (min-width: 64rem) {
+    .toc {
+      position: sticky;
+      top: calc(var(--header-h) + 1.5rem);
+    }
+  }
+
+  .toc__title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-600);
+    margin-bottom: var(--space-2);
+  }
+
+  .toc ol {
+    list-style: none;
+    display: grid;
+    counter-reset: toc;
+  }
+
+  .toc li {
+    counter-increment: toc;
+  }
+
+  .toc a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 44px;
+    color: var(--ink-900);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .toc a::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    color: var(--spai-500);
+  }
+
+  .toc a:hover {
+    color: var(--spai-700);
+    text-decoration: underline;
+  }
+
+  .colic-content {
+    display: grid;
+    gap: clamp(4rem, 3rem + 4vw, 6.5rem);
+    min-width: 0;
+  }
+
+  .block__head {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    margin-bottom: var(--space-6);
+    max-width: 44rem;
+  }
+
+  .signs {
+    list-style: none;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 40rem) {
+    .signs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .sign {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    border-radius: var(--radius-card);
+    background: var(--lilac-100);
+  }
+
+  .sign__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: var(--space-2);
+    border-radius: 14px;
+    background: var(--white);
+    color: var(--spai-700);
+  }
+
+  .sign h3 {
+    font-size: 1.3125rem;
+  }
+
+  .sign p {
+    color: var(--ink-600);
+  }
+
+  .accompany {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 56rem) {
+    .accompany {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--space-7);
+    }
+  }
+
+  .accompany__text {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    align-content: start;
+  }
+
+  .accompany__list {
+    list-style: none;
+    counter-reset: acc;
+    display: grid;
+  }
+
+  .accompany__list li {
+    counter-increment: acc;
+    position: relative;
+    padding: var(--space-4) 0 var(--space-4) 3.25rem;
+    border-top: 1px solid var(--line);
+    color: var(--ink-600);
+  }
+
+  .accompany__list li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .accompany__list li::before {
+    content: counter(acc);
+    position: absolute;
+    left: 0;
+    top: var(--space-4);
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--blush-100);
+    color: var(--spai-700);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .accompany__list strong {
+    display: block;
+    color: var(--ink-900);
+  }
+
+  .resource {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: var(--space-3) var(--space-5) var(--space-3) var(--space-3);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--spai-700);
+    text-decoration: none;
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  .resource:hover {
+    border-color: var(--spai-300);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .resource img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 14px;
+  }
+
+  .resource__text {
+    display: grid;
+  }
+
+  .resource__kicker {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--ink-600);
+  }
+
+  .resource__title {
+    font-weight: 650;
+    line-height: 1.35;
+  }
+
+  .visit-panel {
+    padding: clamp(1.5rem, 1rem + 2.5vw, 3rem);
+    border-radius: var(--radius-panel);
+    background: var(--lilac-100);
+  }
+
+  .visit-panel__tip {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--lilac-200);
+    color: var(--ink-900);
+  }
+
+  .visit-panel__tip :global(svg) {
+    flex: none;
+    margin-top: 3px;
+    color: var(--spai-500);
+  }
+
+  .alert {
+    display: grid;
+    gap: var(--space-4);
+    padding: clamp(1.5rem, 1rem + 2.5vw, 3rem);
+    border-radius: var(--radius-panel);
+    background: var(--white);
+    border: 1.5px solid var(--sky-200);
+    border-left: 6px solid var(--sky-800);
+  }
+
+  .alert__head {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .alert__head > div {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .alert__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 16px;
+    background: var(--sky-100);
+    color: var(--sky-800);
+  }
+
+  .alert__list {
+    display: grid;
+    gap: var(--space-2);
+    padding-left: 1.25rem;
+  }
+
+  .alert__list li::marker {
+    color: var(--sky-800);
+  }
+
+  .alert__foot {
+    font-size: var(--fs-small);
+    color: var(--ink-600);
+  }
+
+  @media (max-width: 35.99rem) {
+    .alert__icon {
+      display: none;
+    }
+  }
+</style>

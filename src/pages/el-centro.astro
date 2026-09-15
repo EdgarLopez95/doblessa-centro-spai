@@ -1,0 +1,329 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Gallery from '../components/Gallery.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { ROUTES, SITE, citaHref, withBase } from '../lib/site';
+
+const path = ROUTES.centro;
+const title = 'El centro | Centro Spai, fisioterapia y bienestar en Burriana';
+const description =
+  'Conoce Centro Spai: su filosofía, su forma de trabajar con familias y sus instalaciones de fisioterapia y bienestar en Burriana.';
+const breadcrumbs = [
+  { label: 'Inicio', href: ROUTES.home },
+  { label: 'El centro', href: path },
+];
+
+const principles = [
+  {
+    title: 'Calmar antes de informar',
+    text: 'Quien llega preocupado necesita primero sentirse escuchado. La explicación viene después, y siempre en lenguaje claro.',
+  },
+  {
+    title: 'Hablar a familias reales',
+    text: 'Cansancio, dudas, horarios imposibles. Adaptamos la atención a la vida de cada familia, no al revés.',
+  },
+  {
+    title: 'Experiencia sin frialdad',
+    text: 'Rigor profesional y trato cercano no están reñidos. Queremos que te sientas en buenas manos y en confianza.',
+  },
+  {
+    title: 'Una cita debe ser fácil',
+    text: 'Pedir ayuda no debería ser otra fuente de estrés. Te orientamos desde el primer mensaje.',
+  },
+];
+
+const gallery = [
+  {
+    src: 'centro/instalaciones-centro-spai-01.jpg',
+    alt: 'Fachada de Centro Spai con el rótulo violeta y la entrada acristalada',
+    caption: 'La entrada del centro, en Burriana',
+    width: 434,
+    height: 579,
+  },
+  {
+    src: 'centro/instalaciones-centro-spai-02.jpg',
+    alt: 'Sala de espera con sillas violetas, mostrador de recepción y un pequeño sillón infantil rosa',
+    caption: 'Recepción y sala de espera, con rincón infantil',
+    width: 434,
+    height: 579,
+  },
+  {
+    src: 'centro/instalaciones-centro-spai-03.jpg',
+    alt: 'Sala de tratamiento con camilla articulada y estantería con material',
+    caption: 'Sala de tratamiento',
+    width: 434,
+    height: 579,
+  },
+  {
+    src: 'centro/instalaciones-centro-spai-04.jpg',
+    alt: 'Consulta con camilla rosa, mesa de trabajo, sillas y mobiliario infantil',
+    caption: 'Consulta preparada para familias',
+    width: 434,
+    height: 579,
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  image="images/centro/instalaciones-centro-spai-01.jpg"
+  imageAlt="Fachada de Centro Spai en Burriana"
+  preloadImage="images/centro/instalaciones-centro-spai-01.jpg"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    eyebrow="El centro"
+    lead="Spai nació con una idea sencilla: que la salud y la calma pueden ir de la mano. Un centro de fisioterapia, osteopatía y bienestar donde bebés, niños y adultos se sienten en casa."
+    breadcrumbs={breadcrumbs}
+    image={{
+      src: 'centro/instalaciones-centro-spai-01.jpg',
+      alt: 'Fachada de Centro Spai con el rótulo violeta y la entrada acristalada',
+      width: 434,
+      height: 579,
+      position: '50% 30%',
+    }}
+  >
+    <Fragment slot="title">Un espacio para cuidar <em>a toda la familia</em></Fragment>
+    <Fragment slot="actions">
+      <a class="btn btn--lg" href="#instalaciones">
+        Ver instalaciones
+        <Icon name="arrow-right" />
+      </a>
+      <a class="btn btn--secondary btn--lg" href={citaHref()}>Pedir cita</a>
+    </Fragment>
+  </PageHero>
+
+  <!-- Filosofía -->
+  <section class="section" aria-labelledby="filosofia-title">
+    <div class="container">
+      <div class="section-head section-head--split" data-reveal>
+        <div>
+          <span class="eyebrow">Filosofía</span>
+          <h2 id="filosofia-title">Cuidado experto, <em>desde el primer día</em></h2>
+        </div>
+        <p class="lead">
+          Cuatro principios que guían cómo recibimos, explicamos y acompañamos a cada persona que cruza la puerta.
+        </p>
+      </div>
+      <ol class="ethos">
+        {
+          principles.map((p, i) => (
+            <li data-reveal style={`--reveal-i:${i}`}>
+              <span class="ethos__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Enfoque humano -->
+  <section class="section surface-kids" aria-labelledby="humano-title">
+    <div class="container human">
+      <div class="human__statement" data-reveal>
+        <span class="eyebrow">Enfoque humano</span>
+        <h2 id="humano-title">Un centro donde <em>los niños son el corazón</em>, y los padres también cuentan</h2>
+      </div>
+      <div class="human__text" data-reveal>
+        <p>
+          Nuestra especialidad es la infancia: bebés en sus primeras semanas, niños que crecen y familias que buscan
+          orientación. Esa mirada impregna todo el centro, desde el rincón infantil de la sala de espera hasta el
+          tiempo que dedicamos a explicar cada sesión.
+        </p>
+        <p>
+          Y porque cuidar a un hijo también cansa, abrimos un espacio para los adultos: fisioterapia, osteopatía,
+          embarazo, posparto y terapias de bienestar, con su propia ruta y su propio ritmo.
+        </p>
+        <div class="human__links">
+          <a class="link-arrow" href={withBase(ROUTES.infantil)}>
+            Ruta infantil
+            <Icon name="arrow-right" />
+          </a>
+          <a class="link-arrow" href={withBase(ROUTES.adultos)}>
+            Adultos y bienestar
+            <Icon name="arrow-right" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instalaciones -->
+  <section class="section" id="instalaciones" aria-labelledby="instalaciones-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">El espacio</span>
+        <h2 id="instalaciones-title">Nuestras <em>instalaciones</em></h2>
+        <p class="lead">Salas tranquilas, preparadas para bebés, niños y adultos. Pulsa una imagen para ampliarla.</p>
+      </div>
+      <Gallery images={gallery} label="Galería de instalaciones de Centro Spai" />
+      <p class="photo-note" data-reveal>
+        <span class="pending">Por validar</span>
+        Fotografías actuales del cliente; se recomienda una sesión fotográfica nueva antes de publicar.
+      </p>
+    </div>
+  </section>
+
+  <!-- Equipo y visita -->
+  <section class="section section--tight" aria-labelledby="equipo-title">
+    <div class="container visit">
+      <div class="visit__team" data-reveal>
+        <span class="eyebrow">El equipo</span>
+        <h2 id="equipo-title">Profesionales de <em>fisioterapia y osteopatía</em></h2>
+        <p>
+          Aquí se presentará al equipo con nombre, titulación, número de colegiación y enfoque de trabajo, una vez el
+          centro facilite y apruebe esta información.
+        </p>
+        <span class="pending">Perfiles pendientes de validar</span>
+      </div>
+      <div class="visit__card" data-reveal>
+        <h3>Visítanos</h3>
+        <p class="visit__row">
+          <Icon name="pin" size={22} />
+          <span>
+            {SITE.address.street}<br />
+            {SITE.address.postalCode} {SITE.address.locality} ({SITE.address.region})
+          </span>
+        </p>
+        <p class="visit__row">
+          <Icon name="clock" size={22} />
+          <span>Horario pendiente de confirmar con el centro</span>
+        </p>
+        <a class="btn btn--block" href={withBase(ROUTES.contacto)}>Contacto y cómo llegar</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Ven a conocernos"
+    text="Pide cita para tu bebé, tu hijo o para ti. Te recibimos con calma."
+  />
+</BaseLayout>
+
+<style>
+  .ethos {
+    list-style: none;
+    display: grid;
+    gap: 0 var(--space-6);
+  }
+
+  @media (min-width: 40rem) {
+    .ethos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .ethos {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .ethos li {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    padding-block: var(--space-5);
+    border-top: 1.5px solid var(--spai-300);
+  }
+
+  .ethos__num {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 480;
+    font-style: italic;
+    line-height: 1;
+    color: var(--spai-500);
+  }
+
+  .ethos h3 {
+    font-size: 1.375rem;
+  }
+
+  .ethos p {
+    color: var(--text-muted);
+  }
+
+  .human {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 56rem) {
+    .human {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-8);
+      align-items: start;
+    }
+  }
+
+  .human__statement {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .human__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-6);
+    margin-top: var(--space-4);
+  }
+
+  .photo-note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    margin-top: var(--space-6);
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+  }
+
+  .visit {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 56rem) {
+    .visit {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: var(--space-8);
+      align-items: center;
+    }
+  }
+
+  .visit__team {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .visit__card {
+    display: grid;
+    gap: var(--space-4);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border-radius: var(--radius-panel);
+    background: var(--white);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .visit__row {
+    display: flex;
+    gap: var(--space-3);
+    margin: 0;
+  }
+
+  .visit__row :global(svg) {
+    flex: none;
+    color: var(--spai-500);
+    margin-top: 2px;
+  }
+</style>

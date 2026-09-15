@@ -1,0 +1,290 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import RouteNav from '../components/RouteNav.astro';
+import Timeline from '../components/Timeline.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { ADULTOS_NAV, ROUTES, citaHref, serviceSchema, withBase } from '../lib/site';
+
+const path = ROUTES.embarazo;
+const title = 'Fisioterapia en embarazo y posparto en Burriana | Centro Spai';
+const description =
+  'Acompañamiento de fisioterapia durante el embarazo y en la recuperación posparto en Burriana, con un enfoque sereno y respetuoso. Pide tu cita.';
+const breadcrumbs = [
+  { label: 'Inicio', href: ROUTES.home },
+  { label: 'Adultos y bienestar', href: ROUTES.adultos },
+  { label: 'Embarazo y posparto', href: path },
+];
+
+const faqs = [
+  {
+    q: '¿En qué momento del embarazo puedo venir?',
+    a: 'Puedes consultarnos en cualquier trimestre. Te pediremos que nos cuentes cómo va el embarazo y cualquier indicación de tu matrona o ginecólogo para adaptar la sesión.',
+  },
+  {
+    q: '¿Cuándo puedo empezar después del parto?',
+    a: 'Depende de cada parto y de cada recuperación. Lo habitual es esperar a la revisión posparto con tu profesional sanitario; en la primera conversación lo valoramos contigo.',
+  },
+  {
+    q: '¿Puedo venir con mi bebé?',
+    a: 'Sí. Somos un centro pensado para familias, y entendemos que en los primeros meses el bebé viene contigo. Coméntalo al pedir cita para organizarnos.',
+  },
+  {
+    q: '¿Qué tipo de molestias se pueden consultar?',
+    a: 'Molestias de espalda o pelvis, cambios posturales, sensación de pesadez o dudas sobre cómo volver a moverte. Si algo te preocupa, coméntalo: te orientamos aunque no sepas cómo describirlo.',
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  tone="adultos"
+  image="images/adultos-bienestar/terapias-de-relax.png"
+  imageAlt="Ilustración de una mujer sentada en postura de meditación"
+  breadcrumbs={breadcrumbs}
+  jsonLd={[serviceSchema('Fisioterapia en embarazo y posparto', description)]}
+>
+  <PageHero
+    tone="adultos"
+    eyebrow="Adultos y bienestar · Embarazo y posparto"
+    lead="Una etapa de cambios merece un acompañamiento tranquilo. Te ayudamos a cuidar tu cuerpo durante el embarazo y a recuperarte a tu ritmo después del parto."
+    breadcrumbs={breadcrumbs}
+    image={{
+      src: 'adultos-bienestar/terapias-de-relax.png',
+      alt: 'Ilustración de una mujer sentada en postura de meditación',
+      width: 345,
+      height: 253,
+      fit: 'contain',
+    }}
+  >
+    <Fragment slot="title">Fisioterapia en embarazo <em class="well">y posparto</em></Fragment>
+    <Fragment slot="actions">
+      <a class="btn btn--well btn--lg" href={citaHref('adultos')}>
+        Pedir cita
+        <Icon name="arrow-right" />
+      </a>
+      <a class="btn btn--secondary btn--lg adult-secondary" href="#acompanamiento">Conocer el servicio</a>
+    </Fragment>
+  </PageHero>
+
+  <RouteNav currentPath={path} tone="adultos" label="Adultos y bienestar" items={ADULTOS_NAV} />
+
+  <!-- Enfoque -->
+  <section class="section" aria-labelledby="enfoque-title">
+    <div class="container container--narrow calm" data-reveal>
+      <span class="eyebrow eyebrow--well">Nuestro enfoque</span>
+      <h2 id="enfoque-title">Sin exigencias, <em class="well">con escucha</em></h2>
+      <p class="lead">
+        Cada embarazo y cada posparto son distintos. No hay plazos que cumplir ni cuerpos a los que “volver”: hay una
+        persona que atraviesa muchos cambios y merece cuidado.
+      </p>
+      <p>
+        Te acompañamos con fisioterapia adaptada a tu momento, explicaciones claras y respeto por tus tiempos,
+        siempre en coordinación con el seguimiento de tu matrona o ginecólogo.
+      </p>
+    </div>
+  </section>
+
+  <!-- Dos etapas -->
+  <section class="section surface-well" id="acompanamiento" aria-labelledby="etapas-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow eyebrow--well">Cómo te acompañamos</span>
+        <h2 id="etapas-title">Dos etapas, <em class="well">un mismo cuidado</em></h2>
+      </div>
+      <div class="phases">
+        <article class="phase" data-reveal>
+          <span class="phase__tag">Durante el embarazo</span>
+          <h3>Cuidar tu cuerpo mientras cambia</h3>
+          <ul class="check-list check-list--well">
+            <li>Molestias de espalda, pelvis o piernas.</li>
+            <li>Cambios en la postura y en la forma de moverte.</li>
+            <li>Movimiento y respiración adaptados a cada trimestre.</li>
+            <li>Preparación corporal para el parto, a tu ritmo.</li>
+          </ul>
+        </article>
+        <article class="phase" data-reveal style="--reveal-i:1">
+          <span class="phase__tag">Después del parto</span>
+          <h3>Recuperarte sin prisas</h3>
+          <ul class="check-list check-list--well">
+            <li>Valoración de tu recuperación tras la revisión posparto.</li>
+            <li>Vuelta progresiva al movimiento y al ejercicio.</li>
+            <li>Molestias asociadas a cargar y cuidar al bebé.</li>
+            <li>Pautas para el día a día con tu bebé en brazos.</li>
+          </ul>
+        </article>
+      </div>
+      <p class="scope" data-reveal>
+        <span class="pending">Por validar</span>
+        Las técnicas concretas y los profesionales que prestan este servicio los confirmará el centro.
+      </p>
+    </div>
+  </section>
+
+  <!-- Proceso -->
+  <section class="section" aria-labelledby="proceso-title">
+    <div class="container">
+      <div class="section-head section-head--split" data-reveal>
+        <div>
+          <span class="eyebrow eyebrow--well">Proceso</span>
+          <h2 id="proceso-title">Así será <em class="well">tu primera cita</em></h2>
+        </div>
+        <p class="lead">Un espacio tranquilo para hablar, valorar y decidir juntas cómo seguir.</p>
+      </div>
+      <Timeline
+        tone="adultos"
+        steps={[
+          {
+            icon: 'chat',
+            title: 'Conversación',
+            text: 'Cómo te encuentras, en qué momento estás y qué te gustaría cuidar.',
+          },
+          {
+            icon: 'clipboard',
+            title: 'Valoración',
+            text: 'Una valoración respetuosa, explicándote cada paso y a tu ritmo.',
+          },
+          {
+            icon: 'path',
+            title: 'Plan a tu medida',
+            text: 'Sesiones y pautas sencillas que encajen con tu día a día.',
+          },
+        ]}
+      />
+      <aside class="care-note" data-reveal>
+        <Icon name="shield" size={24} />
+        <p>
+          <strong>Tu matrona o ginecólogo, siempre primero.</strong> Ante sangrado, dolor intenso, pérdida de líquido,
+          fiebre o cualquier síntoma que te preocupe, contacta con tu profesional sanitario o con urgencias.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Puente infantil -->
+  <section class="section section--tight surface-kids" aria-labelledby="bebe-title">
+    <div class="container bridge" data-reveal>
+      <div>
+        <span class="eyebrow">Cuando llegue el bebé</span>
+        <h2 id="bebe-title" class="bridge__title">También le acompañamos a él o a ella</h2>
+        <p class="muted">Cólicos, osteopatía y fisioterapia infantil, en el mismo centro.</p>
+      </div>
+      <a class="link-arrow" href={withBase(ROUTES.infantil)}>
+        Ver la ruta infantil
+        <Icon name="arrow-right" />
+      </a>
+    </div>
+  </section>
+
+  <Faq items={faqs} tone="adultos" title="Preguntas sobre embarazo y posparto" />
+
+  <CtaBand
+    tone="adultos"
+    eyebrow="Tu cita"
+    title="Cuidarte también es cuidar de tu familia"
+    text="Pide cita y cuéntanos en qué momento estás. Te orientamos con calma."
+  />
+</BaseLayout>
+
+<style>
+  .well {
+    color: var(--sage-800) !important;
+  }
+
+  .adult-secondary {
+    --btn-fg: var(--sage-800);
+    --btn-border: #9fbfa7;
+  }
+
+  .adult-secondary:hover {
+    --btn-fg: var(--sage-800);
+    --btn-border: var(--sage-800);
+  }
+
+  .calm {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .phases {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 48rem) {
+    .phases {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .phase {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    justify-items: start;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+    border-radius: var(--radius-panel);
+    background: var(--white);
+  }
+
+  .phase__tag {
+    padding: 0.2rem 0.75rem;
+    border-radius: var(--radius-pill);
+    background: var(--sage-100);
+    color: var(--sage-800);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .phase h3 {
+    font-size: clamp(1.5rem, 1.3rem + 0.6vw, 1.875rem);
+  }
+
+  .scope {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    margin-top: var(--space-5);
+    font-size: var(--fs-small);
+    color: var(--ink-600);
+  }
+
+  .care-note {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+    padding: var(--space-5);
+    border-radius: var(--radius-card);
+    background: var(--sky-100);
+    color: var(--ink-900);
+  }
+
+  .care-note :global(svg) {
+    flex: none;
+    color: var(--sky-800);
+  }
+
+  .bridge {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-6);
+  }
+
+  .bridge > div {
+    display: grid;
+    gap: var(--space-2);
+    justify-items: start;
+  }
+
+  .bridge__title {
+    font-size: clamp(1.5rem, 1.3rem + 0.6vw, 1.875rem);
+  }
+</style>

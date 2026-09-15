@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { ROUTES, withBase } from '../lib/site';
+---
+
+<BaseLayout
+  title="Página no encontrada | Centro Spai"
+  description="La página que buscas no existe. Vuelve al inicio de Centro Spai."
+  path="/404/"
+  noindex
+>
+  <section class="section">
+    <div class="container container--narrow not-found">
+      <span class="eyebrow">Error 404</span>
+      <h1>Esta página <em>no está aquí</em></h1>
+      <p class="lead">Puede que el enlace haya cambiado. Te ayudamos a encontrar lo que buscas.</p>
+      <div class="btn-row btn-row--stack-mobile">
+        <a class="btn btn--lg" href={withBase(ROUTES.home)}>
+          Volver al inicio
+          <Icon name="arrow-right" />
+        </a>
+        <a class="btn btn--secondary btn--lg" href={withBase(ROUTES.contacto)}>Contacto</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+    padding-block: var(--space-7);
+  }
+</style>

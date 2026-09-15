@@ -1,0 +1,537 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import RouteNav from '../components/RouteNav.astro';
+import NeedCard from '../components/NeedCard.astro';
+import ServiceEditorial from '../components/ServiceEditorial.astro';
+import Timeline from '../components/Timeline.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Chips from '../components/Chips.astro';
+import Icon from '../components/Icon.astro';
+import { INFANTIL_NAV, ROUTES, citaHref, serviceSchema, withBase } from '../lib/site';
+
+const path = ROUTES.infantil;
+const title = 'Fisioterapia infantil en Burriana | Centro Spai';
+const description =
+  'Atención de fisioterapia infantil y osteopatía para bebés y niños en Burriana. Conoce el enfoque de Spai y solicita cita.';
+const breadcrumbs = [
+  { label: 'Inicio', href: ROUTES.home },
+  { label: 'Fisioterapia infantil', href: path },
+];
+
+const stages = [
+  {
+    label: 'Primeros meses',
+    items: [
+      {
+        icon: 'moon',
+        title: 'Cólicos del lactante',
+        text: 'Llanto intenso y difícil de calmar. Valoración suave y pautas para casa.',
+        href: ROUTES.colicos,
+        linkLabel: 'Ver cólicos',
+      },
+      {
+        icon: 'hands',
+        title: 'Osteopatía para bebés',
+        text: 'Un abordaje manual y respetuoso, adaptado a la edad del bebé.',
+        href: ROUTES.osteopatia,
+        linkLabel: 'Ver osteopatía',
+      },
+    ],
+  },
+  {
+    label: 'Crecimiento',
+    items: [
+      {
+        icon: 'sprout',
+        title: 'Desarrollo y movimiento',
+        text: 'Postura, volteo, gateo y primeros pasos, acompañados etapa a etapa.',
+        href: '#desarrollo',
+        linkLabel: 'Leer más',
+      },
+      {
+        icon: 'wind',
+        title: 'Fisioterapia respiratoria',
+        text: 'Ayuda en los procesos de mocos y congestión, con recursos para casa.',
+        href: '#respiratorio',
+        linkLabel: 'Leer más',
+      },
+    ],
+  },
+  {
+    label: 'Familias',
+    items: [
+      {
+        icon: 'heart',
+        title: 'Masaje y orientación',
+        text: 'Masaje infantil, hábitos y rutinas para el día a día.',
+        href: '#orientacion',
+        linkLabel: 'Leer más',
+      },
+      {
+        icon: 'users',
+        title: 'Talleres para familias',
+        text: 'Espacios prácticos para aprender juntos, como el Taller Moquitos.',
+        href: ROUTES.talleres,
+        linkLabel: 'Ver talleres',
+      },
+    ],
+  },
+] as const;
+
+const faqs = [
+  {
+    q: '¿Desde qué edad podéis atender a un bebé?',
+    a: 'Atendemos bebés desde sus primeras semanas. En la primera llamada te orientamos sobre si la cita es adecuada para su edad y su situación.',
+  },
+  {
+    q: '¿Necesito que el pediatra me derive?',
+    a: 'No suele ser necesario para pedir cita. Aun así, si tenéis informes o indicaciones del pediatra, traedlos: nos ayudan a coordinarnos y a entender mejor el caso.',
+  },
+  {
+    q: '¿Qué debo llevar a la primera sesión?',
+    a: 'Ropa cómoda para el bebé, un pañal y una muda de repuesto, y lo que suele calmarle (chupete, mantita). Si tenéis informes médicos, también son útiles.',
+  },
+  {
+    q: '¿Puedo estar presente durante la sesión?',
+    a: 'Sí. La familia participa en la sesión: os explicamos lo que hacemos y os enseñamos pautas para continuar en casa.',
+  },
+  {
+    q: '¿Cuántas sesiones hacen falta?',
+    a: 'Depende de cada bebé y de cómo evoluciona. Tras la valoración os damos una orientación honesta, sin comprometeros a un número cerrado de sesiones.',
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  tone="infantil"
+  image="images/infantil/fisioterapia-para-bebes.jpg"
+  imageAlt="Bebé sonriente tumbado de lado sobre una manta blanca"
+  preloadImage="images/infantil/fisioterapia-para-bebes.jpg"
+  breadcrumbs={breadcrumbs}
+  jsonLd={[serviceSchema('Fisioterapia infantil', description)]}
+>
+  <PageHero
+    tone="infantil"
+    eyebrow="Ruta infantil · Bebés y niños"
+    lead="Tratamos a los más pequeños con manos expertas y un ritmo suave, y acompañamos a la familia para que sepa cómo ayudarle también en casa."
+    breadcrumbs={breadcrumbs}
+    image={{
+      src: 'infantil/fisioterapia-para-bebes.jpg',
+      alt: 'Bebé sonriente tumbado de lado sobre una manta blanca',
+      width: 851,
+      height: 955,
+      position: '60% 50%',
+      enhance: true,
+    }}
+  >
+    <Fragment slot="title">Fisioterapia infantil <em>en Burriana</em></Fragment>
+    <Fragment slot="actions">
+      <a class="btn btn--lg" href={citaHref('infantil')}>
+        Solicitar cita infantil
+        <Icon name="arrow-right" />
+      </a>
+      <a class="btn btn--secondary btn--lg" href="#servicios">Ver servicios</a>
+    </Fragment>
+  </PageHero>
+
+  <RouteNav currentPath={path} tone="infantil" label="Ruta infantil" items={INFANTIL_NAV} />
+
+  <!-- Explicación humana -->
+  <section class="section" aria-labelledby="enfoque-title">
+    <div class="container intro">
+      <div class="intro__lead" data-reveal>
+        <span class="eyebrow">Nuestro enfoque</span>
+        <h2 id="enfoque-title">Tratamos al bebé, <em>acompañamos a la familia</em></h2>
+      </div>
+      <div class="intro__text" data-reveal>
+        <p class="lead">
+          La fisioterapia infantil ayuda a los bebés y niños en momentos concretos de su desarrollo: cuando algo les
+          incomoda, cuando un proceso respiratorio se alarga o cuando la familia quiere entender mejor cómo
+          acompañar su crecimiento.
+        </p>
+        <p>
+          En Spai trabajamos con técnicas manuales suaves, observación y juego, siempre adaptados a la edad y a cómo
+          está el bebé ese día. Y dedicamos tiempo a explicaros qué vemos, porque buena parte del cuidado ocurre en
+          casa.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios por etapa -->
+  <section class="section surface-kids" id="servicios" aria-labelledby="servicios-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Servicios por necesidad y etapa</span>
+        <h2 id="servicios-title">Encuentra lo que <em>necesitáis</em></h2>
+        <p class="lead">Agrupados por el momento que estáis viviendo, no por nombres técnicos.</p>
+      </div>
+      <div class="stages">
+        {
+          stages.map((stage, s) => (
+            <div class="stage" data-reveal style={`--reveal-i:${s}`}>
+              <h3 class="stage__label">
+                <span class="stage__num" aria-hidden="true">{String(s + 1).padStart(2, '0')}</span>
+                {stage.label}
+              </h3>
+              <ul class="stage__cards">
+                {stage.items.map((item) => (
+                  <li>
+                    <NeedCard {...item} headingLevel="h4" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Detalle de servicios -->
+  <section class="section" aria-label="Detalle de servicios">
+    <div class="container details">
+      <ServiceEditorial
+        id="desarrollo"
+        eyebrow="Desarrollo y movimiento"
+        image={{
+          src: 'infantil/fisioterapia-infantil.png',
+          alt: 'Ilustración de un bebé gateando',
+          width: 345,
+          height: 253,
+          fit: 'contain',
+        }}
+      >
+        <h2>Cada etapa, <em>a su ritmo</em></h2>
+        <p>
+          Cada bebé tiene su tiempo. Cuando a la familia le surgen dudas sobre cómo se mueve, cómo se sostiene o cómo
+          avanza hacia el gateo y la marcha, observamos con calma y os proponemos juegos y posturas que favorecen su
+          movimiento.
+        </p>
+        <Chips label="Temas habituales" items={['Postura y control de cabeza', 'Volteo y gateo', 'Primeros pasos', 'Psicomotricidad']} />
+      </ServiceEditorial>
+
+      <ServiceEditorial
+        id="respiratorio"
+        eyebrow="Fisioterapia respiratoria"
+        reverse
+        surface="info"
+        image={{
+          src: 'talleres-app/taller-moquitos.jpg',
+          alt: 'Niña sonándose la nariz con un pañuelo',
+          width: 1920,
+          height: 699,
+          position: '26% 50%',
+        }}
+      >
+        <h2>Para los días de <em>mocos y congestión</em></h2>
+        <p>
+          Los procesos respiratorios son frecuentes en la infancia y a veces se alargan. La fisioterapia respiratoria
+          infantil ayuda a movilizar secreciones con técnicas adaptadas, y os enseñamos cómo hacer una buena higiene
+          nasal en casa.
+        </p>
+        <p class="note">
+          <Icon name="info" size={18} />
+          Si hay dificultad para respirar, fiebre alta o decaimiento, acude antes a tu pediatra o a urgencias.
+        </p>
+      </ServiceEditorial>
+
+      <ServiceEditorial id="orientacion" eyebrow="Masaje y orientación a familias" surface="warm">
+        <div slot="media" class="quote-panel">
+          <p class="quote-panel__text">“Los pequeños gestos de casa también forman parte del cuidado.”</p>
+          <span class="quote-panel__sign">Principio de trabajo de Spai</span>
+        </div>
+        <h2>Rutinas, masaje <em>y crianza</em></h2>
+        <p>
+          Os acompañamos en las dudas del día a día: cómo sostener y cambiar de postura al bebé, rutinas de sueño y
+          baño, o cómo aprovechar el masaje infantil como un momento de conexión y tranquilidad.
+        </p>
+        <ul class="check-list">
+          <li>Masaje infantil guiado para hacerlo en casa.</li>
+          <li>Pautas de postura y manejo en los primeros meses.</li>
+          <li>Hábitos y rutinas adaptados a vuestra familia.</li>
+        </ul>
+      </ServiceEditorial>
+    </div>
+  </section>
+
+  <!-- Primera visita -->
+  <section class="section surface-kids" aria-labelledby="visita-title">
+    <div class="container">
+      <div class="section-head section-head--split" data-reveal>
+        <div>
+          <span class="eyebrow">Primera visita</span>
+          <h2 id="visita-title">Qué ocurre en <em>la primera cita</em></h2>
+        </div>
+        <p class="lead">Una sesión tranquila, con tiempo para escuchar y para resolver vuestras dudas.</p>
+      </div>
+      <Timeline
+        steps={[
+          {
+            icon: 'chat',
+            title: 'Cuéntanos',
+            text: 'Hablamos sobre el bebé, su día a día y lo que os preocupa. Si tenéis informes, los revisamos.',
+          },
+          {
+            icon: 'clipboard',
+            title: 'Valoración',
+            text: 'Observamos cómo se mueve, cómo reacciona y cómo está, siempre con delicadeza y respetando sus pausas.',
+          },
+          {
+            icon: 'path',
+            title: 'Acompañamiento',
+            text: 'Os explicamos lo que vemos, os proponemos un plan y os llevamos pautas claras para casa.',
+          },
+        ]}
+      />
+    </div>
+  </section>
+
+  <!-- Enfoque profesional -->
+  <section class="section" aria-labelledby="equipo-title">
+    <div class="container team">
+      <div class="team__head" data-reveal>
+        <span class="eyebrow">Enfoque profesional</span>
+        <h2 id="equipo-title">Quién atiende <em>a vuestro bebé</em></h2>
+        <p class="muted">
+          La atención infantil la prestan profesionales de fisioterapia y osteopatía con formación específica en
+          infancia. Aquí se presentarán sus perfiles cuando el centro los valide.
+        </p>
+      </div>
+      <ul class="team__grid">
+        {
+          [1, 2].map((n) => (
+            <li class="profile" data-reveal style={`--reveal-i:${n}`}>
+              <div class="profile__avatar" aria-hidden="true">
+                <Icon name="person" size={36} />
+              </div>
+              <div class="profile__body">
+                <span class="pending">Perfil pendiente de validar</span>
+                <p class="profile__role">Fisioterapia y osteopatía infantil</p>
+                <dl class="profile__fields">
+                  <div>
+                    <dt>Nombre</dt>
+                    <dd>Lo aporta el centro</dd>
+                  </div>
+                  <div>
+                    <dt>Titulación y colegiación</dt>
+                    <dd>Lo aporta el centro</dd>
+                  </div>
+                  <div>
+                    <dt>Enfoque</dt>
+                    <dd>Lo aporta el centro</dd>
+                  </div>
+                </dl>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Faq items={faqs} tone="infantil" intro="Lo que más nos preguntan las familias antes de su primera cita." />
+
+  <CtaBand
+    tone="infantil"
+    title="¿Hablamos de vuestro bebé?"
+    text="Cuéntanos qué os preocupa y te orientamos sobre la cita más adecuada."
+  />
+</BaseLayout>
+
+<style>
+  .intro {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 56rem) {
+    .intro {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--space-8);
+    }
+  }
+
+  .intro__lead {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    justify-items: start;
+  }
+
+  .stages {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 64rem) {
+    .stages {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+  }
+
+  .stage__label {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
+    border-bottom: 1.5px solid var(--spai-300);
+    font-size: 1.5rem;
+  }
+
+  .stage__num {
+    font-size: 0.9375rem;
+    color: var(--spai-500);
+  }
+
+  .stage__cards {
+    list-style: none;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 40rem) and (max-width: 63.99rem) {
+    .stage__cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .details {
+    display: grid;
+    gap: clamp(4rem, 3rem + 5vw, 7rem);
+  }
+
+  .note {
+    display: flex;
+    gap: var(--space-2);
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    padding-left: var(--space-3);
+    border-left: 2px solid var(--sky-200);
+  }
+
+  .note :global(svg) {
+    flex: none;
+    margin-top: 3px;
+    color: var(--sky-800);
+  }
+
+  .quote-panel {
+    display: grid;
+    align-content: center;
+    gap: var(--space-5);
+    height: 100%;
+    padding: clamp(2rem, 1rem + 4vw, 4rem);
+  }
+
+  .quote-panel__text {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+    font-style: italic;
+    font-weight: 460;
+    line-height: 1.2;
+    color: var(--spai-700);
+  }
+
+  .quote-panel__sign {
+    font-size: var(--fs-small);
+    font-weight: 650;
+    color: var(--ink-600);
+  }
+
+  .team {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 56rem) {
+    .team {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--space-8);
+      align-items: center;
+    }
+  }
+
+  .team__head {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .team__grid {
+    list-style: none;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 40rem) {
+    .team__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .profile {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border-radius: var(--radius-card);
+    border: 1.5px dashed var(--spai-300);
+    background: var(--white);
+  }
+
+  .profile__avatar {
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background: var(--lilac-100);
+    color: var(--spai-500);
+  }
+
+  .profile__body {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+  }
+
+  .profile__role {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--spai-700);
+    line-height: 1.3;
+  }
+
+  .profile__fields {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    width: 100%;
+  }
+
+  .profile__fields div {
+    display: grid;
+    gap: 0;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .profile__fields dt {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--ink-600);
+  }
+
+  .profile__fields dd {
+    margin: 0;
+    color: var(--ink-400);
+    font-style: italic;
+  }
+</style>

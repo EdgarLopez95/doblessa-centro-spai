@@ -1,0 +1,369 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import DemoForm from '../components/DemoForm.astro';
+import Icon from '../components/Icon.astro';
+import { ROUTES, SITE, img } from '../lib/site';
+
+const path = ROUTES.contacto;
+const title = 'Pide cita en Centro Spai | Fisioterapia en Burriana';
+const description =
+  'Solicita cita infantil o para adultos en Centro Spai, Burriana. Elige el tipo de cita, cuéntanos el motivo y te orientamos.';
+const breadcrumbs = [
+  { label: 'Inicio', href: ROUTES.home },
+  { label: 'Contacto', href: path },
+];
+---
+
+<BaseLayout title={title} description={description} path={path} breadcrumbs={breadcrumbs} hideMobileCta>
+  <section class="contact-hero">
+    <div class="container">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="contact-hero__copy">
+        <span class="eyebrow">Contacto y cita</span>
+        <h1>Pide cita en <em>Centro Spai</em></h1>
+        <p class="lead">
+          Elige para quién es la cita y cuéntanos brevemente el motivo. No necesitas explicar toda la historia: te
+          orientamos nosotros.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" aria-label="Solicitud de cita y datos del centro">
+    <div class="container contact__grid">
+      <div class="contact__form panel">
+        <h2 class="contact__form-title">Solicitud de cita</h2>
+        <DemoForm />
+      </div>
+
+      <aside class="contact__aside" aria-labelledby="datos-title">
+        <div class="info-card">
+          <h2 id="datos-title" class="info-card__title">Datos del centro</h2>
+          <ul class="info-list">
+            <li>
+              <img src={img('ui/icono-direccion.png')} alt="" width="61" height="61" loading="lazy" />
+              <div>
+                <span class="info-list__label">Dirección</span>
+                <address>
+                  {SITE.address.street}<br />
+                  {SITE.address.postalCode} {SITE.address.locality} ({SITE.address.region})
+                </address>
+                <span class="pending">Por validar</span>
+              </div>
+            </li>
+            <li>
+              <img src={img('ui/icono-telefono.png')} alt="" width="61" height="61" loading="lazy" />
+              <div>
+                <span class="info-list__label">Teléfono</span>
+                <p class="info-list__missing">Pendiente de confirmar por el centro</p>
+              </div>
+            </li>
+            <li>
+              <img src={img('ui/icono-email.png')} alt="" width="61" height="61" loading="lazy" />
+              <div>
+                <span class="info-list__label">Email</span>
+                <p class="info-list__missing">Pendiente de confirmar por el centro</p>
+              </div>
+            </li>
+            <li>
+              <span class="info-list__icon" aria-hidden="true"><Icon name="clock" size={24} /></span>
+              <div>
+                <span class="info-list__label">Horario</span>
+                <p class="info-list__missing">Pendiente de confirmar por el centro</p>
+              </div>
+            </li>
+          </ul>
+
+          <div class="quick">
+            <p class="quick__title">Contacto directo</p>
+            <div class="quick__buttons">
+              <button type="button" class="btn btn--secondary" disabled aria-describedby="quick-note">
+                <Icon name="phone" size={18} />
+                Llamar
+              </button>
+              <button type="button" class="btn btn--secondary" disabled aria-describedby="quick-note">
+                <Icon name="chat" size={18} />
+                WhatsApp
+              </button>
+            </div>
+            <p class="quick__note" id="quick-note">
+              Botones visuales: se activarán cuando el centro confirme sus números. Habrá teléfonos diferenciados para
+              cita infantil y de adultos.
+            </p>
+          </div>
+        </div>
+
+        <figure class="map" aria-labelledby="map-caption">
+          <div class="map__canvas" aria-hidden="true">
+            <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="260" fill="#EEF2EE" />
+              <path d="M-20 70 L420 40" stroke="#fff" stroke-width="22" />
+              <path d="M-20 190 L420 170" stroke="#fff" stroke-width="16" />
+              <path d="M90 -20 L130 280" stroke="#fff" stroke-width="18" />
+              <path d="M270 -20 L250 280" stroke="#fff" stroke-width="26" />
+              <path d="M130 120 L260 110" stroke="#fff" stroke-width="12" />
+              <rect x="150" y="60" width="80" height="40" rx="6" fill="#DCE8DF" />
+              <rect x="20" y="95" width="60" height="70" rx="6" fill="#E4DAF0" />
+              <rect x="290" y="80" width="90" height="70" rx="6" fill="#DCE8DF" />
+              <rect x="150" y="135" width="85" height="30" rx="6" fill="#E4DAF0" />
+              <rect x="300" y="190" width="80" height="50" rx="6" fill="#E4DAF0" />
+              <rect x="20" y="205" width="60" height="45" rx="6" fill="#DCE8DF" />
+            </svg>
+            <span class="map__pin">
+              <Icon name="pin" size={28} />
+            </span>
+          </div>
+          <figcaption id="map-caption" class="map__caption">
+            <strong>Mapa ilustrativo</strong> · {SITE.address.street}, {SITE.address.locality}. En la web real se enlazará
+            a la ubicación verificada.
+          </figcaption>
+        </figure>
+
+        <figure class="facade">
+          <img
+            src={img('centro/instalaciones-centro-spai-01.jpg')}
+            alt="Fachada de Centro Spai con el rótulo violeta"
+            width="434"
+            height="579"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Así reconocerás la entrada: rótulo violeta con la mariposa de Spai.</figcaption>
+        </figure>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="privacidad-title">
+    <div class="container container--narrow privacy" >
+      <Icon name="shield" size={26} />
+      <div>
+        <h2 id="privacidad-title" class="privacy__title">Tus datos, con cuidado</h2>
+        <p class="muted">
+          Solo pedimos lo necesario para responderte. No solicitamos historia clínica por este canal: los detalles de
+          salud se tratan en consulta, de forma confidencial.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    padding-block: var(--space-4) var(--space-7);
+    background: linear-gradient(180deg, var(--cloud-50), var(--lilac-100));
+  }
+
+  .contact-hero__copy {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    max-width: 46rem;
+    margin-top: var(--space-5);
+  }
+
+  .contact {
+    padding-bottom: var(--section-y);
+    background: linear-gradient(180deg, var(--lilac-100) 0 6rem, var(--cloud-50) 6rem);
+  }
+
+  .contact__grid {
+    display: grid;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  @media (min-width: 64rem) {
+    .contact__grid {
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+      gap: var(--space-6);
+    }
+
+    .contact__aside {
+      position: sticky;
+      top: calc(var(--header-h) + 1.5rem);
+    }
+  }
+
+  .contact__form {
+    padding: clamp(1.25rem, 0.8rem + 2.5vw, 3rem);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .contact__form-title {
+    font-size: var(--fs-h3);
+    margin-bottom: var(--space-5);
+  }
+
+  .contact__aside {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .info-card {
+    padding: var(--space-5);
+    border-radius: var(--radius-panel);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+
+  .info-card__title {
+    font-size: 1.375rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .info-list {
+    list-style: none;
+    display: grid;
+  }
+
+  .info-list li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .info-list li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .info-list img,
+  .info-list__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .info-list__icon {
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--lilac-100);
+    color: var(--spai-700);
+  }
+
+  .info-list__label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-600);
+  }
+
+  .info-list address {
+    font-style: normal;
+    font-weight: 600;
+    margin-bottom: var(--space-1);
+  }
+
+  .info-list__missing {
+    color: var(--ink-600);
+    font-style: italic;
+  }
+
+  .quick {
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+  }
+
+  .quick__title {
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+  }
+
+  .quick__buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .quick__note {
+    margin-top: var(--space-3);
+    font-size: 0.875rem;
+    color: var(--ink-600);
+  }
+
+  .map {
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius-panel);
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+
+  .map__canvas {
+    position: relative;
+    aspect-ratio: 400 / 220;
+  }
+
+  .map__canvas svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .map__pin {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 50% 50% 50% 0;
+    transform: translate(-50%, -70%) rotate(-45deg);
+    background: var(--spai-700);
+    color: var(--white);
+    box-shadow: 0 10px 20px -8px rgb(71 52 95 / 0.7);
+  }
+
+  .map__pin :global(svg) {
+    transform: rotate(45deg);
+  }
+
+  .map__caption {
+    padding: var(--space-3) var(--space-4);
+    font-size: 0.875rem;
+    color: var(--ink-600);
+  }
+
+  .facade {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: var(--space-4);
+    align-items: center;
+    margin: 0;
+    padding: var(--space-3);
+    border-radius: var(--radius-card);
+    background: var(--lilac-100);
+  }
+
+  .facade img {
+    width: 5.5rem;
+    aspect-ratio: 1;
+    object-fit: cover;
+    object-position: 50% 20%;
+    border-radius: 14px;
+  }
+
+  .facade figcaption {
+    font-size: var(--fs-small);
+    color: var(--ink-900);
+  }
+
+  .privacy {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    color: var(--spai-500);
+  }
+
+  .privacy__title {
+    font-size: 1.375rem;
+    margin-bottom: var(--space-2);
+  }
+</style>

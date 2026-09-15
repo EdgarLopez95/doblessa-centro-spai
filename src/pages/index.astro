@@ -1,4 +1,686 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AudienceSelector from '../components/AudienceSelector.astro';
+import NeedCard from '../components/NeedCard.astro';
+import Timeline from '../components/Timeline.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Chips from '../components/Chips.astro';
+import Icon from '../components/Icon.astro';
+import { ROUTES, SITE, citaHref, img, withBase } from '../lib/site';
+
+const needs = [
+  {
+    icon: 'moon',
+    tag: 'Cólicos',
+    title: 'Llora mucho y cuesta calmarle',
+    text: 'Cuando el llanto se repite y estáis agotados, os ayudamos a entender qué ocurre y cómo acompañarle.',
+    href: ROUTES.colicos,
+    linkLabel: 'Cólicos del lactante',
+  },
+  {
+    icon: 'sprout',
+    tag: 'Desarrollo',
+    title: 'Queremos acompañar cómo se mueve',
+    text: 'Postura, volteo, gateo o primeros pasos: observamos cada etapa con calma y os damos pautas claras.',
+    href: `${ROUTES.infantil}#desarrollo`,
+    linkLabel: 'Desarrollo y movimiento',
+  },
+  {
+    icon: 'wind',
+    tag: 'Respiratorio',
+    title: 'Días de mocos y congestión',
+    text: 'Fisioterapia respiratoria infantil y recursos para que en casa sepáis cómo ayudarle.',
+    href: `${ROUTES.infantil}#respiratorio`,
+    linkLabel: 'Fisioterapia respiratoria',
+  },
+  {
+    icon: 'hands',
+    tag: 'Osteopatía',
+    title: 'Un abordaje manual y suave',
+    text: 'Osteopatía para bebés con un trato respetuoso, adaptado a su edad y a su momento.',
+    href: ROUTES.osteopatia,
+    linkLabel: 'Osteopatía para bebés',
+  },
+  {
+    icon: 'heart',
+    tag: 'Familias',
+    title: 'Rutinas, masaje y crianza',
+    text: 'Orientación sobre hábitos, masaje infantil y las dudas del día a día con vuestro bebé.',
+    href: `${ROUTES.infantil}#orientacion`,
+    linkLabel: 'Masaje y orientación',
+  },
+  {
+    icon: 'users',
+    tag: 'Talleres',
+    title: 'Aprender juntos',
+    text: 'Espacios prácticos para familias, como el Taller Moquitos, para resolver dudas con calma.',
+    href: ROUTES.talleres,
+    linkLabel: 'Talleres y recursos',
+  },
+] as const;
+
+const commitments = [
+  {
+    icon: 'shield',
+    title: 'La infancia, en el centro',
+    text: 'Bebés, niños y familias son el núcleo de nuestro trabajo en fisioterapia y osteopatía.',
+  },
+  {
+    icon: 'hands',
+    title: 'Manos expertas, ritmo suave',
+    text: 'Cada sesión se adapta a la edad, al momento y a cómo se siente el bebé ese día.',
+  },
+  {
+    icon: 'chat',
+    title: 'Explicaciones claras',
+    text: 'Os contamos qué observamos y qué podéis hacer en casa, sin tecnicismos ni prisas.',
+  },
+  {
+    icon: 'home',
+    title: 'Un centro para toda la familia',
+    text: 'Cuando lo necesitas, también hay atención para adultos, embarazo y posparto.',
+  },
+] as const;
+
+const businessSchema = {
+  '@type': 'MedicalBusiness',
+  name: SITE.name,
+  description:
+    'Centro de fisioterapia y osteopatía para bebés, niños y familias, con atención para adultos y bienestar en Burriana.',
+  areaServed: { '@type': 'City', name: 'Burriana' },
+};
 ---
-<BaseLayout><main><p>Base técnica preparada para el rediseño de Centro Spai.</p></main></BaseLayout>
+
+<BaseLayout
+  title="Fisioterapia infantil y osteopatía en Burriana | Centro Spai"
+  description="Centro Spai acompaña a bebés, niños y familias con fisioterapia y osteopatía en Burriana. Conoce los servicios y pide cita."
+  path={ROUTES.home}
+  preloadImage="images/inicio/hero-centro-spai.jpg"
+  imageAlt="Bebé sonriente tumbado sobre una manta blanca"
+  jsonLd={[businessSchema]}
+>
+  <!-- Hero -->
+  <section class="home-hero">
+    <div class="home-hero__grid">
+      <div class="home-hero__copy">
+        <span class="eyebrow">Cuidado experto, desde el primer día</span>
+        <h1>Fisioterapia infantil <em>y bienestar</em> en Burriana</h1>
+        <p class="lead">
+          En Centro Spai acompañamos a bebés, niños y familias con fisioterapia y osteopatía suave y personalizada. Y
+          cuando lo necesitas, también cuidamos de ti.
+        </p>
+        <div class="btn-row btn-row--stack-mobile">
+          <a class="btn btn--lg" href={citaHref('infantil')}>
+            Pedir cita infantil
+            <Icon name="arrow-right" />
+          </a>
+          <a class="btn btn--secondary btn--lg" href={withBase(ROUTES.colicos)}>Cólicos del lactante</a>
+        </div>
+      </div>
+      <figure class="home-hero__media">
+        <img
+          src={img('inicio/hero-centro-spai.jpg')}
+          alt="Bebé sonriente tumbado sobre una manta blanca"
+          width="1920"
+          height="699"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <figcaption class="home-hero__badge">
+          <span class="home-hero__badge-icon"><Icon name="heart" size={20} /></span>
+          <span>Atención suave para bebés, niños y familias</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <AudienceSelector overlap />
+
+  <!-- Necesidades infantiles -->
+  <section class="section" aria-labelledby="necesidades-title">
+    <div class="container">
+      <div class="section-head section-head--split" data-reveal>
+        <div>
+          <span class="eyebrow">Ruta infantil</span>
+          <h2 id="necesidades-title">¿Qué os preocupa <em>ahora mismo?</em></h2>
+        </div>
+        <p class="lead">
+          Empieza por lo que estáis viviendo. Cada necesidad te lleva a una explicación sencilla y a la forma de
+          pedir cita.
+        </p>
+      </div>
+      <ul class="needs-grid">
+        {
+          needs.map((n, i) => (
+            <li data-reveal style={`--reveal-i:${i % 3}`}>
+              <NeedCard {...n} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Cólicos destacado -->
+  <section class="section section--tight" aria-labelledby="colicos-title">
+    <div class="container">
+      <div class="colic" data-reveal>
+        <div class="colic__media">
+          <img
+            src={img('infantil/colicos-del-lactante.png')}
+            alt="Ilustración de un bebé llorando"
+            width="345"
+            height="253"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="colic__body">
+          <span class="eyebrow">Tratamiento destacado</span>
+          <h2 id="colicos-title">Cólicos del lactante: <em>no estáis solos</em></h2>
+          <p>
+            Las semanas de llanto intenso agotan a cualquier familia. En Spai os escuchamos, valoramos al bebé con
+            delicadeza y os acompañamos con pautas que podéis aplicar en casa.
+          </p>
+          <ul class="check-list check-list--warm">
+            <li>Llanto intenso que se repite, a menudo en la misma franja del día.</li>
+            <li>Cuesta calmarle aunque haya comido y esté limpio.</li>
+            <li>Piernas encogidas o gestos de incomodidad.</li>
+          </ul>
+          <p class="colic__warning">
+            <Icon name="info" size={20} />
+            <span>
+              Si hay fiebre, vómitos, rechazo de las tomas o algo que os inquieta, consultad primero con vuestro
+              pediatra.
+            </span>
+          </p>
+          <div class="btn-row btn-row--stack-mobile">
+            <a class="btn" href={withBase(ROUTES.colicos)}>
+              Leer sobre cólicos
+              <Icon name="arrow-right" />
+            </a>
+            <a class="btn btn--secondary" href={citaHref('infantil')}>Consultar una cita</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Confianza -->
+  <section class="section" aria-labelledby="confianza-title">
+    <div class="container trust">
+      <div class="trust__head" data-reveal>
+        <span class="eyebrow">Por qué Spai</span>
+        <h2 id="confianza-title">Calma antes que tecnicismos, <em>experiencia sin frialdad</em></h2>
+        <p class="muted">
+          Queremos que salgáis de la consulta entendiendo lo que pasa y sabiendo cómo seguir.
+        </p>
+        <span class="pending">Trayectoria, titulaciones y colegiación: pendientes de validar</span>
+      </div>
+      <ul class="trust__list">
+        {
+          commitments.map((c, i) => (
+            <li class="trust__item" data-reveal style={`--reveal-i:${i}`}>
+              <span class="trust__icon">
+                <Icon name={c.icon} size={24} />
+              </span>
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section surface-kids" aria-labelledby="visita-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Primera visita</span>
+        <h2 id="visita-title">Pedir ayuda debería sentirse <em>fácil</em></h2>
+        <p class="lead">Tres pasos sencillos, de tu primer mensaje a un acompañamiento a vuestra medida.</p>
+      </div>
+      <Timeline />
+      <div class="btn-row visit-cta" data-reveal>
+        <a class="btn btn--lg" href={citaHref('infantil')}>
+          Empezar por contarnos
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- El centro -->
+  <section class="section" aria-labelledby="centro-title">
+    <div class="container place">
+      <figure class="place__media" data-reveal>
+        <img
+          src={img('centro/instalaciones-centro-spai-01.jpg')}
+          alt="Fachada de Centro Spai con su rótulo violeta y la entrada acristalada"
+          width="434"
+          height="579"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <div class="place__body" data-reveal>
+        <span class="eyebrow">El centro</span>
+        <h2 id="centro-title">Un espacio propio en Burriana, <em>pensado para familias</em></h2>
+        <p>
+          Spai nació como un lugar donde la salud y la calma van de la mano. Salas luminosas, un rincón para los
+          más pequeños y un equipo que conoce a las familias por su nombre.
+        </p>
+        <p class="place__address">
+          <Icon name="pin" size={20} />
+          <span>{SITE.address.street}, {SITE.address.postalCode} {SITE.address.locality}</span>
+          <span class="pending">Por validar</span>
+        </p>
+        <a class="link-arrow" href={withBase(ROUTES.centro)}>
+          Conocer el centro
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Adultos -->
+  <section class="section surface-well" aria-labelledby="adultos-title">
+    <div class="container adults">
+      <div class="adults__body" data-reveal>
+        <span class="eyebrow eyebrow--well">Adultos y bienestar</span>
+        <h2 id="adultos-title">Y también, <em>para ti</em></h2>
+        <p>
+          Muchas familias que confían en nosotros para sus hijos encuentran aquí su propio espacio: fisioterapia,
+          osteopatía, acompañamiento en el embarazo y el posparto, y terapias para bajar el ritmo.
+        </p>
+        <Chips
+          tone="adultos"
+          label="Áreas para adultos"
+          items={[
+            { label: 'Fisioterapia', href: ROUTES.adultos },
+            { label: 'Osteopatía', href: `${ROUTES.adultos}#tratamientos` },
+            { label: 'Embarazo y posparto', href: ROUTES.embarazo },
+            { label: 'Bienestar y relax', href: `${ROUTES.adultos}#bienestar` },
+          ]}
+        />
+        <div class="btn-row btn-row--stack-mobile">
+          <a class="btn btn--well" href={withBase(ROUTES.adultos)}>
+            Ver adultos y bienestar
+            <Icon name="arrow-right" />
+          </a>
+        </div>
+      </div>
+      <figure class="adults__media" data-reveal>
+        <img
+          src={img('adultos-bienestar/bienestar-y-relax.jpg')}
+          alt="Fisioterapeuta colocando las manos sobre el hombro y la espalda de una paciente"
+          width="1920"
+          height="699"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Cuéntanos qué necesitáis"
+    text="Elige el tipo de cita y te orientamos. Sin compromiso y sin necesidad de explicar toda la historia clínica."
+  />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .home-hero {
+    background: linear-gradient(180deg, var(--cloud-50) 0%, var(--lilac-100) 100%);
+    padding-bottom: clamp(5rem, 3rem + 6vw, 8rem);
+    overflow: hidden;
+  }
+
+  .home-hero__grid {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(var(--gutter), 1fr)
+      [content-start] minmax(0, calc(var(--container) * 0.5))
+      [mid] minmax(0, calc(var(--container) * 0.5))
+      [content-end] minmax(var(--gutter), 1fr)
+      [full-end];
+    align-items: center;
+  }
+
+  .home-hero__copy {
+    grid-column: content-start / mid;
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+    padding-block: clamp(2.5rem, 1rem + 5vw, 5.5rem);
+    padding-right: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .home-hero__copy h1 {
+    font-size: clamp(2.5rem, 1.6rem + 3vw, 3.75rem);
+  }
+
+  .home-hero__copy .lead {
+    max-width: 34rem;
+  }
+
+  .home-hero__media {
+    position: relative;
+    grid-column: mid / full-end;
+    align-self: stretch;
+    margin: var(--space-6) 0 0;
+    min-height: 32rem;
+    border-radius: 32px 0 0 32px;
+    overflow: hidden;
+    background: #eef0f4;
+  }
+
+  .home-hero__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 82% 45%;
+  }
+
+  .home-hero__badge {
+    position: absolute;
+    left: clamp(1rem, 3vw, 2rem);
+    bottom: clamp(5rem, 7vw, 7rem);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    max-width: 17rem;
+    padding: 0.75rem 1rem 0.75rem 0.75rem;
+    border-radius: 16px;
+    background: rgb(255 255 255 / 0.94);
+    box-shadow: var(--shadow-soft);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--ink-900);
+  }
+
+  .home-hero__badge-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 12px;
+    background: var(--blush-100);
+    color: var(--spai-700);
+  }
+
+  @media (max-width: 55.99rem) {
+    .home-hero__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .home-hero__media {
+      grid-column: 1;
+      grid-row: 1;
+      margin: var(--space-4) var(--gutter) 0;
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius-panel);
+    }
+
+    .home-hero__copy {
+      grid-column: 1;
+      padding: var(--space-6) var(--gutter) var(--space-4);
+    }
+
+    .home-hero__badge {
+      bottom: var(--space-4);
+      left: var(--space-4);
+    }
+  }
+
+  @media (max-width: 35.99rem) {
+    .home-hero__media {
+      aspect-ratio: 1 / 0.85;
+    }
+
+    .home-hero__media img {
+      object-position: 80% 40%;
+    }
+
+    .home-hero__copy :global(.btn-row) {
+      width: 100%;
+    }
+
+    .home-hero__badge {
+      font-size: 0.875rem;
+      max-width: 15rem;
+    }
+  }
+
+  /* Necesidades */
+  .needs-grid {
+    list-style: none;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 40rem) {
+    .needs-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .needs-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+  }
+
+  /* Cólicos */
+  .colic {
+    display: grid;
+    gap: var(--space-6);
+    padding: clamp(1.5rem, 0.8rem + 3.5vw, 4rem);
+    border-radius: var(--radius-panel);
+    background: var(--blush-100);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .colic {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: var(--space-8);
+    }
+  }
+
+  .colic__media {
+    display: grid;
+    place-items: center;
+    padding: clamp(1rem, 3vw, 2.5rem);
+    border-radius: 20px;
+    background: var(--white);
+    aspect-ratio: 1 / 0.9;
+  }
+
+  .colic__media img {
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  .colic__body {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .colic__warning {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-control);
+    background: var(--white);
+    font-size: var(--fs-small);
+    color: var(--ink-900);
+  }
+
+  .colic__warning :global(svg) {
+    flex: none;
+    color: var(--spai-500);
+    margin-top: 2px;
+  }
+
+  /* Confianza */
+  .trust {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  @media (min-width: 56rem) {
+    .trust {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: var(--space-8);
+      align-items: start;
+    }
+  }
+
+  .trust__head {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .trust__list {
+    list-style: none;
+    display: grid;
+    gap: 0 var(--space-6);
+  }
+
+  @media (min-width: 40rem) {
+    .trust__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .trust__item {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-5);
+    border-top: 1px solid var(--line);
+  }
+
+  .trust__icon {
+    color: var(--spai-500);
+    margin-bottom: var(--space-1);
+  }
+
+  .trust__item h3 {
+    font-size: 1.3125rem;
+  }
+
+  .trust__item p {
+    color: var(--text-muted);
+  }
+
+  .visit-cta {
+    margin-top: var(--space-7);
+  }
+
+  /* El centro */
+  .place {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .place {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: var(--space-8);
+    }
+  }
+
+  .place__media {
+    position: relative;
+    margin: 0 var(--space-5) var(--space-5) 0;
+    max-width: 26rem;
+  }
+
+  .place__media::before {
+    content: '';
+    position: absolute;
+    inset: var(--space-5) calc(var(--space-5) * -1) calc(var(--space-5) * -1) var(--space-5);
+    border-radius: var(--radius-panel);
+    background: var(--lilac-100);
+  }
+
+  .place__media img {
+    position: relative;
+    width: 100%;
+    border-radius: var(--radius-panel);
+  }
+
+  .place__body {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    max-width: 36rem;
+  }
+
+  .place__address {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    font-weight: 600;
+  }
+
+  .place__address :global(svg) {
+    color: var(--spai-500);
+  }
+
+  /* Adultos */
+  .adults {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .adults {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+  }
+
+  .adults__body {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .adults__body h2 em {
+    color: var(--sage-800);
+  }
+
+  .adults__body :global(.btn-row) {
+    margin-top: var(--space-2);
+  }
+
+  .adults__media {
+    margin: 0;
+    aspect-ratio: 5 / 4;
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  .adults__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 22% 30%;
+  }
+</style>

@@ -1,0 +1,355 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Chips from '../components/Chips.astro';
+import Icon from '../components/Icon.astro';
+import { ROUTES, citaHref, img, withBase } from '../lib/site';
+
+const path = ROUTES.talleres;
+const title = 'Talleres y recursos para familias | Centro Spai';
+const description =
+  'Talleres y recursos de Centro Spai para familias: Taller Moquitos y aplicaciones sobre cólicos del lactante. Consulta próximas convocatorias.';
+const breadcrumbs = [
+  { label: 'Inicio', href: ROUTES.home },
+  { label: 'Talleres y recursos', href: path },
+];
+// noindex hasta disponer de fechas, responsable e inscripción reales (ver seo-propuesto.md)
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  tone="infantil"
+  image="images/talleres-app/taller-moquitos.jpg"
+  imageAlt="Niña sonándose la nariz con un pañuelo"
+  breadcrumbs={breadcrumbs}
+  noindex
+>
+  <PageHero
+    tone="infantil"
+    eyebrow="Talleres y recursos"
+    lead="Aprender juntos también es cuidar. Espacios prácticos y recursos pensados para que las familias resuelvan dudas del día a día con más tranquilidad."
+    breadcrumbs={breadcrumbs}
+  >
+    <Fragment slot="title">Talleres y recursos <em>para familias</em></Fragment>
+    <Fragment slot="actions">
+      <a class="btn btn--lg" href="#taller-moquitos">
+        Taller Moquitos
+        <Icon name="arrow-right" />
+      </a>
+      <a class="btn btn--secondary btn--lg" href="#apps">Apps sobre cólicos</a>
+    </Fragment>
+  </PageHero>
+
+  <!-- Taller Moquitos -->
+  <section class="section section--tight" id="taller-moquitos" aria-labelledby="moquitos-title">
+    <div class="container">
+      <article class="workshop" data-reveal>
+        <figure class="workshop__media">
+          <img
+            src={img('talleres-app/taller-moquitos.jpg')}
+            alt="Niña con coletas sonándose la nariz con un pañuelo"
+            width="1920"
+            height="699"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="workshop__body">
+          <div class="workshop__meta">
+            <span class="tag">Taller para familias</span>
+            <span class="pending">Fechas y modalidad por confirmar</span>
+          </div>
+          <h2 id="moquitos-title">Taller <em>Moquitos</em></h2>
+          <p class="lead">
+            Un taller práctico para las temporadas de mocos y congestión: entender qué ocurre y aprender a ayudar a
+            los más pequeños en casa.
+          </p>
+          <div class="workshop__cols">
+            <div>
+              <h3>Qué se trabaja</h3>
+              <ul class="check-list">
+                <li>Cómo hacer una higiene nasal cómoda y segura.</li>
+                <li>Posturas y rutinas para los días de congestión.</li>
+                <li>Señales para consultar con el pediatra.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Para quién</h3>
+              <p class="muted">
+                Madres, padres y cuidadores de bebés y niños pequeños. La web actual lo presenta en formato
+                presencial y online.
+              </p>
+            </div>
+          </div>
+          <div class="workshop__actions">
+            <a class="btn" href={citaHref('infantil')}>
+              Preguntar por próximas fechas
+              <Icon name="arrow-right" />
+            </a>
+            <p class="workshop__hint">No hay inscripción online: el equipo te informará de la próxima convocatoria.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Apps -->
+  <section class="section surface-kids" id="apps" aria-labelledby="apps-title">
+    <div class="container apps">
+      <div class="apps__body" data-reveal>
+        <span class="eyebrow">Recursos digitales</span>
+        <h2 id="apps-title">Apps sobre <em>cólicos del lactante</em></h2>
+        <p>
+          Spai ha desarrollado recursos digitales para acompañar a las familias durante los cólicos, con información
+          y apoyo pensado para usar en casa.
+        </p>
+        <ul class="app-list">
+          <li class="app">
+            <img
+              src={img('talleres-app/app-centro-spai-pantalla-01.jpg')}
+              alt=""
+              width="180"
+              height="180"
+              loading="lazy"
+              decoding="async"
+            />
+            <div>
+              <h3>No más Cólicos</h3>
+              <p>Información y pautas para familias con bebés con cólicos.</p>
+            </div>
+          </li>
+          <li class="app">
+            <span class="app__placeholder" aria-hidden="true"><Icon name="book" size={30} /></span>
+            <div>
+              <h3>Anticólicos</h3>
+              <p>Recurso de apoyo para los momentos de llanto.</p>
+            </div>
+          </li>
+        </ul>
+        <p class="apps__note">
+          <Icon name="info" size={20} />
+          <span>
+            Mostramos las apps como recurso informativo. Su disponibilidad actual está pendiente de confirmar, por eso
+            no incluimos enlaces de descarga.
+          </span>
+        </p>
+      </div>
+      <figure class="apps__media" data-reveal>
+        <img
+          src={img('talleres-app/app-centro-spai-presentacion.png')}
+          alt="Aplicación No más Cólicos de Centro Spai mostrada en un teléfono y una tableta"
+          width="790"
+          height="511"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <!-- Otros temas -->
+  <section class="section" aria-labelledby="temas-title">
+    <div class="container container--narrow topics" data-reveal>
+      <span class="eyebrow">Más adelante</span>
+      <h2 id="temas-title">Otros temas que trabajamos <em>con familias</em></h2>
+      <p class="muted">
+        Además de las sesiones individuales, el centro orienta a las familias en temas de crianza y cuidado diario.
+        Si te interesa alguno, cuéntanoslo al pedir cita.
+      </p>
+      <Chips
+        label="Temas para familias"
+        items={[
+          { label: 'Cólicos del lactante', href: ROUTES.colicos },
+          { label: 'Masaje infantil', href: `${ROUTES.infantil}#orientacion` },
+          { label: 'Crianza y hábitos', href: `${ROUTES.infantil}#orientacion` },
+          { label: 'Desarrollo y movimiento', href: `${ROUTES.infantil}#desarrollo` },
+        ]}
+      />
+    </div>
+  </section>
+
+  <CtaBand
+    tone="infantil"
+    title="¿Te interesa un taller?"
+    text="Escríbenos y te avisamos cuando haya una nueva convocatoria o te orientamos con una cita."
+  />
+</BaseLayout>
+
+<style>
+  .workshop {
+    display: grid;
+    overflow: hidden;
+    border-radius: var(--radius-panel);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+
+  .workshop__media {
+    margin: 0;
+    aspect-ratio: 16 / 7;
+    background: #e9e1dc;
+  }
+
+  .workshop__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 20% 40%;
+  }
+
+  @media (max-width: 47.99rem) {
+    .workshop__media {
+      aspect-ratio: 4 / 3;
+    }
+
+    .workshop__media img {
+      object-position: 24% 40%;
+    }
+  }
+
+  .workshop__body {
+    display: grid;
+    gap: var(--space-4);
+    padding: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+  }
+
+  .workshop__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.7rem;
+    border-radius: var(--radius-pill);
+    background: var(--lilac-100);
+    color: var(--spai-700);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  .workshop__cols {
+    display: grid;
+    gap: var(--space-6);
+    margin-block: var(--space-3);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 48rem) {
+    .workshop__cols {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .workshop__cols h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .workshop__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .workshop__hint {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    max-width: 24rem;
+  }
+
+  .apps {
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .apps {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+  }
+
+  .apps__body {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .app-list {
+    list-style: none;
+    display: grid;
+    gap: var(--space-3);
+    width: 100%;
+    margin-top: var(--space-2);
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    align-items: center;
+    padding: var(--space-3);
+    border-radius: var(--radius-card);
+    background: var(--white);
+  }
+
+  .app img,
+  .app__placeholder {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 14px;
+  }
+
+  .app__placeholder {
+    display: grid;
+    place-items: center;
+    background: var(--blush-100);
+    color: var(--spai-700);
+  }
+
+  .app h3 {
+    font-size: 1.25rem;
+  }
+
+  .app p {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+  }
+
+  .apps__note {
+    display: flex;
+    gap: var(--space-3);
+    font-size: var(--fs-small);
+    color: var(--ink-600);
+  }
+
+  .apps__note :global(svg) {
+    flex: none;
+    margin-top: 1px;
+    color: var(--sky-800);
+  }
+
+  .apps__media {
+    margin: 0;
+  }
+
+  .apps__media img {
+    width: 100%;
+  }
+
+  .topics {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+</style>

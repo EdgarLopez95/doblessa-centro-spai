@@ -1,0 +1,300 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import RouteNav from '../components/RouteNav.astro';
+import NeedCard from '../components/NeedCard.astro';
+import Timeline from '../components/Timeline.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { INFANTIL_NAV, ROUTES, citaHref, serviceSchema, withBase } from '../lib/site';
+
+const path = ROUTES.osteopatia;
+const title = 'Osteopatía para bebés en Burriana | Centro Spai';
+const description =
+  'Osteopatía para bebés en Burriana con un enfoque suave y respetuoso. Conoce para quién se orienta, cómo es la atención y habla con el equipo.';
+const breadcrumbs = [
+  { label: 'Inicio', href: ROUTES.home },
+  { label: 'Fisioterapia infantil', href: ROUTES.infantil },
+  { label: 'Osteopatía para bebés', href: path },
+];
+
+const principles = [
+  {
+    title: 'Suave',
+    text: 'Contacto delicado y presiones muy ligeras, respetando las pausas del bebé.',
+  },
+  {
+    title: 'Adaptada a su etapa',
+    text: 'No es igual un recién nacido que un bebé que ya gatea: cada sesión se ajusta a su edad.',
+  },
+  {
+    title: 'Complementaria',
+    text: 'Se suma al seguimiento pediátrico; nunca lo sustituye.',
+  },
+];
+
+const forWho = [
+  {
+    icon: 'baby',
+    title: 'Tras el nacimiento',
+    text: 'Familias que desean una valoración suave de su bebé en las primeras semanas.',
+  },
+  {
+    icon: 'moon',
+    title: 'Bebés inquietos',
+    text: 'Bebés a los que les cuesta relajarse, o que parecen incómodos al estar tumbados.',
+  },
+  {
+    icon: 'sprout',
+    title: 'Preferencias posturales',
+    text: 'Cuando la familia nota que el bebé tiende a girar siempre hacia el mismo lado.',
+  },
+  {
+    icon: 'hands',
+    title: 'Junto a la fisioterapia',
+    text: 'Como complemento a otros tratamientos de fisioterapia infantil del centro.',
+  },
+] as const;
+
+const faqs = [
+  {
+    q: '¿Qué diferencia hay entre osteopatía y fisioterapia infantil?',
+    a: 'Ambas trabajan con las manos y comparten muchos objetivos. La osteopatía pone el foco en la movilidad y el equilibrio del cuerpo con técnicas muy suaves. En la valoración os explicamos qué enfoque encaja mejor con vuestro bebé.',
+  },
+  {
+    q: '¿Duele o le resulta molesto al bebé?',
+    a: 'Las técnicas son muy delicadas. Algunos bebés se relajan e incluso se duermen; otros necesitan pausas. Adaptamos la sesión a su respuesta en todo momento.',
+  },
+  {
+    q: '¿Tiene alguna contraindicación?',
+    a: 'Hay situaciones en las que conviene una valoración médica previa. Por eso, en la primera conversación repasamos su estado general y, si vemos algo que requiera al pediatra, os lo indicamos.',
+  },
+  {
+    q: '¿Cuánto dura una sesión?',
+    a: 'La duración exacta la confirma el centro al pedir cita. La primera visita suele ser algo más larga porque incluye la conversación inicial con la familia.',
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  tone="infantil"
+  image="images/centro/equipo-centro-spai.jpg"
+  imageAlt="Bebé sonriente sentado sobre fondo claro"
+  preloadImage="images/centro/equipo-centro-spai.jpg"
+  breadcrumbs={breadcrumbs}
+  jsonLd={[serviceSchema('Osteopatía para bebés', description)]}
+>
+  <PageHero
+    tone="infantil"
+    eyebrow="Ruta infantil · Osteopatía"
+    lead="Un abordaje manual, suave y respetuoso, pensado para los primeros meses y adaptado al ritmo de cada bebé y de su familia."
+    breadcrumbs={breadcrumbs}
+    image={{
+      src: 'centro/equipo-centro-spai.jpg',
+      alt: 'Bebé sonriente sentado sobre fondo claro',
+      width: 421,
+      height: 421,
+      fit: 'contain',
+    }}
+  >
+    <Fragment slot="title">Osteopatía para bebés <em>en Burriana</em></Fragment>
+    <Fragment slot="actions">
+      <a class="btn btn--lg" href={citaHref('infantil')}>
+        Hablar con el equipo
+        <Icon name="arrow-right" />
+      </a>
+      <a class="btn btn--secondary btn--lg" href="#para-quien">¿Para quién es?</a>
+    </Fragment>
+  </PageHero>
+
+  <RouteNav currentPath={path} tone="infantil" label="Ruta infantil" items={INFANTIL_NAV} />
+
+  <!-- Enfoque -->
+  <section class="section" aria-labelledby="enfoque-title">
+    <div class="container approach">
+      <div class="approach__text" data-reveal>
+        <span class="eyebrow">Enfoque</span>
+        <h2 id="enfoque-title">Escuchar con las manos, <em>sin forzar</em></h2>
+        <p class="lead">
+          La osteopatía infantil utiliza técnicas manuales muy suaves para valorar y acompañar la movilidad del
+          cuerpo del bebé.
+        </p>
+        <p>
+          Presentamos este servicio con prudencia: no es un tratamiento milagroso ni sustituye al pediatra. Es una
+          forma de cuidado respetuosa que, en la valoración, os explicaremos si puede encajar con vuestro bebé.
+        </p>
+      </div>
+      <ol class="principles">
+        {
+          principles.map((p, i) => (
+            <li data-reveal style={`--reveal-i:${i}`}>
+              <span class="principles__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{p.title}</h3>
+                <p>{p.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Para quién -->
+  <section class="section surface-kids" id="para-quien" aria-labelledby="quien-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Para quién se orienta</span>
+        <h2 id="quien-title">Situaciones en las que <em>las familias nos consultan</em></h2>
+        <p class="lead">
+          Estas son situaciones frecuentes, no un listado de indicaciones. La valoración confirma si es el enfoque
+          adecuado.
+        </p>
+      </div>
+      <ul class="who-grid">
+        {
+          forWho.map((w, i) => (
+            <li data-reveal style={`--reveal-i:${i}`}>
+              <NeedCard {...w} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Proceso -->
+  <section class="section" aria-labelledby="proceso-title">
+    <div class="container">
+      <div class="section-head section-head--split" data-reveal>
+        <div>
+          <span class="eyebrow">Proceso de atención</span>
+          <h2 id="proceso-title">Cómo es <em>la atención</em></h2>
+        </div>
+        <p class="lead">Siempre con la familia presente y con explicaciones claras en cada paso.</p>
+      </div>
+      <Timeline
+        steps={[
+          {
+            icon: 'chat',
+            title: 'Conversación inicial',
+            text: 'Embarazo, parto, primeras semanas y lo que habéis notado. Revisamos los informes que tengáis.',
+          },
+          {
+            icon: 'hands',
+            title: 'Valoración manual',
+            text: 'Observamos y valoramos con técnicas suaves, siguiendo en todo momento las señales del bebé.',
+          },
+          {
+            icon: 'path',
+            title: 'Orientación',
+            text: 'Os contamos lo que vemos, si conviene seguir y qué podéis hacer en casa.',
+          },
+        ]}
+      />
+      <p class="cross" data-reveal>
+        ¿Os preocupa el llanto de vuestro bebé?
+        <a class="link-arrow" href={withBase(ROUTES.colicos)}>
+          Leer sobre cólicos del lactante
+          <Icon name="arrow-right" />
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <Faq items={faqs} tone="infantil" title="Preguntas sobre osteopatía infantil" />
+
+  <CtaBand
+    tone="infantil"
+    title="Hablemos de vuestro bebé"
+    text="Te orientamos sobre si la osteopatía infantil puede encajar en vuestro caso."
+  />
+</BaseLayout>
+
+<style>
+  .approach {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  @media (min-width: 56rem) {
+    .approach {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: var(--space-8);
+      align-items: center;
+    }
+  }
+
+  .approach__text {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .principles {
+    list-style: none;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .principles li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border-radius: var(--radius-card);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+
+  .principles__num {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--blush-300);
+    -webkit-text-stroke: 0.5px var(--spai-500);
+  }
+
+  .principles h3 {
+    font-size: 1.3125rem;
+    margin-bottom: var(--space-1);
+  }
+
+  .principles p {
+    color: var(--text-muted);
+  }
+
+  .who-grid {
+    list-style: none;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 40rem) {
+    .who-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .who-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .cross {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 var(--space-3);
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line);
+    color: var(--text-muted);
+  }
+</style>

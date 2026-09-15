@@ -1,0 +1,396 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import RouteNav from '../components/RouteNav.astro';
+import Timeline from '../components/Timeline.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Chips from '../components/Chips.astro';
+import Icon from '../components/Icon.astro';
+import { ADULTOS_NAV, ROUTES, citaHref, img, serviceSchema, withBase } from '../lib/site';
+
+const path = ROUTES.adultos;
+const title = 'Fisioterapia y osteopatía para adultos en Burriana | Centro Spai';
+const description =
+  'Tratamientos de fisioterapia y osteopatía para adultos, embarazo y posparto en Burriana. Solicita tu cita.';
+const breadcrumbs = [
+  { label: 'Inicio', href: ROUTES.home },
+  { label: 'Adultos y bienestar', href: path },
+];
+
+const groups = [
+  {
+    id: 'dolor',
+    kicker: 'Dolor, tensión y lesiones',
+    title: 'Aliviar molestias y recuperar confianza',
+    text: 'Para dolor de espalda, cuello o articulaciones, tensión muscular o la recuperación tras una lesión.',
+    chips: ['Terapia manual', 'Osteopatía', 'Punción seca', 'Indiba'],
+    image: { src: 'adultos-bienestar/fisioterapia-estetica.png', alt: 'Ilustración de una fisioterapeuta realizando un masaje en camilla' },
+  },
+  {
+    id: 'movimiento',
+    kicker: 'Movimiento y ejercicio',
+    title: 'Moverte mejor en tu día a día',
+    text: 'Ejercicio guiado para ganar movilidad, trabajar la postura y sentirte más fuerte, a tu ritmo.',
+    chips: ['Pilates', 'Movilidad', 'Postura'],
+    image: { src: 'adultos-bienestar/fisioterapia-adultos.png', alt: 'Ilustración de una mujer estirándose sobre una pelota de ejercicio' },
+  },
+  {
+    id: 'bienestar',
+    kicker: 'Bienestar y relax',
+    title: 'Un momento para bajar el ritmo',
+    text: 'Terapias orientadas al descanso y al bienestar general. Te explicamos el alcance de cada una en consulta.',
+    chips: ['Terapias de relax', 'Drenaje', 'Medicina tradicional china', 'Fisioestética'],
+    image: { src: 'adultos-bienestar/medicina-tradicional-china.png', alt: 'Ilustración de un terapeuta aplicando ventosas en la espalda de un paciente' },
+  },
+];
+
+const faqs = [
+  {
+    q: '¿Puedo pedir cita para mí si mi hijo ya es paciente del centro?',
+    a: 'Claro. La ruta de adultos es independiente: pides tu propia cita y tienes tu propio seguimiento. Si os viene bien, intentamos coordinar horarios.',
+  },
+  {
+    q: '¿Cómo sé qué tratamiento necesito?',
+    a: 'No hace falta que lo sepas. Cuéntanos qué te pasa y, tras la valoración, te proponemos el enfoque que mejor encaje contigo.',
+  },
+  {
+    q: '¿Qué ropa llevo a la sesión?',
+    a: 'Ropa cómoda que te permita moverte. Si vienes a una sesión de ejercicio, mejor ropa deportiva.',
+  },
+  {
+    q: '¿Las terapias de bienestar sustituyen a un tratamiento médico?',
+    a: 'No. Son terapias complementarias orientadas al bienestar. Si tienes una patología o estás en tratamiento, coméntanoslo para valorar qué es adecuado.',
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  tone="adultos"
+  image="images/adultos-bienestar/bienestar-y-relax.jpg"
+  imageAlt="Fisioterapeuta colocando las manos sobre el hombro y la espalda de una paciente"
+  preloadImage="images/adultos-bienestar/bienestar-y-relax.jpg"
+  breadcrumbs={breadcrumbs}
+  jsonLd={[serviceSchema('Fisioterapia y osteopatía para adultos', description)]}
+>
+  <PageHero
+    tone="adultos"
+    eyebrow="Adultos y bienestar"
+    lead="Tu propio espacio de cuidado. Fisioterapia, osteopatía y terapias de bienestar para aliviar molestias, moverte mejor y dedicarte un momento."
+    breadcrumbs={breadcrumbs}
+    image={{
+      src: 'adultos-bienestar/bienestar-y-relax.jpg',
+      alt: 'Fisioterapeuta colocando las manos sobre el hombro y la espalda de una paciente',
+      width: 1920,
+      height: 699,
+      position: '30% 40%',
+    }}
+  >
+    <Fragment slot="title">Fisioterapia y osteopatía <em>para adultos</em> en Burriana</Fragment>
+    <Fragment slot="actions">
+      <a class="btn btn--well btn--lg" href={citaHref('adultos')}>
+        Pedir cita para adultos
+        <Icon name="arrow-right" />
+      </a>
+      <a class="btn btn--secondary btn--lg adult-secondary" href="#tratamientos">Ver tratamientos</a>
+    </Fragment>
+  </PageHero>
+
+  <RouteNav currentPath={path} tone="adultos" label="Adultos y bienestar" items={ADULTOS_NAV} />
+
+  <!-- Tratamientos agrupados -->
+  <section class="section" id="tratamientos" aria-labelledby="tratamientos-title">
+    <div class="container">
+      <div class="section-head section-head--split" data-reveal>
+        <div>
+          <span class="eyebrow eyebrow--well">Tratamientos</span>
+          <h2 id="tratamientos-title">Empieza por <em class="well">lo que buscas</em></h2>
+        </div>
+        <p class="lead">
+          Hemos agrupado los tratamientos por objetivo. En la primera sesión te ayudamos a elegir, sin catálogos
+          interminables.
+        </p>
+      </div>
+
+      <div class="groups">
+        {
+          groups.map((g, i) => (
+            <article class:list={['group', { 'group--reverse': i % 2 === 1 }]} id={g.id} data-reveal>
+              <div class="group__media">
+                <img src={img(g.image.src)} alt={g.image.alt} width="345" height="253" loading="lazy" decoding="async" />
+              </div>
+              <div class="group__body">
+                <span class="group__kicker">{g.kicker}</span>
+                <h3>{g.title}</h3>
+                <p>{g.text}</p>
+                <Chips tone="adultos" label={`Tratamientos de ${g.kicker.toLowerCase()}`} items={g.chips} />
+              </div>
+            </article>
+          ))
+        }
+
+        <a class="group-link" href={withBase(ROUTES.embarazo)} data-reveal>
+          <span class="group-link__icon">
+            <Icon name="leaf" size={28} />
+          </span>
+          <span class="group-link__body">
+            <span class="group__kicker">Embarazo y posparto</span>
+            <span class="group-link__title">Acompañamiento en una etapa de grandes cambios</span>
+            <span class="group-link__text">Fisioterapia durante el embarazo y en la recuperación tras el parto.</span>
+          </span>
+          <span class="group-link__arrow">
+            <Icon name="arrow-right" />
+          </span>
+        </a>
+      </div>
+      <p class="scope-note" data-reveal>
+        <span class="pending">Por validar</span>
+        El listado de técnicas procede de la web actual; el centro confirmará qué tratamientos ofrece y quién los presta.
+      </p>
+    </div>
+  </section>
+
+  <!-- Proceso -->
+  <section class="section surface-well" aria-labelledby="proceso-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow eyebrow--well">Cómo trabajamos</span>
+        <h2 id="proceso-title">Un plan claro, <em class="well">desde la primera sesión</em></h2>
+      </div>
+      <Timeline
+        tone="adultos"
+        steps={[
+          {
+            icon: 'chat',
+            title: 'Nos cuentas',
+            text: 'Qué te ocurre, desde cuándo y cómo afecta a tu día a día.',
+          },
+          {
+            icon: 'clipboard',
+            title: 'Valoramos',
+            text: 'Exploramos cómo te mueves y dónde está el origen de la molestia.',
+          },
+          {
+            icon: 'path',
+            title: 'Te acompañamos',
+            text: 'Tratamiento, ejercicios y pautas para que ganes autonomía.',
+          },
+        ]}
+      />
+    </div>
+  </section>
+
+  <!-- Puente con infantil -->
+  <section class="section section--tight" aria-labelledby="puente-title">
+    <div class="container">
+      <div class="bridge" data-reveal>
+        <span class="bridge__icon"><Icon name="baby" size={28} /></span>
+        <div>
+          <h2 id="puente-title" class="bridge__title">¿Buscas atención para tu bebé o tu hijo?</h2>
+          <p class="muted">La ruta infantil tiene su propio espacio, servicios y cita.</p>
+        </div>
+        <a class="btn btn--secondary" href={withBase(ROUTES.infantil)}>Ir a la ruta infantil</a>
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faqs} tone="adultos" title="Preguntas sobre la atención adulta" />
+
+  <CtaBand
+    tone="adultos"
+    eyebrow="Tu cita"
+    title="Dedícate un momento"
+    text="Cuéntanos qué necesitas y te proponemos la cita más adecuada para ti."
+  />
+</BaseLayout>
+
+<style>
+  .well {
+    color: var(--sage-800) !important;
+  }
+
+  .adult-secondary {
+    --btn-fg: var(--sage-800);
+    --btn-border: #9fbfa7;
+  }
+
+  .adult-secondary:hover {
+    --btn-fg: var(--sage-800);
+    --btn-border: var(--sage-800);
+  }
+
+  .groups {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .group {
+    display: grid;
+    gap: var(--space-5);
+    padding: clamp(1.25rem, 0.8rem + 2vw, 2.5rem);
+    border-radius: var(--radius-panel);
+    background: var(--white);
+    border: 1px solid #dde8df;
+    align-items: center;
+  }
+
+  @media (min-width: 48rem) {
+    .group {
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      gap: var(--space-7);
+    }
+
+    .group--reverse .group__media {
+      order: 2;
+    }
+  }
+
+  .group__media {
+    display: grid;
+    place-items: center;
+    padding: var(--space-4);
+    border-radius: 18px;
+    background: var(--sage-100);
+  }
+
+  .group__media img {
+    width: 100%;
+    max-width: 17rem;
+    border-radius: 14px;
+    mix-blend-mode: multiply;
+  }
+
+  .group__body {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+  }
+
+  .group__kicker {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sage-800);
+  }
+
+  .group__body h3 {
+    font-size: clamp(1.5rem, 1.3rem + 0.6vw, 1.875rem);
+  }
+
+  .group__body p {
+    color: var(--text-muted);
+    max-width: 36rem;
+  }
+
+  .group-link {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-5);
+    padding: clamp(1.25rem, 0.8rem + 2vw, 2.5rem);
+    border-radius: var(--radius-panel);
+    background: var(--sage-100);
+    border: 1px solid var(--sage-200);
+    color: inherit;
+    text-decoration: none;
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  .group-link:hover {
+    color: inherit;
+    border-color: var(--sage-800);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .group-link__icon,
+  .group-link__arrow {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 16px;
+    background: var(--white);
+    color: var(--sage-800);
+  }
+
+  .group-link__arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+  }
+
+  .group-link__body {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .group-link__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
+    line-height: 1.2;
+    color: var(--spai-700);
+  }
+
+  .group-link__text {
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 35.99rem) {
+    .group-link {
+      grid-template-columns: 1fr;
+    }
+
+    .group-link__arrow {
+      display: none;
+    }
+  }
+
+  .scope-note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    margin-top: var(--space-5);
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+  }
+
+  .bridge {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-5) var(--space-6);
+    border-radius: var(--radius-panel);
+    background: var(--lilac-100);
+  }
+
+  .bridge__icon {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 16px;
+    background: var(--white);
+    color: var(--spai-700);
+  }
+
+  .bridge__title {
+    font-size: 1.375rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .bridge {
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
+  }
+</style>
