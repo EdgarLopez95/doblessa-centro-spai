@@ -1,0 +1,169 @@
+---
+import Icon from './Icon.astro';
+import { citaHref, withBase, ROUTES, type Tone } from '../lib/site';
+
+interface Props {
+  tone?: Tone;
+  title: string;
+  text: string;
+  eyebrow?: string;
+}
+
+const { tone = 'neutral', title, text, eyebrow = 'Primer paso' } = Astro.props;
+---
+
+<section class:list={['cta-band', `cta-band--${tone}`]} aria-labelledby={`cta-${tone}`}>
+  <div class="container">
+    <div class="cta-band__panel" data-reveal>
+      <div class="cta-band__copy">
+        <span class="cta-band__eyebrow">{eyebrow}</span>
+        <h2 id={`cta-${tone}`}>{title}</h2>
+        <p>{text}</p>
+      </div>
+      <div class="cta-band__actions">
+        {
+          tone === 'neutral' ? (
+            <>
+              <a class="btn btn--on-brand btn--lg" href={citaHref('infantil')}>
+                Pedir cita infantil
+                <Icon name="arrow-right" />
+              </a>
+              <a class="btn cta-band__outline btn--lg" href={citaHref('adultos')}>
+                Pedir cita para adultos
+              </a>
+            </>
+          ) : (
+            <>
+              <a class="btn btn--on-brand btn--lg" href={citaHref(tone)}>
+                {tone === 'adultos' ? 'Pedir cita para adultos' : 'Pedir cita infantil'}
+                <Icon name="arrow-right" />
+              </a>
+              <a class="btn cta-band__outline btn--lg" href={withBase(ROUTES.contacto)}>
+                Ver datos de contacto
+              </a>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    padding-block: var(--section-y);
+  }
+
+  .cta-band__panel {
+    position: relative;
+    display: grid;
+    gap: var(--space-6);
+    padding: clamp(2rem, 1.2rem + 3.5vw, 4.5rem);
+    border-radius: var(--radius-panel);
+    background: var(--spai-700);
+    color: #efe9f6;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .cta-band--adultos .cta-band__panel {
+    background: var(--sage-800);
+  }
+
+  /* Arcos suaves: eco de las alas de la mariposa */
+  .cta-band__panel::before,
+  .cta-band__panel::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .cta-band__panel::before {
+    width: 28rem;
+    height: 28rem;
+    right: -8rem;
+    top: -14rem;
+    background: radial-gradient(circle, rgb(242 182 197 / 0.28), transparent 65%);
+  }
+
+  .cta-band__panel::after {
+    width: 22rem;
+    height: 22rem;
+    right: 6rem;
+    bottom: -14rem;
+    background: radial-gradient(circle, rgb(191 225 234 / 0.2), transparent 65%);
+  }
+
+  .cta-band--adultos .cta-band__panel::before {
+    background: radial-gradient(circle, rgb(207 227 211 / 0.3), transparent 65%);
+  }
+
+  @media (min-width: 56rem) {
+    .cta-band__panel {
+      grid-template-columns: minmax(0, 1.3fr) auto;
+      align-items: center;
+      gap: var(--space-8);
+    }
+  }
+
+  .cta-band__copy {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 38rem;
+  }
+
+  .cta-band__eyebrow {
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blush-300);
+  }
+
+  .cta-band--adultos .cta-band__eyebrow {
+    color: var(--sage-200);
+  }
+
+  .cta-band h2 {
+    color: var(--white);
+  }
+
+  .cta-band__actions {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .cta-band__outline {
+    --btn-bg: transparent;
+    --btn-fg: var(--white);
+    --btn-border: rgb(255 255 255 / 0.5);
+  }
+
+  .cta-band__outline:hover {
+    --btn-bg: rgb(255 255 255 / 0.1);
+    --btn-border: var(--white);
+    box-shadow: none;
+  }
+
+  .cta-band :focus-visible {
+    outline-color: var(--white);
+  }
+
+  .cta-band--adultos .btn--on-brand {
+    --btn-fg: var(--sage-800);
+  }
+
+  .cta-band--adultos .btn--on-brand:hover {
+    --btn-bg: var(--sage-100);
+    --btn-border: var(--sage-100);
+    --btn-fg: #273f2f;
+  }
+
+  @media (max-width: 35.99rem) {
+    .cta-band .btn {
+      white-space: normal;
+    }
+  }
+</style>

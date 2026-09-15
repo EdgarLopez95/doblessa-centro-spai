@@ -1,0 +1,138 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import { withBase, type Tone } from '../lib/site';
+
+interface Props {
+  icon: IconName;
+  title: string;
+  text: string;
+  href?: string;
+  linkLabel?: string;
+  tone?: Tone;
+  /** Etiqueta pequeña (etapa, tipo). */
+  tag?: string;
+  headingLevel?: 'h3' | 'h4';
+}
+
+const { icon, title, text, href, linkLabel = 'Saber más', tone = 'infantil', tag, headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
+---
+
+<article class:list={['need-card', `need-card--${tone}`, { 'need-card--link': href }]}>
+  <div class="need-card__top">
+    <span class="need-card__icon"><Icon name={icon} size={26} /></span>
+    {tag && <span class="need-card__tag">{tag}</span>}
+  </div>
+  <Heading class="need-card__title">{title}</Heading>
+  <p class="need-card__text">{text}</p>
+  <slot />
+  {
+    href && (
+      <a class="link-arrow need-card__link" href={href.startsWith('#') ? href : withBase(href)}>
+        {linkLabel}
+        <span class="visually-hidden">: {title}</span>
+        <Icon name="arrow-right" />
+      </a>
+    )
+  }
+</article>
+
+<style>
+  .need-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+    padding: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+    border-radius: var(--radius-card);
+    background: var(--white);
+    border: 1px solid var(--line);
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+  }
+
+  .need-card--infantil {
+    --nc-soft: var(--lilac-100);
+    --nc-ink: var(--spai-700);
+  }
+
+  .need-card--adultos {
+    --nc-soft: var(--sage-100);
+    --nc-ink: var(--sage-800);
+  }
+
+  .need-card--neutral {
+    --nc-soft: var(--sky-100);
+    --nc-ink: var(--sky-800);
+  }
+
+  .need-card--link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+    border-color: var(--spai-300);
+  }
+
+  .need-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .need-card__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 14px;
+    background: var(--nc-soft);
+    color: var(--nc-ink);
+  }
+
+  .need-card__tag {
+    padding: 0.15rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--nc-soft);
+    color: var(--nc-ink);
+    font-size: 0.8125rem;
+    font-weight: 650;
+  }
+
+  .need-card__title {
+    font-size: 1.375rem;
+  }
+
+  .need-card__text {
+    color: var(--text-muted);
+  }
+
+  .need-card__link {
+    margin-top: auto;
+    padding-top: var(--space-2);
+  }
+
+  .need-card--adultos .need-card__link {
+    color: var(--sage-800);
+  }
+
+  /* Enlace extendido */
+  .need-card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-card);
+  }
+
+  .need-card__link:focus-visible {
+    outline: none;
+  }
+
+  .need-card__link:focus-visible::after {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+</style>

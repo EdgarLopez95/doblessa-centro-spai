@@ -1,0 +1,238 @@
+---
+import Icon from './Icon.astro';
+import { ROUTES, withBase } from '../lib/site';
+
+interface Props {
+  /** Se superpone al borde inferior del hero. */
+  overlap?: boolean;
+}
+
+const { overlap = false } = Astro.props;
+
+const routes = [
+  {
+    tone: 'infantil',
+    icon: 'baby',
+    kicker: 'Ruta infantil',
+    title: 'Para mi bebé o niño',
+    text: 'Cólicos, desarrollo, respiración, osteopatía y orientación a familias.',
+    href: ROUTES.infantil,
+    cta: 'Ver atención infantil',
+  },
+  {
+    tone: 'adultos',
+    icon: 'person',
+    kicker: 'Adultos y bienestar',
+    title: 'Para mí',
+    text: 'Fisioterapia, osteopatía, embarazo, posparto y terapias de bienestar.',
+    href: ROUTES.adultos,
+    cta: 'Ver atención para adultos',
+  },
+] as const;
+---
+
+<section class:list={['audience', { 'audience--overlap': overlap }]} aria-labelledby="audience-title">
+  <div class="container">
+    <h2 id="audience-title" class="audience__title">¿Para quién buscas atención?</h2>
+    <ul class="audience__grid">
+      {
+        routes.map((r) => (
+          <li class:list={['audience-card', `audience-card--${r.tone}`]}>
+            <span class="audience-card__icon">
+              <Icon name={r.icon} size={28} />
+            </span>
+            <div class="audience-card__body">
+              <span class="audience-card__kicker">{r.kicker}</span>
+              <h3 class="audience-card__title">
+                <a href={withBase(r.href)} class="audience-card__link">
+                  {r.title}
+                  <span class="visually-hidden">: {r.cta}</span>
+                </a>
+              </h3>
+              <p>{r.text}</p>
+            </div>
+            <span class="audience-card__arrow" aria-hidden="true">
+              <Icon name="arrow-right" size={22} />
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .audience {
+    position: relative;
+    z-index: 2;
+  }
+
+  .audience--overlap {
+    margin-top: clamp(-5.5rem, -6vw, -3rem);
+  }
+
+  .audience__title {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-600);
+    margin-bottom: var(--space-3);
+  }
+
+  .audience--overlap .audience__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .audience__grid {
+    display: grid;
+    gap: var(--space-4);
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .audience__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+  }
+
+  .audience-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-4) var(--space-5);
+    align-items: center;
+    padding: clamp(1.25rem, 0.9rem + 1.2vw, 2rem);
+    border-radius: var(--radius-panel);
+    border: 1px solid var(--line);
+    background: var(--white);
+    box-shadow: var(--shadow-soft);
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+  }
+
+  .audience-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 4px;
+    border-radius: 0 4px 4px 0;
+    background: var(--card-band);
+  }
+
+  .audience-card--infantil {
+    --card-band: var(--blush-300);
+    --card-soft: var(--lilac-100);
+    --card-ink: var(--spai-700);
+  }
+
+  .audience-card--adultos {
+    --card-band: var(--sage-200);
+    --card-soft: var(--sage-100);
+    --card-ink: var(--sage-800);
+  }
+
+  .audience-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+    border-color: var(--spai-300);
+  }
+
+  .audience-card:focus-within {
+    border-color: var(--spai-500);
+  }
+
+  .audience-card__icon {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 16px;
+    background: var(--card-soft);
+    color: var(--card-ink);
+  }
+
+  .audience-card__body {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .audience-card__kicker {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--card-ink);
+  }
+
+  .audience-card__title {
+    font-size: clamp(1.5rem, 1.25rem + 0.8vw, 1.875rem);
+  }
+
+  .audience-card__link {
+    color: var(--spai-700);
+    text-decoration: none;
+  }
+
+  /* Enlace extendido a toda la tarjeta */
+  .audience-card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-panel);
+  }
+
+  .audience-card__link:focus-visible {
+    outline: none;
+  }
+
+  .audience-card__link:focus-visible::after {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  .audience-card p {
+    color: var(--text-muted);
+  }
+
+  .audience-card__arrow {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--card-soft);
+    color: var(--card-ink);
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .audience-card:hover .audience-card__arrow {
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 29.99rem) {
+    .audience-card {
+      grid-template-columns: auto 1fr;
+    }
+
+    .audience-card__arrow {
+      display: none;
+    }
+
+    .audience-card__icon {
+      width: 3rem;
+      height: 3rem;
+      align-self: start;
+    }
+  }
+</style>

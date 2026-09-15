@@ -1,0 +1,256 @@
+---
+import Icon from './Icon.astro';
+import { ROUTES, SITE, citaHref, img, withBase } from '../lib/site';
+
+const year = 2026;
+const columns = [
+  {
+    title: 'Infantil',
+    links: [
+      { label: 'Fisioterapia infantil', href: ROUTES.infantil },
+      { label: 'Cólicos del lactante', href: ROUTES.colicos },
+      { label: 'Osteopatía para bebés', href: ROUTES.osteopatia },
+      { label: 'Talleres para familias', href: ROUTES.talleres },
+    ],
+  },
+  {
+    title: 'Adultos y bienestar',
+    links: [
+      { label: 'Fisioterapia para adultos', href: ROUTES.adultos },
+      { label: 'Embarazo y posparto', href: ROUTES.embarazo },
+    ],
+  },
+  {
+    title: 'Spai',
+    links: [
+      { label: 'El centro', href: ROUTES.centro },
+      { label: 'Contacto y cita', href: ROUTES.contacto },
+    ],
+  },
+];
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <a href={withBase(ROUTES.home)} class="site-footer__logo" aria-label="Centro Spai, ir al inicio">
+          <img src={img('marca/logo-centro-spai.png')} alt="" width="346" height="103" loading="lazy" />
+        </a>
+        <p class="site-footer__claim">Cuidado experto, <em>desde el primer día.</em></p>
+        <p class="site-footer__text">
+          Fisioterapia y osteopatía para bebés, niños y familias en Burriana. Y un espacio también para ti.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--on-brand" href={citaHref('infantil')}>Cita infantil</a>
+          <a class="btn site-footer__btn-outline" href={citaHref('adultos')}>Cita adultos</a>
+        </div>
+      </div>
+
+      {
+        columns.map((col) => (
+          <nav class="site-footer__col" aria-label={col.title}>
+            <h2 class="site-footer__title">{col.title}</h2>
+            <ul>
+              {col.links.map((l) => (
+                <li>
+                  <a href={withBase(l.href)}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Dónde estamos</h2>
+        <address class="site-footer__address">
+          <span class="site-footer__row">
+            <Icon name="pin" size={20} />
+            <span>
+              {SITE.address.street}<br />
+              {SITE.address.postalCode} {SITE.address.locality} ({SITE.address.region})
+            </span>
+          </span>
+          <span class="site-footer__row">
+            <Icon name="phone" size={20} />
+            <span>Teléfonos y horario: pendientes de confirmar</span>
+          </span>
+        </address>
+        <span class="site-footer__pending">Datos por validar con el centro</span>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>© {year} Centro Spai · Propuesta de rediseño (mockup estático)</p>
+      <ul>
+        <li><a href={withBase(ROUTES.privacidad)}>Política de privacidad</a></li>
+        <li><a href={withBase(ROUTES.avisoLegal)}>Aviso legal</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    background: var(--spai-700);
+    color: #efe9f6;
+    padding-block: var(--space-8) var(--space-5);
+  }
+
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: linear-gradient(90deg, var(--blush-300) 0 33%, var(--sky-200) 33% 66%, var(--sage-200) 66%);
+  }
+
+  .site-footer__top {
+    display: grid;
+    gap: var(--space-7) var(--space-6);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 40rem) {
+    .site-footer__top {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .site-footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .site-footer__top {
+      grid-template-columns: 1.6fr repeat(3, minmax(0, 0.8fr)) 1.1fr;
+    }
+
+    .site-footer__brand {
+      grid-column: auto;
+    }
+  }
+
+  .site-footer__logo {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+  }
+
+  .site-footer__logo img {
+    height: 52px;
+    width: auto;
+  }
+
+  .site-footer__claim {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: var(--space-3);
+  }
+
+  .site-footer__claim em {
+    color: var(--blush-300);
+    font-weight: 460;
+  }
+
+  .site-footer__text {
+    max-width: 30rem;
+    margin-bottom: var(--space-5);
+    color: #ddd3ea;
+  }
+
+  .site-footer__btn-outline {
+    --btn-bg: transparent;
+    --btn-fg: var(--white);
+    --btn-border: rgb(255 255 255 / 0.5);
+  }
+
+  .site-footer__btn-outline:hover {
+    --btn-bg: rgb(255 255 255 / 0.1);
+    --btn-border: var(--white);
+    box-shadow: none;
+  }
+
+  .site-footer__title {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blush-300);
+    margin-bottom: var(--space-3);
+  }
+
+  .site-footer__col ul {
+    list-style: none;
+  }
+
+  .site-footer a:not(.btn) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .site-footer a:not(.btn):hover {
+    color: var(--blush-300);
+    text-decoration: underline;
+  }
+
+  .site-footer :focus-visible {
+    outline-color: var(--white);
+  }
+
+  .site-footer__address {
+    font-style: normal;
+    display: grid;
+    gap: var(--space-3);
+    color: #efe9f6;
+  }
+
+  .site-footer__row {
+    display: flex;
+    gap: var(--space-3);
+    line-height: 1.5;
+  }
+
+  .site-footer__row :global(svg) {
+    flex: none;
+    margin-top: 2px;
+    color: var(--blush-300);
+  }
+
+  .site-footer__pending {
+    display: inline-block;
+    margin-top: var(--space-3);
+    padding: 0.15rem 0.6rem;
+    border: 1px solid rgb(255 255 255 / 0.35);
+    border-radius: var(--radius-pill);
+    font-size: 0.8125rem;
+    color: #efe9f6;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+    margin-top: var(--space-8);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgb(255 255 255 / 0.18);
+    font-size: var(--fs-small);
+    color: #ddd3ea;
+  }
+
+  .site-footer__bottom ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    list-style: none;
+  }
+</style>

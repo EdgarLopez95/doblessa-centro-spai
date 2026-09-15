@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import Icon from './Icon.astro';
+import { ROUTES } from '../lib/site';
+
+interface Props {
+  title: string;
+  heading: string;
+  description: string;
+  path: string;
+}
+
+const { title, heading, description, path } = Astro.props;
+const breadcrumbs = [
+  { label: 'Inicio', href: ROUTES.home },
+  { label: heading, href: path },
+];
+---
+
+<BaseLayout title={title} description={description} path={path} breadcrumbs={breadcrumbs} noindex>
+  <article class="legal">
+    <div class="container container--narrow">
+      <Breadcrumbs items={breadcrumbs} />
+      <header class="legal__head">
+        <span class="eyebrow">Información legal</span>
+        <h1>{heading}</h1>
+        <div class="legal__notice" role="note">
+          <Icon name="info" size={22} />
+          <p>
+            <strong>Contenido legal pendiente de validación.</strong> Este texto es una estructura orientativa del
+            mockup. Antes de publicar, debe redactarlo o revisarlo un asesor legal con los datos reales del titular.
+          </p>
+        </div>
+      </header>
+      <div class="prose legal__body">
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: var(--space-4) var(--section-y);
+  }
+
+  .legal__head {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+    margin-block: var(--space-5) var(--space-7);
+  }
+
+  .legal__notice {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-card);
+    background: var(--sky-100);
+    border: 1px solid var(--sky-200);
+    color: var(--sky-800);
+  }
+
+  .legal__notice :global(svg) {
+    flex: none;
+    margin-top: 3px;
+  }
+
+  .legal__body :global(h2) {
+    font-size: 1.5rem;
+    margin-top: var(--space-7);
+  }
+
+  .legal__body :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .legal__body :global(.placeholder) {
+    padding: 0.05rem 0.4rem;
+    border-radius: 6px;
+    background: var(--lilac-100);
+    color: var(--spai-700);
+    font-weight: 600;
+  }
+</style>

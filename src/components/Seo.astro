@@ -1,0 +1,94 @@
+---
+import { SITE, withBase, ROUTES } from '../lib/site';
+
+export interface Crumb {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  /** Ruta interna sin base, p. ej. `/contacto/`. */
+  path: string;
+  image?: string;
+  imageAlt?: string;
+  noindex?: boolean;
+  breadcrumbs?: Crumb[];
+  /** JSON-LD adicional específico de la página. */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  path,
+  image = SITE.defaultImage,
+  imageAlt = 'Centro Spai, fisioterapia infantil y bienestar en Burriana',
+  noindex = false,
+  breadcrumbs,
+  jsonLd = [],
+} = Astro.props;
+
+const site = Astro.site!;
+const canonical = new URL(withBase(path), site).href;
+const homeUrl = new URL(withBase(ROUTES.home), site).href;
+const ogImage = new URL(withBase(image), site).href;
+
+// Datos estructurados prudentes: solo información verificable
+// (nombre, web e idioma). Sin NAP, reseñas ni profesionales.
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'WebSite',
+    '@id': `${homeUrl}#website`,
+    url: homeUrl,
+    name: SITE.name,
+    inLanguage: 'es-ES',
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { '@id': `${homeUrl}#website` },
+    inLanguage: 'es-ES',
+  },
+];
+
+if (breadcrumbs && breadcrumbs.length > 0) {
+  graph.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.label,
+      item: new URL(withBase(c.href), site).href,
+    })),
+  });
+}
+
+graph.push(...jsonLd);
+
+const schema = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content={SITE.locale} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<script type="application/ld+json" set:html={schema} />

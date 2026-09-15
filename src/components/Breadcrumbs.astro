@@ -1,0 +1,67 @@
+---
+import { withBase } from '../lib/site';
+import type { Crumb } from './Seo.astro';
+
+interface Props {
+  items: Crumb[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="crumbs" aria-label="Ruta de navegación">
+  <ol>
+    {
+      items.map((c, i) => (
+        <li>
+          {i < items.length - 1 ? (
+            <a href={withBase(c.href)}>{c.label}</a>
+          ) : (
+            <span aria-current="page">{c.label}</span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 0.5rem;
+    list-style: none;
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+  }
+
+  .crumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .crumbs li + li::before {
+    content: '/';
+    color: var(--spai-300);
+  }
+
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .crumbs a:hover {
+    color: var(--spai-700);
+    text-decoration: underline;
+  }
+
+  .crumbs [aria-current] {
+    color: var(--spai-700);
+    font-weight: 600;
+  }
+</style>

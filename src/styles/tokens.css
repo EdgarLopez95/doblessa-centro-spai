@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Tokens — Centro Spai
+   Primitivos del sistema propuesto + alias semánticos. Usar siempre los
+   semánticos en componentes.
+   ========================================================================== */
+
+:root {
+  /* Primitivos */
+  --spai-800: #47345f;
+  --spai-700: #5b437b;
+  --spai-500: #8062a7;
+  --spai-300: #c7b6dc;
+  --lilac-200: #e4daf0;
+  --lilac-100: #f0ebf6;
+  --blush-300: #f2b6c5;
+  --blush-100: #fcebf0;
+  --sky-200: #bfe1ea;
+  --sky-100: #e8f4f7;
+  --sky-800: #2c5763;
+  --sage-200: #cfe3d3;
+  --sage-100: #ebf4ed;
+  --sage-800: #33503c;
+  --cloud-50: #fafafc;
+  --white: #ffffff;
+  --ink-900: #25222a;
+  --ink-600: #615c68;
+  --ink-400: #8c8792;
+  --danger-700: #a3263f;
+  --danger-100: #fbe9ec;
+
+  /* Semánticos */
+  --surface-page: var(--cloud-50);
+  --surface-raised: var(--white);
+  --surface-kids: var(--lilac-100);
+  --surface-warm: var(--blush-100);
+  --surface-info: var(--sky-100);
+  --surface-well: var(--sage-100);
+  --surface-brand: var(--spai-700);
+
+  --text-strong: var(--ink-900);
+  --text-body: var(--ink-900);
+  --text-muted: var(--ink-600);
+  --text-brand: var(--spai-700);
+  --text-accent: var(--spai-500);
+  --text-on-brand: var(--white);
+  --text-well: var(--sage-800);
+  --text-info: var(--sky-800);
+
+  --accent: var(--spai-500);
+  --accent-strong: var(--spai-700);
+  --accent-deeper: var(--spai-800);
+  --line: var(--lilac-200);
+  --line-soft: #ece8f1;
+  --focus-ring: var(--spai-500);
+
+  /* Tipografía */
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --fs-small: 0.9375rem;   /* 15 */
+  --fs-body: 1.0625rem;    /* 17 */
+  --fs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --fs-h3: clamp(1.3125rem, 1.2rem + 0.4vw, 1.5rem);
+  --fs-h2: clamp(1.875rem, 1.5rem + 1.2vw, 2.375rem);
+  --fs-h1: clamp(2.375rem, 1.7rem + 2.4vw, 3.375rem);
+  --lh-body: 1.65;
+  --lh-tight: 1.1;
+
+  /* Espacio */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3.5rem;
+  --space-8: 5rem;
+  --space-9: 7rem;
+  --section-y: clamp(3.5rem, 2rem + 6vw, 7rem);
+
+  /* Retícula */
+  --container: 74rem; /* 1184px */
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 1.5rem);
+
+  /* Forma */
+  --radius-panel: 24px;
+  --radius-card: 20px;
+  --radius-control: 12px;
+  --radius-pill: 999px;
+  --shadow-soft: 0 1px 2px rgb(37 34 42 / 0.04), 0 12px 32px -18px rgb(91 67 123 / 0.22);
+  --shadow-lift: 0 2px 4px rgb(37 34 42 / 0.05), 0 20px 40px -20px rgb(91 67 123 / 0.3);
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 180ms;
+  --dur-base: 220ms;
+  --dur-slow: 240ms;
+
+  --header-h: 72px;
+  color-scheme: light;
+}
+
+@media (max-width: 63.99rem) {
+  :root {
+    --header-h: 64px;
+  }
+}

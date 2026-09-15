@@ -1,0 +1,576 @@
+---
+import Icon from './Icon.astro';
+import { ROUTES, withBase } from '../lib/site';
+---
+
+<form class="demo-form" novalidate data-demo-form data-tone="infantil" aria-describedby="demo-form-note">
+  <p class="demo-form__note" id="demo-form-note">
+    <Icon name="info" size={20} />
+    <span><strong>Formulario demostrativo.</strong> No envía ni guarda datos; sirve para mostrar el flujo de solicitud.</span>
+  </p>
+
+  <fieldset class="field-group">
+    <legend class="field-label">Tipo de cita <span class="req" aria-hidden="true">*</span></legend>
+    <div class="type-select">
+      <label class="type-option type-option--infantil">
+        <input type="radio" name="tipo" value="infantil" checked />
+        <span class="type-option__box">
+          <span class="type-option__icon"><Icon name="baby" size={26} /></span>
+          <span class="type-option__text">
+            <span class="type-option__title">Para mi bebé o niño</span>
+            <span class="type-option__desc">Fisioterapia infantil, cólicos, osteopatía</span>
+          </span>
+          <span class="type-option__check" aria-hidden="true"><Icon name="check" size={16} /></span>
+        </span>
+      </label>
+      <label class="type-option type-option--adulto">
+        <input type="radio" name="tipo" value="adulto" />
+        <span class="type-option__box">
+          <span class="type-option__icon"><Icon name="person" size={26} /></span>
+          <span class="type-option__text">
+            <span class="type-option__title">Para mí</span>
+            <span class="type-option__desc">Adultos, embarazo, posparto y bienestar</span>
+          </span>
+          <span class="type-option__check" aria-hidden="true"><Icon name="check" size={16} /></span>
+        </span>
+      </label>
+    </div>
+  </fieldset>
+
+  <div class="field">
+    <label class="field-label" for="motivo">Motivo de la consulta <span class="req" aria-hidden="true">*</span></label>
+    <div class="select-wrap">
+      <select id="motivo" name="motivo" required aria-describedby="motivo-error">
+        <option value="">Elige una opción</option>
+        <optgroup label="Infantil" data-group="infantil">
+          <option>Cólicos o llanto difícil de calmar</option>
+          <option>Desarrollo y movimiento</option>
+          <option>Respiratorio y mocos</option>
+          <option>Osteopatía para bebés</option>
+          <option>Masaje, hábitos u orientación a familias</option>
+          <option>Talleres para familias</option>
+        </optgroup>
+        <optgroup label="Adultos y bienestar" data-group="adulto" disabled hidden>
+          <option>Dolor o molestias musculares</option>
+          <option>Movilidad y recuperación</option>
+          <option>Embarazo</option>
+          <option>Posparto</option>
+          <option>Terapias de bienestar y relax</option>
+        </optgroup>
+        <option>Aún no lo sé, prefiero que me orientéis</option>
+      </select>
+      <Icon name="chevron-right" size={18} class="select-wrap__icon" />
+    </div>
+    <p class="field-error" id="motivo-error" hidden>Elige un motivo para poder orientarte.</p>
+  </div>
+
+  <div class="field" data-only="infantil">
+    <label class="field-label" for="edad">Edad aproximada <span class="optional">(opcional)</span></label>
+    <input id="edad" name="edad" type="text" autocomplete="off" placeholder="Por ejemplo: 6 semanas" aria-describedby="edad-hint" />
+    <p class="field-hint" id="edad-hint">No necesitamos historia clínica: con una idea general es suficiente.</p>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label class="field-label" for="nombre">Nombre <span class="req" aria-hidden="true">*</span></label>
+      <input id="nombre" name="nombre" type="text" autocomplete="name" required aria-describedby="nombre-error" />
+      <p class="field-error" id="nombre-error" hidden>Escribe tu nombre.</p>
+    </div>
+    <div class="field">
+      <label class="field-label" for="contacto">Teléfono o email <span class="req" aria-hidden="true">*</span></label>
+      <input id="contacto" name="contacto" type="text" autocomplete="email" inputmode="email" required aria-describedby="contacto-hint contacto-error" />
+      <p class="field-hint" id="contacto-hint">Lo usaremos solo para responder a tu solicitud.</p>
+      <p class="field-error" id="contacto-error" hidden>Indica un teléfono o un email válido.</p>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="field-label" for="mensaje">¿Algo que quieras contarnos? <span class="optional">(opcional)</span></label>
+    <textarea id="mensaje" name="mensaje" rows="4" placeholder="Por ejemplo: qué franja horaria os viene mejor"></textarea>
+  </div>
+
+  <div class="field">
+    <label class="consent">
+      <input type="checkbox" name="consentimiento" required aria-describedby="consent-error" />
+      <span>
+        He leído la <a href={withBase(ROUTES.privacidad)}>política de privacidad</a> y acepto que Centro Spai use estos datos para contactarme sobre mi solicitud. <span class="req" aria-hidden="true">*</span>
+      </span>
+    </label>
+    <p class="field-error" id="consent-error" hidden>Necesitamos tu consentimiento para poder responderte.</p>
+  </div>
+
+  <div class="demo-form__footer">
+    <button type="submit" class="btn btn--lg" data-submit>
+      <span data-submit-label>Enviar solicitud de cita</span>
+      <Icon name="arrow-right" />
+    </button>
+    <p class="field-hint"><span class="req" aria-hidden="true">*</span> Campos obligatorios</p>
+  </div>
+
+  <div class="demo-form__status" role="status" aria-live="polite" tabindex="-1" data-status hidden>
+    <Icon name="check" size={22} />
+    <div>
+      <p><strong>Solicitud demostrativa: en la web real este formulario conectará con el equipo.</strong></p>
+      <p>No se ha enviado ningún dato. En la versión publicada, aquí se confirmaría cómo y cuándo contactará Spai.</p>
+    </div>
+  </div>
+</form>
+
+<style>
+  .demo-form {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .demo-form__note {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-control);
+    background: var(--sky-100);
+    color: var(--sky-800);
+    font-size: var(--fs-small);
+    line-height: 1.5;
+  }
+
+  .demo-form__note :global(svg) {
+    flex: none;
+    margin-top: 1px;
+  }
+
+  .field-group {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+
+  .field {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    min-width: 0;
+  }
+
+  .field-row {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 40rem) {
+    .field-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .field-label {
+    padding: 0;
+    font-weight: 650;
+    color: var(--ink-900);
+  }
+
+  .field-group .field-label {
+    margin-bottom: var(--space-2);
+  }
+
+  .req {
+    color: var(--danger-700);
+  }
+
+  .optional {
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .field-hint {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+  }
+
+  .field-error {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--danger-700);
+  }
+
+  .field-error::before {
+    content: '!';
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    background: var(--danger-700);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .field-error[hidden] {
+    display: none;
+  }
+
+  input[type='text'],
+  select,
+  textarea {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #cfc6da;
+    border-radius: var(--radius-control);
+    background: var(--white);
+    color: var(--ink-900);
+    font-size: 1.0625rem;
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #8a8591;
+  }
+
+  input[type='text']:hover,
+  select:hover,
+  textarea:hover {
+    border-color: var(--spai-300);
+  }
+
+  input[type='text']:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+    border-color: var(--spai-500);
+    box-shadow: 0 0 0 4px rgb(128 98 167 / 0.22);
+  }
+
+  [aria-invalid='true'] {
+    border-color: var(--danger-700) !important;
+    background: #fffafb !important;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 110px;
+  }
+
+  .select-wrap {
+    position: relative;
+  }
+
+  select {
+    appearance: none;
+    padding-right: 2.75rem;
+  }
+
+  .select-wrap :global(.select-wrap__icon) {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    color: var(--spai-700);
+    pointer-events: none;
+  }
+
+  /* Selector de tipo */
+  .type-select {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 40rem) {
+    .type-select {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .type-option {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .type-option input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    cursor: pointer;
+  }
+
+  .type-option__box {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 88px;
+    padding: var(--space-4);
+    border: 1.5px solid #cfc6da;
+    border-radius: 16px;
+    background: var(--white);
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out);
+  }
+
+  .type-option--infantil {
+    --opt-soft: var(--lilac-100);
+    --opt-ink: var(--spai-700);
+  }
+
+  .type-option--adulto {
+    --opt-soft: var(--sage-100);
+    --opt-ink: var(--sage-800);
+  }
+
+  .type-option__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 12px;
+    background: var(--opt-soft);
+    color: var(--opt-ink);
+  }
+
+  .type-option__text {
+    display: grid;
+    line-height: 1.35;
+  }
+
+  .type-option__title {
+    font-weight: 700;
+    color: var(--ink-900);
+  }
+
+  .type-option__desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+  }
+
+  .type-option__check {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    border: 1.5px solid #cfc6da;
+    color: transparent;
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .type-option:hover .type-option__box {
+    border-color: var(--spai-300);
+  }
+
+  .type-option input:checked + .type-option__box {
+    border-color: var(--opt-ink);
+    background: var(--opt-soft);
+    box-shadow: inset 0 0 0 1px var(--opt-ink);
+  }
+
+  .type-option input:checked + .type-option__box .type-option__check {
+    background: var(--opt-ink);
+    border-color: var(--opt-ink);
+    color: var(--white);
+  }
+
+  .type-option input:focus-visible + .type-option__box {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  .consent {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+    align-items: start;
+    color: var(--ink-900);
+    cursor: pointer;
+  }
+
+  .consent input {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0.1rem 0 0;
+    accent-color: var(--spai-700);
+    cursor: pointer;
+  }
+
+  .consent a {
+    font-weight: 600;
+  }
+
+  .demo-form__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  @media (max-width: 35.99rem) {
+    .demo-form__footer .btn {
+      width: 100%;
+    }
+  }
+
+  .demo-form[data-tone='adulto'] [data-submit]:not([disabled]) {
+    --btn-bg: var(--sage-800);
+    --btn-border: var(--sage-800);
+  }
+
+  .demo-form__status {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-radius: 16px;
+    background: var(--sage-100);
+    border: 1px solid var(--sage-200);
+    color: var(--sage-800);
+  }
+
+  .demo-form__status[hidden] {
+    display: none;
+  }
+
+  .demo-form__status :global(svg) {
+    margin-top: 2px;
+  }
+
+  .demo-form__status:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--sage-200);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .demo-form__status:not([hidden]) {
+      animation: status-in var(--dur-slow) var(--ease-out);
+    }
+  }
+
+  @keyframes status-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  [data-only][hidden] {
+    display: none;
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-demo-form]');
+
+  if (form) {
+    const select = form.querySelector<HTMLSelectElement>('#motivo')!;
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]')!;
+    const radios = form.querySelectorAll<HTMLInputElement>('input[name="tipo"]');
+    const onlyInfantil = form.querySelectorAll<HTMLElement>('[data-only="infantil"]');
+
+    const applyType = (type: string) => {
+      form.dataset.tone = type;
+      form.querySelectorAll<HTMLOptGroupElement>('optgroup').forEach((group) => {
+        const match = group.dataset.group === type;
+        group.disabled = !match;
+        group.hidden = !match;
+      });
+      if (select.selectedOptions[0]?.parentElement instanceof HTMLOptGroupElement) {
+        const parent = select.selectedOptions[0].parentElement as HTMLOptGroupElement;
+        if (parent.disabled) select.value = '';
+      }
+      onlyInfantil.forEach((el) => (el.hidden = type !== 'infantil'));
+      document.dispatchEvent(new CustomEvent('spai:tipo', { detail: type }));
+    };
+
+    // Preselección desde la URL (?tipo=adulto | infantil)
+    const fromUrl = new URLSearchParams(window.location.search).get('tipo');
+    const initial = fromUrl === 'adulto' ? 'adulto' : 'infantil';
+    radios.forEach((r) => (r.checked = r.value === initial));
+    applyType(initial);
+
+    radios.forEach((r) => r.addEventListener('change', () => r.checked && applyType(r.value)));
+
+    // Permite a otros bloques de la página cambiar el tipo
+    document.addEventListener('spai:set-tipo', (e) => {
+      const type = (e as CustomEvent<string>).detail;
+      radios.forEach((r) => (r.checked = r.value === type));
+      applyType(type);
+    });
+
+    const setError = (field: HTMLElement, errorId: string, invalid: boolean) => {
+      const error = form.querySelector<HTMLElement>(`#${errorId}`);
+      field.setAttribute('aria-invalid', String(invalid));
+      if (error) error.hidden = !invalid;
+    };
+
+    const validators: [string, string, () => boolean][] = [
+      ['motivo', 'motivo-error', () => select.value.trim() !== ''],
+      ['nombre', 'nombre-error', () => (form.querySelector<HTMLInputElement>('#nombre')!.value.trim().length > 1)],
+      [
+        'contacto',
+        'contacto-error',
+        () => {
+          const v = form.querySelector<HTMLInputElement>('#contacto')!.value.trim();
+          const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+          const phone = v.replace(/[\s()+-]/g, '').length >= 9 && /^[\d\s()+-]+$/.test(v);
+          return email || phone;
+        },
+      ],
+    ];
+
+    const consent = form.querySelector<HTMLInputElement>('input[name="consentimiento"]')!;
+
+    const validate = () => {
+      let firstInvalid: HTMLElement | null = null;
+      for (const [id, errorId, check] of validators) {
+        const field = form.querySelector<HTMLElement>(`#${id}`)!;
+        const ok = check();
+        setError(field, errorId, !ok);
+        if (!ok && !firstInvalid) firstInvalid = field;
+      }
+      const consentOk = consent.checked;
+      setError(consent, 'consent-error', !consentOk);
+      if (!consentOk && !firstInvalid) firstInvalid = consent;
+      return firstInvalid;
+    };
+
+    // Revalidar en vivo solo campos ya marcados como inválidos
+    form.addEventListener('input', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.getAttribute('aria-invalid') === 'true') validate();
+    });
+    form.addEventListener('change', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.getAttribute('aria-invalid') === 'true') validate();
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Nunca se envían datos
+      status.hidden = true;
+      const firstInvalid = validate();
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+      submit.disabled = true;
+      submitLabel.textContent = 'Procesando…';
+      window.setTimeout(() => {
+        submit.disabled = false;
+        submitLabel.textContent = 'Enviar solicitud de cita';
+        status.hidden = false;
+        status.focus();
+      }, 600);
+    });
+  }
+</script>

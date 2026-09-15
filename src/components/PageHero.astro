@@ -1,0 +1,179 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+import type { Crumb } from './Seo.astro';
+import { img, type Tone } from '../lib/site';
+
+interface HeroImage {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  /** object-position CSS */
+  position?: string;
+  /** `contain` para ilustraciones sobre fondo blanco. */
+  fit?: 'cover' | 'contain';
+  /** Mejora imágenes con veladura clara. */
+  enhance?: boolean;
+}
+
+interface Props {
+  tone?: Tone;
+  eyebrow: string;
+  lead: string;
+  breadcrumbs?: Crumb[];
+  image?: HeroImage;
+  /** Nota corta bajo los botones. */
+  note?: string;
+}
+
+const { tone = 'neutral', eyebrow, lead, breadcrumbs, image, note } = Astro.props;
+---
+
+<section class:list={['page-hero', `page-hero--${tone}`, { 'page-hero--no-media': !image }]}>
+  <div class="container">
+    {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+    <div class="page-hero__grid">
+      <div class="page-hero__copy">
+        <span class:list={['eyebrow', { 'eyebrow--well': tone === 'adultos' }]}>{eyebrow}</span>
+        <h1><slot name="title" /></h1>
+        <p class="lead">{lead}</p>
+        <div class="btn-row btn-row--stack-mobile page-hero__actions">
+          <slot name="actions" />
+        </div>
+        {note && <p class="page-hero__note">{note}</p>}
+      </div>
+      {
+        image && (
+          <figure class:list={['page-hero__media', `page-hero__media--${image.fit ?? 'cover'}`]}>
+            <img
+              src={img(image.src)}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              fetchpriority="high"
+              decoding="async"
+              class:list={{ 'is-enhanced': image.enhance }}
+              style={image.position ? `object-position:${image.position}` : undefined}
+            />
+          </figure>
+        )
+      }
+      <slot name="aside" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    padding-block: var(--space-4) var(--section-y);
+    overflow: hidden;
+  }
+
+  .page-hero--infantil {
+    background: linear-gradient(180deg, var(--cloud-50) 0, var(--lilac-100) 70%);
+  }
+
+  .page-hero--adultos {
+    background: linear-gradient(180deg, var(--cloud-50) 0, var(--sage-100) 70%);
+  }
+
+  .page-hero--neutral {
+    background: linear-gradient(180deg, var(--cloud-50) 0, var(--sky-100) 120%);
+  }
+
+  .page-hero__grid {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+    margin-top: var(--space-5);
+  }
+
+  @media (min-width: 56rem) {
+    .page-hero__grid {
+      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      gap: var(--space-8);
+    }
+
+    .page-hero--no-media .page-hero__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .page-hero--no-media .page-hero__copy {
+      max-width: 50rem;
+    }
+  }
+
+  .page-hero__copy {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+  }
+
+  .page-hero__copy .lead {
+    max-width: 38rem;
+  }
+
+  .page-hero__actions {
+    margin-top: var(--space-2);
+  }
+
+  @media (max-width: 35.99rem) {
+    .page-hero__actions {
+      width: 100%;
+    }
+  }
+
+  .page-hero__note {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+  }
+
+  .page-hero__media {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 5 / 5.2;
+    max-height: 34rem;
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .page-hero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px rgb(91 67 123 / 0.08);
+    pointer-events: none;
+  }
+
+  .page-hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .page-hero__media--contain {
+    display: grid;
+    place-items: center;
+    padding: var(--space-6);
+  }
+
+  .page-hero__media--contain img {
+    object-fit: contain;
+    height: auto;
+  }
+
+  .is-enhanced {
+    filter: contrast(1.28) saturate(1.2) brightness(0.97);
+  }
+
+  @media (max-width: 55.99rem) {
+    .page-hero__media {
+      aspect-ratio: 4 / 3;
+      order: -1;
+    }
+  }
+</style>

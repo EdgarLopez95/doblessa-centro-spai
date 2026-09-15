@@ -1,0 +1,105 @@
+---
+import { isActive, withBase, type Tone } from '../lib/site';
+
+interface Props {
+  currentPath: string;
+  tone: Tone;
+  label: string;
+  items: { label: string; href: string }[];
+}
+
+const { currentPath, tone, label, items } = Astro.props;
+---
+
+<nav class:list={['route-nav', `route-nav--${tone}`]} aria-label={label}>
+  <div class="container route-nav__inner">
+    <span class="route-nav__label" aria-hidden="true">{label}</span>
+    <ul>
+      {
+        items.map((item) => {
+          const current = isActive(withBase(currentPath), [item.href]);
+          return (
+            <li>
+              <a href={withBase(item.href)} aria-current={current ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .route-nav {
+    border-block: 1px solid var(--line);
+    background: var(--white);
+  }
+
+  .route-nav__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .route-nav__inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .route-nav__label {
+    flex: none;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-600);
+  }
+
+  .route-nav ul {
+    display: flex;
+    gap: var(--space-1);
+    list-style: none;
+  }
+
+  .route-nav a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 56px;
+    padding-inline: 0.85rem;
+    white-space: nowrap;
+    color: var(--ink-900);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .route-nav a:hover {
+    color: var(--spai-700);
+  }
+
+  .route-nav a[aria-current='page'] {
+    color: var(--spai-700);
+  }
+
+  .route-nav a[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    left: 0.85rem;
+    right: 0.85rem;
+    bottom: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: var(--blush-300);
+  }
+
+  .route-nav--adultos a[aria-current='page'] {
+    color: var(--sage-800);
+  }
+
+  .route-nav--adultos a[aria-current='page']::after {
+    background: var(--sage-800);
+  }
+</style>

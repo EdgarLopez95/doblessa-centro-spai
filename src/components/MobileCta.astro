@@ -1,0 +1,73 @@
+---
+import Icon from './Icon.astro';
+import { citaHref, type Tone } from '../lib/site';
+
+interface Props {
+  tone: Tone;
+}
+
+const { tone } = Astro.props;
+const label =
+  tone === 'adultos' ? 'Pedir cita para adultos' : tone === 'infantil' ? 'Pedir cita infantil' : 'Pedir cita';
+---
+
+<div class="mobile-cta" data-mobile-cta data-tone={tone}>
+  <a class:list={['btn btn--block', { 'btn--well': tone === 'adultos' }]} href={citaHref(tone)}>
+    <Icon name="calendar" size={18} />
+    {label}
+  </a>
+</div>
+
+<style>
+  .mobile-cta {
+    display: none;
+  }
+
+  @media (max-width: 47.99rem) {
+    .mobile-cta {
+      display: block;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 40;
+      padding: 0.625rem var(--gutter) calc(0.625rem + env(safe-area-inset-bottom));
+      background: rgb(250 250 252 / 0.94);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid var(--line);
+      transform: translateY(110%);
+      transition: transform var(--dur-slow) var(--ease-out);
+    }
+
+    .mobile-cta.is-visible {
+      transform: none;
+    }
+
+    :global(body:has(.mobile-cta)) {
+      padding-bottom: 76px;
+    }
+  }
+</style>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-mobile-cta]');
+  const footer = document.querySelector('.site-footer');
+  if (bar) {
+    let pastHero = false;
+    let footerVisible = false;
+    const update = () => bar.classList.toggle('is-visible', pastHero && !footerVisible);
+    const onScroll = () => {
+      pastHero = window.scrollY > window.innerHeight * 0.45;
+      update();
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    if (footer && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        footerVisible = entry.isIntersecting;
+        update();
+      }).observe(footer);
+    }
+  }
+</script>

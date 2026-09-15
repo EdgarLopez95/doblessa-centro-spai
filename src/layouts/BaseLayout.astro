@@ -1,18 +1,103 @@
 ---
 import '../styles/global.css';
+import Seo, { type Crumb } from '../components/Seo.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileCta from '../components/MobileCta.astro';
+import { withBase, type Tone } from '../lib/site';
 
-interface Props { title?: string; description?: string; }
-const { title = 'Base técnica · Centro Spai', description = 'Esqueleto técnico del rediseño de Centro Spai.' } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  tone?: Tone;
+  image?: string;
+  imageAlt?: string;
+  /** Imagen LCP a precargar (ruta relativa a la base). */
+  preloadImage?: string;
+  breadcrumbs?: Crumb[];
+  jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
+  /** Oculta la barra fija de cita en móvil (p. ej. en contacto). */
+  hideMobileCta?: boolean;
+}
+
+const {
+  title,
+  description,
+  path,
+  tone = 'neutral',
+  image,
+  imageAlt,
+  preloadImage,
+  breadcrumbs,
+  jsonLd,
+  noindex,
+  hideMobileCta = false,
+} = Astro.props;
 ---
+
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
-    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#5B437B" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,480..620;1,9..144,480&family=Source+Sans+3:wght@400..700&display=swap"
+    />
+    {preloadImage && <link rel="preload" as="image" href={withBase(preloadImage)} fetchpriority="high" />}
+    <Seo
+      title={title}
+      description={description}
+      path={path}
+      image={image}
+      imageAlt={imageAlt}
+      breadcrumbs={breadcrumbs}
+      jsonLd={jsonLd}
+      noindex={noindex}
+    />
   </head>
-  <body><slot /></body>
+  <body data-tone={tone}>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <Header currentPath={withBase(path)} tone={tone} />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    {!hideMobileCta && <MobileCta tone={tone} />}
+
+    <script>
+      // Revelado sutil al entrar en viewport. Sin JS o con reduced-motion
+      // el contenido es visible desde el inicio (ver global.css).
+      const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if ('IntersectionObserver' in window && items.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        items.forEach((el) => io.observe(el));
+      } else {
+        items.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
 </html>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+</style>

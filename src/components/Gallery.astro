@@ -1,0 +1,305 @@
+---
+import Icon from './Icon.astro';
+import { img } from '../lib/site';
+
+export interface GalleryImage {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption: string;
+}
+
+interface Props {
+  images: GalleryImage[];
+  label: string;
+}
+
+const { images, label } = Astro.props;
+---
+
+<div class="gallery" data-gallery>
+  <ul class="gallery__grid" aria-label={label}>
+    {
+      images.map((image, i) => (
+        <li class="gallery__item" data-reveal style={`--reveal-i:${i}`}>
+          <button
+            type="button"
+            class="gallery__button"
+            data-gallery-open={i}
+            aria-haspopup="dialog"
+          >
+            <img
+              src={img(image.src)}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="gallery__zoom" aria-hidden="true">
+              <Icon name="expand" size={18} />
+            </span>
+            <span class="visually-hidden">Ampliar imagen {i + 1} de {images.length}</span>
+          </button>
+          <p class="gallery__caption">{image.caption}</p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <dialog class="viewer" aria-label="Visor de imágenes" data-viewer>
+    <div class="viewer__frame">
+      <figure class="viewer__figure">
+        <img data-viewer-img src={img(images[0].src)} alt={images[0].alt} width={images[0].width} height={images[0].height} />
+        <figcaption>
+          <span data-viewer-caption>{images[0].caption}</span>
+          <span class="viewer__count" data-viewer-count aria-live="polite">1 / {images.length}</span>
+        </figcaption>
+      </figure>
+      <div class="viewer__controls">
+        <button type="button" class="viewer__btn" data-viewer-prev>
+          <Icon name="chevron-left" />
+          <span class="visually-hidden">Imagen anterior</span>
+        </button>
+        <button type="button" class="viewer__btn" data-viewer-next>
+          <Icon name="chevron-right" />
+          <span class="visually-hidden">Imagen siguiente</span>
+        </button>
+      </div>
+      <button type="button" class="viewer__btn viewer__close" data-viewer-close>
+        <Icon name="close" />
+        <span class="visually-hidden">Cerrar visor</span>
+      </button>
+    </div>
+  </dialog>
+
+  <script type="application/json" data-gallery-data set:html={JSON.stringify(images.map((i) => ({ ...i, url: img(i.src) })))} />
+</div>
+
+<style>
+  .gallery__grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 56rem) {
+    .gallery__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+
+    .gallery__item:nth-child(even) {
+      margin-top: var(--space-7);
+    }
+  }
+
+  .gallery__button {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--lilac-100);
+    aspect-ratio: 434 / 579;
+  }
+
+  .gallery__button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 420ms var(--ease-out);
+  }
+
+  .gallery__button:hover img {
+    transform: scale(1.03);
+  }
+
+  .gallery__button:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: var(--radius-card);
+  }
+
+  .gallery__zoom {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.92);
+    color: var(--spai-700);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .gallery__caption {
+    margin-top: var(--space-3);
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+  }
+
+  /* Visor */
+  .viewer {
+    width: min(100% - 2rem, 44rem);
+    max-height: calc(100dvh - 2rem);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-panel);
+    background: var(--white);
+    color: var(--ink-900);
+    box-shadow: 0 30px 80px -20px rgb(37 34 42 / 0.5);
+  }
+
+  .viewer::backdrop {
+    background: rgb(37 34 42 / 0.72);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .viewer[open] {
+      animation: viewer-in var(--dur-slow) var(--ease-out);
+    }
+
+    .viewer[open]::backdrop {
+      animation: viewer-fade var(--dur-slow) var(--ease-out);
+    }
+  }
+
+  @keyframes viewer-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.99);
+    }
+  }
+
+  @keyframes viewer-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .viewer__frame {
+    position: relative;
+  }
+
+  .viewer__figure {
+    margin: 0;
+  }
+
+  .viewer__figure img {
+    width: 100%;
+    max-height: calc(100dvh - 9rem);
+    object-fit: contain;
+    background: var(--ink-900);
+  }
+
+  .viewer__figure figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    padding-right: 8rem;
+    color: var(--ink-600);
+  }
+
+  .viewer__count {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .viewer__controls {
+    position: absolute;
+    right: var(--space-3);
+    bottom: 0.4rem;
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .viewer__btn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--spai-700);
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .viewer__btn:hover {
+    background: var(--lilac-100);
+  }
+
+  .viewer__close {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    border-color: transparent;
+    box-shadow: var(--shadow-soft);
+  }
+</style>
+
+<script>
+  interface Item {
+    url: string;
+    alt: string;
+    caption: string;
+    width: number;
+    height: number;
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+    const data = root.querySelector('[data-gallery-data]');
+    const dialog = root.querySelector<HTMLDialogElement>('[data-viewer]');
+    const image = root.querySelector<HTMLImageElement>('[data-viewer-img]');
+    const caption = root.querySelector<HTMLElement>('[data-viewer-caption]');
+    const count = root.querySelector<HTMLElement>('[data-viewer-count]');
+    if (!data || !dialog || !image || !caption || !count) return;
+
+    const items: Item[] = JSON.parse(data.textContent || '[]');
+    let index = 0;
+    let opener: HTMLElement | null = null;
+
+    const show = (i: number) => {
+      index = (i + items.length) % items.length;
+      const item = items[index];
+      image.src = item.url;
+      image.alt = item.alt;
+      image.width = item.width;
+      image.height = item.height;
+      caption.textContent = item.caption;
+      count.textContent = `${index + 1} / ${items.length}`;
+    };
+
+    root.querySelectorAll<HTMLButtonElement>('[data-gallery-open]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        opener = btn;
+        show(Number(btn.dataset.galleryOpen));
+        dialog.showModal();
+      });
+    });
+
+    root.querySelector('[data-viewer-prev]')?.addEventListener('click', () => show(index - 1));
+    root.querySelector('[data-viewer-next]')?.addEventListener('click', () => show(index + 1));
+    root.querySelector('[data-viewer-close]')?.addEventListener('click', () => dialog.close());
+
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(index - 1);
+      if (e.key === 'ArrowRight') show(index + 1);
+    });
+
+    // Cerrar al pulsar el fondo
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener('close', () => opener?.focus());
+  });
+</script>
