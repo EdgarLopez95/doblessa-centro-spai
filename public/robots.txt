@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://edgarlopez95.github.io/doblessa-centro-spai/sitemap.xml

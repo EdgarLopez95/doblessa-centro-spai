@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Solo páginas indexables. Talleres y páginas legales llevan noindex hasta validar su contenido. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://edgarlopez95.github.io/doblessa-centro-spai/</loc><lastmod>2026-09-14</lastmod></url>
+  <url><loc>https://edgarlopez95.github.io/doblessa-centro-spai/fisioterapia-infantil-burriana/</loc><lastmod>2026-09-14</lastmod></url>
+  <url><loc>https://edgarlopez95.github.io/doblessa-centro-spai/colicos-del-lactante-burriana/</loc><lastmod>2026-09-14</lastmod></url>
+  <url><loc>https://edgarlopez95.github.io/doblessa-centro-spai/osteopatia-bebes-burriana/</loc><lastmod>2026-09-14</lastmod></url>
+  <url><loc>https://edgarlopez95.github.io/doblessa-centro-spai/fisioterapia-adultos-burriana/</loc><lastmod>2026-09-14</lastmod></url>
+  <url><loc>https://edgarlopez95.github.io/doblessa-centro-spai/embarazo-posparto/</loc><lastmod>2026-09-14</lastmod></url>
+  <url><loc>https://edgarlopez95.github.io/doblessa-centro-spai/el-centro/</loc><lastmod>2026-09-14</lastmod></url>
+  <url><loc>https://edgarlopez95.github.io/doblessa-centro-spai/contacto/</loc><lastmod>2026-09-14</lastmod></url>
+</urlset>
