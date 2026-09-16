@@ -45,11 +45,19 @@ const {
     <meta name="theme-color" content="#5B437B" />
     <script is:inline>document.documentElement.classList.add('js');</script>
     <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,480..620;1,9..144,480&family=Source+Sans+3:wght@400..700&display=swap"
+      rel="preload"
+      href={withBase('fonts/source-sans-3-normal.woff2')}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={withBase('fonts/fraunces-normal.woff2')}
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
     {
       preloadImage && (
