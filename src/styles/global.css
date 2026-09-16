@@ -606,6 +606,42 @@ strong {
   opacity: 0.7;
 }
 
+/* Nota de validación clínica y aviso informativo */
+.clinical-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--lilac-100);
+  border: 1px solid var(--lilac-200);
+  border-left: 4px solid var(--spai-500);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--spai-800);
+}
+
+.clinical-note--well {
+  background: var(--sage-100);
+  border-color: var(--sage-200);
+  border-left-color: var(--sage-800);
+  color: var(--sage-800);
+}
+
+.clinical-note p {
+  margin: 0;
+}
+
+.clinical-note svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--spai-700);
+}
+
+.clinical-note--well svg {
+  color: var(--sage-800);
+}
+
 /* Paneles */
 .panel {
   background: var(--surface-raised);
