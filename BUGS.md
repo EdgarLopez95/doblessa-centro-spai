@@ -103,7 +103,29 @@ Este documento detalla los problemas de usabilidad, accesibilidad, coherencia de
 * **Problema**: El sitio cargaba exclusivamente imágenes PNG y JPG originales de hasta 290 KB, penalizando métricas de Core Web Vitals en conexiones móviles lentas.
 * **Impacto**: Tiempos de carga más elevados y menor puntuación Lighthouse en rendimiento móvil.
 * **Corrección**:
-  * Se implementó el script `scripts/generate-webp.mjs` utilizando `sharp` (ya presente en el entorno), integrado en `npm run build`.
+  * Se implementó el script `scripts/generate-webp.mjs` utilizando `sharp`, integrado en `npm run build`.
   * Se creó el componente `src/components/Picture.astro` con elemento `<picture>`, `<source type="image/webp">` y etiqueta `<img>` de respaldo.
   * Se sustituyeron las etiquetas `<img>` de todas las secciones críticas por `<Picture>`.
   * Se configuraron preloads de los recursos hero en formato WebP con `type="image/webp"` en `src/layouts/BaseLayout.astro`.
+
+---
+
+### BUG-10: Dependencia de compilación `sharp` no declarada en package.json
+* **Severidad**: Media
+* **Componente**: `package.json`, CI pipeline
+* **Problema**: `scripts/generate-webp.mjs` ejecutaba `import sharp from 'sharp'`, pero `sharp` solo existía como dependencia opcional interna de Astro y no figuraba en el `dependencies` principal del proyecto.
+* **Impacto**: Riesgo de fallo de compilación en entornos de integración continua o despliegues limpios (`npm ci`).
+* **Corrección**: Se declaró `"sharp": "^0.35.4"` directamente en `dependencies` de `package.json` y se ejecutó `npm install` asegurando compatibilidad con el lockfile.
+
+---
+
+### BUG-11: Dependencia externa de Google Fonts (privacidad RGPD y rendimiento)
+* **Severidad**: Media
+* **Componentes**: `src/layouts/BaseLayout.astro`, `src/styles/global.css`
+* **Problema**: Las fuentes corporativas (*Fraunces* y *Source Sans 3*) se cargaban a través de `fonts.googleapis.com` y `fonts.gstatic.com`.
+* **Impacto**: Peticiones externas bloqueantes, potencial infracción de privacidad por cesión de IP a servidores de terceros según la jurisprudencia europea del RGPD, y dependencia de red externa.
+* **Corrección**:
+  * Se descargaron los archivos WOFF2 optimizados en `public/fonts/`.
+  * Se configuraron reglas `@font-face` con `font-display: swap` y la ruta canónica `/doblessa-centro-spai/fonts/` en `src/styles/global.css`.
+  * Se eliminaron los enlaces a Google Fonts de `BaseLayout.astro` sustituyéndolos por preloads locales con `crossorigin`.
+  * Cero peticiones externas a servicios de Google Fonts en todo el sitio.

@@ -63,18 +63,38 @@ for (const file of htmlFiles) {
     errors++;
   }
 
-  // Check 4: No "desde la primera sesión" in H2
-  const h2Matches = content.match(/<h2[^>]*>([\s\S]*?)<\/h2>/gi) || [];
-  for (const h2 of h2Matches) {
-    if (/desde la primera sesión/i.test(h2)) {
-      console.error(`ERROR [${rel}]: Found 'desde la primera sesión' in H2: ${h2}`);
+    // Check 4: No "desde la primera sesión" anywhere in content
+    if (/desde la primera sesión/i.test(content)) {
+      console.error(`ERROR [${rel}]: Found 'desde la primera sesión' in content`);
       errors++;
     }
-    if (/\b(resultados|cura)\b/i.test(h2)) {
-      console.error(`ERROR [${rel}]: Found forbidden claim word in H2: ${h2}`);
+
+    // Check 4b: No "cura" or "resultados garantizados" in H2
+    const h2Matches = content.match(/<h2[^>]*>([\s\S]*?)<\/h2>/gi) || [];
+    for (const h2 of h2Matches) {
+      if (/\b(resultados|cura)\b/i.test(h2)) {
+        console.error(`ERROR [${rel}]: Found forbidden claim word in H2: ${h2}`);
+        errors++;
+      }
+    }
+
+    // Check 7: No fonts.googleapis.com or fonts.gstatic.com
+    if (/fonts\.googleapis\.com/i.test(content) || /fonts\.gstatic\.com/i.test(content)) {
+      console.error(`ERROR [${rel}]: Found external Google Fonts reference!`);
       errors++;
     }
-  }
+
+    // Check 8: Font preloads exist on disk
+    const fontMatches = content.match(/href=["'](\/doblessa-centro-spai\/fonts\/[^"']+)["']/gi) || [];
+    for (const fontAttr of fontMatches) {
+      const url = fontAttr.replace(/href=["']/i, '').replace(/["']$/, '');
+      const relPath = url.replace('/doblessa-centro-spai/', '');
+      const filePath = path.join(distDir, relPath);
+      if (!fs.existsSync(filePath)) {
+        console.error(`ERROR [${rel}]: Font file not found on disk: ${filePath}`);
+        errors++;
+      }
+    }
 
   // Check 5: Track existing element IDs
   const idMatches = content.match(/id=["']([^"']+)["']/gi) || [];
