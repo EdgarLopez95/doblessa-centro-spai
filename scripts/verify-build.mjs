@@ -82,7 +82,33 @@ const forbiddenPhrases = [
   'Lo aporta el centro',
   'mockup',
   'maqueta',
+  // Afirmaciones de práctica clínica u operativa en primera persona
+  'os explicamos',
+  'te ayudamos',
+  'os ayudamos',
+  'acompañaros',
+  'valoramos al bebé',
+  'Tratamos al bebé',
+  'nos consultan',
+  'Adaptamos la atención',
+  'trabajamos con familias',
+  'técnicas manuales suaves',
+  'adaptadas a la edad',
+  'Recuperarte sin prisas',
+  'Cuidar tu cuerpo mientras cambia',
+  'la presta un profesional',
+  // Promesas de atención, respuesta o relación previa
+  'Sin compromiso',
+  'a tu ritmo',
+  'Si ya venís',
+  'Solo pedimos',
+  'para poder responderte',
+  'Lo usaremos solo',
+  'conectará con el equipo',
 ];
+
+// Marcadores de plantilla que no deben quedar en las páginas legales
+const legalPlaceholders = /\[(Razón social|NIF|Domicilio social|Email de privacidad|Plazo de conservación|Proveedores tecnológicos|Datos registrales|Titularidad de las imágenes)\]/;
 const foundAnchors = new Set();
 
 for (const file of htmlFiles) {
@@ -147,6 +173,12 @@ for (const file of htmlFiles) {
         console.error(`ERROR [${rel}]: Frase prohibida encontrada: "${phrase}"`);
         errors++;
       }
+    }
+
+    // Check 6d-bis: Páginas legales sin marcadores de plantilla
+    if (/politica-de-privacidad|aviso-legal/.test(rel) && legalPlaceholders.test(content)) {
+      console.error(`ERROR [${rel}]: Marcador de plantilla en una página legal`);
+      errors++;
     }
 
     // Check 6e: Sin enlaces a tiendas de aplicaciones sin verificar

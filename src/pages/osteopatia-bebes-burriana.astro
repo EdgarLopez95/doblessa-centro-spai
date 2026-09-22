@@ -26,7 +26,7 @@ const principles = [
   },
   {
     title: 'Adaptada a su etapa',
-    text: 'No es igual un recién nacido que un bebé que ya gatea: cada sesión se ajusta a su edad.',
+    text: 'No es igual un recién nacido que un bebé que ya gatea: la edad condiciona el abordaje.',
   },
   {
     title: 'Complementaria',
@@ -38,7 +38,7 @@ const forWho = [
   {
     icon: 'baby',
     title: 'Tras el nacimiento',
-    text: 'Familias que desean una valoración suave de su bebé en las primeras semanas.',
+    text: 'Familias que buscan una primera mirada al bebé en las primeras semanas.',
   },
   {
     icon: 'moon',
@@ -53,14 +53,14 @@ const forWho = [
   {
     icon: 'hands',
     title: 'Junto a la fisioterapia',
-    text: 'Como complemento a otros tratamientos de fisioterapia infantil del centro.',
+    text: 'Junto al resto de servicios de fisioterapia infantil del catálogo.',
   },
 ] as const;
 
 const faqs = [
   {
     q: '¿Qué diferencia hay entre osteopatía y fisioterapia infantil?',
-    a: 'Ambas trabajan con las manos y comparten muchos objetivos. La osteopatía pone el foco en la movilidad y el equilibrio del cuerpo con técnicas muy suaves. En la valoración os explicamos qué enfoque encaja mejor con vuestro bebé.',
+    a: 'Ambas trabajan con las manos y comparten muchos objetivos. La osteopatía pone el foco en la movilidad y el equilibrio del cuerpo. Qué enfoque encaja mejor con cada bebé corresponde valorarlo a un profesional sanitario.',
   },
   {
     q: '¿Duele o le resulta molesto al bebé?',
@@ -91,7 +91,7 @@ const faqs = [
   <PageHero
     tone="infantil"
     eyebrow="Ruta infantil · Osteopatía"
-    lead="Un abordaje manual, suave y respetuoso, pensado para los primeros meses y adaptado al ritmo de cada bebé y de su familia."
+    lead="Osteopatía para bebés: uno de los servicios que Centro Spai publica dentro del bloque de Fisio-Peques."
     breadcrumbs={breadcrumbs}
     image={{
       src: 'centro/equipo-centro-spai.jpg',
@@ -127,6 +127,7 @@ const faqs = [
       <div class="approach__text" data-reveal>
         <span class="eyebrow">Enfoque</span>
         <h2 id="enfoque-title">Escuchar con las manos, <em>sin forzar</em></h2>
+        <p class="proposal-tag">Propuesta de experiencia para el rediseño</p>
         <p class="lead">
           La osteopatía infantil utiliza técnicas manuales muy suaves para valorar y acompañar la movilidad del
           cuerpo del bebé.
@@ -157,7 +158,7 @@ const faqs = [
     <div class="container">
       <div class="section-head" data-reveal>
         <span class="eyebrow">Para quién se orienta</span>
-        <h2 id="quien-title">Situaciones en las que <em>las familias nos consultan</em></h2>
+        <h2 id="quien-title">Situaciones por las que <em>se consulta la osteopatía infantil</em></h2>
         <p class="lead">
           Estas son situaciones frecuentes por las que las familias se interesan por la osteopatía infantil, no un
           listado de indicaciones clínicas.
@@ -191,12 +192,12 @@ const faqs = [
           {
             icon: 'chat',
             title: 'Conversación inicial',
-            text: 'Embarazo, parto, primeras semanas y lo que habéis notado. Revisamos los informes que tengáis.',
+            text: 'Un primer momento para hablar del embarazo, el parto y lo que habéis notado.',
           },
           {
             icon: 'hands',
             title: 'Valoración manual',
-            text: 'Observamos y valoramos con técnicas suaves, siguiendo en todo momento las señales del bebé.',
+            text: 'Un momento de valoración, siguiendo en todo momento las señales del bebé.',
           },
           {
             icon: 'path',

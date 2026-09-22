@@ -206,7 +206,7 @@ server.listen(PORT, async () => {
     await page.waitForTimeout(800);
 
     const statusText = await page.locator('[data-status]').innerText();
-    const expected = 'Solicitud demostrativa: en la web real este formulario conectará con el equipo';
+    const expected = 'Solicitud demostrativa: este formulario no envía ni almacena datos';
     if (!statusText.includes(expected)) {
       console.error(`FAIL: Status text does not contain exact required string: "${expected}"`);
       errors++;
@@ -334,7 +334,32 @@ server.listen(PORT, async () => {
     }
     console.log('✓ Recorridos de atención marcados como propuesta de experiencia');
 
-    // 9. Sin <source> convertido en item de layout (regresión de <Picture>)
+    // 9. El formulario se presenta solo por lo verificable
+    await page.goto(`http://localhost:${PORT}/doblessa-centro-spai/contacto/`, { waitUntil: 'networkidle' });
+    const demoNote = await page.locator('[data-demo-form] .demo-form__note').innerText();
+    if (!/Formulario demostrativo:\s*no envía ni almacena datos/i.test(demoNote)) {
+      console.error(`FAIL: aviso del formulario inesperado: "${demoNote}"`);
+      errors++;
+    } else {
+      console.log('✓ El formulario se anuncia como demostrativo y sin almacenamiento');
+    }
+
+    // 10. Páginas legales neutras, sin marcadores ni obligaciones inventadas
+    for (const legal of ['politica-de-privacidad', 'aviso-legal']) {
+      await page.goto(`http://localhost:${PORT}/doblessa-centro-spai/${legal}/`, { waitUntil: 'networkidle' });
+      const body = await page.locator('main').innerText();
+      if (/\[(Razón social|NIF|Domicilio social|Email de privacidad|Datos registrales)\]/.test(body)) {
+        console.error(`FAIL: ${legal} conserva marcadores de plantilla`);
+        errors++;
+      }
+      if (!/antes de una publicación real/i.test(body)) {
+        console.error(`FAIL: ${legal} no advierte de que la información legal definitiva falta`);
+        errors++;
+      }
+    }
+    console.log('✓ Páginas legales presentadas como propuesta, sin marcadores');
+
+    // 11. Sin <source> convertido en item de layout (regresión de <Picture>)
     const sourceBoxes = await page.evaluate(() =>
       [...document.querySelectorAll('picture.spai-picture > source')].filter(
         (el) => el.getBoundingClientRect().width > 0,

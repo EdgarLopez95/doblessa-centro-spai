@@ -7,7 +7,7 @@ import { ROUTES, withBase } from '../lib/site';
   <div class="demo-form__step" data-step="form">
   <p class="demo-form__note" id="demo-form-note">
     <Icon name="info" size={20} />
-    <span><strong>Formulario demostrativo.</strong> No envía ni guarda datos; sirve para mostrar el flujo de solicitud.</span>
+    <span><strong>Formulario demostrativo:</strong> no envía ni almacena datos.</span>
   </p>
 
   <fieldset class="field-group">
@@ -62,13 +62,13 @@ import { ROUTES, withBase } from '../lib/site';
       </select>
       <Icon name="chevron-right" size={18} class="select-wrap__icon" />
     </div>
-    <p class="field-error" id="motivo-error" hidden>Elige un motivo para poder orientarte.</p>
+    <p class="field-error" id="motivo-error" hidden>Elige un motivo para continuar con el ejemplo.</p>
   </div>
 
   <div class="field" data-only="infantil">
     <label class="field-label" for="edad">Edad aproximada <span class="optional">(opcional)</span></label>
     <input id="edad" name="edad" type="text" autocomplete="off" placeholder="Por ejemplo: 6 semanas" aria-describedby="edad-hint" />
-    <p class="field-hint" id="edad-hint">No necesitamos historia clínica: con una idea general es suficiente.</p>
+    <p class="field-hint" id="edad-hint">Campo de ejemplo: basta una idea general.</p>
   </div>
 
   <div class="field-row">
@@ -80,7 +80,7 @@ import { ROUTES, withBase } from '../lib/site';
     <div class="field">
       <label class="field-label" for="contacto">Teléfono o email <span class="req" aria-hidden="true">*</span></label>
       <input id="contacto" name="contacto" type="text" autocomplete="email" inputmode="email" required aria-describedby="contacto-hint contacto-error" />
-      <p class="field-hint" id="contacto-hint">Lo usaremos solo para responder a tu solicitud.</p>
+      <p class="field-hint" id="contacto-hint">Campo de ejemplo: no se envía a ningún destino.</p>
       <p class="field-error" id="contacto-error" hidden>Indica un teléfono o un email válido.</p>
     </div>
   </div>
@@ -94,10 +94,10 @@ import { ROUTES, withBase } from '../lib/site';
     <label class="consent">
       <input type="checkbox" name="consentimiento" required aria-describedby="consent-error" />
       <span>
-        He leído la <a href={withBase(ROUTES.privacidad)}>política de privacidad</a> y acepto que Centro Spai use estos datos para contactarme sobre mi solicitud. <span class="req" aria-hidden="true">*</span>
+        He leído la <a href={withBase(ROUTES.privacidad)}>información legal</a> y acepto continuar con esta solicitud demostrativa. <span class="req" aria-hidden="true">*</span>
       </span>
     </label>
-    <p class="field-error" id="consent-error" hidden>Necesitamos tu consentimiento para poder responderte.</p>
+    <p class="field-error" id="consent-error" hidden>Marca la casilla para continuar con el ejemplo.</p>
   </div>
 
   <div class="demo-form__footer">
@@ -113,7 +113,7 @@ import { ROUTES, withBase } from '../lib/site';
   <section class="summary" data-step="summary" aria-labelledby="summary-title" hidden>
     <h3 class="summary__title" id="summary-title" tabindex="-1">Revisa tu solicitud</h3>
     <p class="summary__intro">
-      Comprueba que los datos son correctos antes de confirmar. Todavía no se ha enviado nada.
+      Este es el resumen del ejemplo. No se envía nada al confirmar.
     </p>
     <dl class="summary__list" data-summary></dl>
     <div class="summary__actions">
@@ -128,8 +128,8 @@ import { ROUTES, withBase } from '../lib/site';
   <div class="demo-form__status" role="status" aria-live="polite" tabindex="-1" data-status hidden>
     <Icon name="check" size={22} />
     <div>
-      <p><strong>Solicitud demostrativa: en la web real este formulario conectará con el equipo.</strong></p>
-      <p>No se ha enviado ningún dato. En la versión publicada, aquí se confirmaría cómo y cuándo contactará Spai.</p>
+      <p><strong>Solicitud demostrativa: este formulario no envía ni almacena datos.</strong></p>
+      <p>Nada de lo que has escrito ha salido de esta página.</p>
       <button type="button" class="btn btn--secondary demo-form__restart" data-restart>Hacer otra solicitud</button>
     </div>
   </div>

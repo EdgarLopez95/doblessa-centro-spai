@@ -1,51 +1,34 @@
 ---
 import LegalPage from '../components/LegalPage.astro';
-import { ROUTES } from '../lib/site';
+import { CONTACT, ROUTES } from '../lib/site';
 ---
 
 <LegalPage
   title="Aviso legal | Centro Spai"
   heading="Aviso legal"
-  description="Aviso legal y condiciones de uso de la web de Centro Spai."
+  description="Información legal de la propuesta de rediseño de la web de Centro Spai."
   path={ROUTES.avisoLegal}
 >
-  <h2>1. Datos identificativos</h2>
+  <h2>Sobre esta web</h2>
   <p>
-    Titular del sitio web: <span class="placeholder">[Razón social]</span>. NIF:
-    <span class="placeholder">[NIF]</span>. Domicilio: <span class="placeholder">[Domicilio social]</span>.
-    Datos registrales y, en su caso, colegiales: <span class="placeholder">[Datos registrales]</span>.
+    Esta web es una propuesta de rediseño para Centro Spai. Los servicios, talleres, recursos digitales, imágenes y
+    datos de contacto que aparecen proceden de la web pública del centro, {CONTACT.currentDomain}.
   </p>
 
-  <h2>2. Objeto</h2>
+  <h2>Qué incluirá esta página en la versión publicada</h2>
+  <ul>
+    <li>Datos identificativos del titular del sitio y, en su caso, datos registrales y colegiales.</li>
+    <li>Condiciones de uso del sitio web.</li>
+    <li>Titularidad de los textos, las imágenes y los signos distintivos.</li>
+    <li>Régimen de responsabilidad y legislación aplicable.</li>
+  </ul>
   <p>
-    Este sitio web ofrece información sobre los servicios de fisioterapia, osteopatía y bienestar de Centro Spai y
-    permite solicitar información o cita.
+    Esa información deberá redactarse y revisarse con asesoramiento legal antes de una publicación real del sitio.
   </p>
 
-  <h2>3. Información sanitaria</h2>
+  <h2>Contenidos de salud</h2>
   <p>
-    Los contenidos tienen carácter informativo y no sustituyen la valoración de un profesional sanitario. No deben
-    utilizarse para realizar diagnósticos ni para decidir tratamientos sin consulta profesional.
+    Los contenidos sanitarios tienen carácter informativo y no sustituyen la valoración de un profesional sanitario.
+    No deben utilizarse para decidir sobre un diagnóstico o un tratamiento.
   </p>
-
-  <h2>4. Condiciones de uso</h2>
-  <p>
-    La persona usuaria se compromete a hacer un uso adecuado de los contenidos y a no emplearlos para actividades
-    ilícitas o contrarias a la buena fe.
-  </p>
-
-  <h2>5. Propiedad intelectual</h2>
-  <p>
-    Los textos, imágenes, logotipos y demás elementos del sitio pertenecen a su titular o se usan con autorización.
-    Queda prohibida su reproducción sin permiso: <span class="placeholder">[Titularidad de las imágenes]</span>.
-  </p>
-
-  <h2>6. Responsabilidad</h2>
-  <p>
-    El titular no se hace responsable del mal uso de los contenidos ni de posibles interrupciones del servicio ajenas
-    a su control.
-  </p>
-
-  <h2>7. Legislación aplicable</h2>
-  <p>La relación se rige por la normativa española vigente.</p>
 </LegalPage>

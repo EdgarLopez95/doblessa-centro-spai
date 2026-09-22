@@ -73,6 +73,19 @@ Regla aplicada: **todo lo que no esté sustentado por la web del centro se prese
 - **Catálogo de adultos**: «Radiofrecuencia corporal y facial» pasa a «Radiofrecuencia», por no constar ese detalle en la documentación del proyecto.
 - **Presentación**: la interfaz se ve terminada. Los pendientes viven en `GAPS.md`, `ESTADO.md` y el inventario, no repetidos por toda la web.
 
+## Cierre de afirmaciones no verificadas (tercera pasada)
+
+Criterio: en las rutas clínicas no queda ninguna frase que presente como hecho actual que Centro Spai explique o acompañe personalmente, realice valoraciones, aplique técnicas suaves o manuales adaptadas, ayude a recuperarse, trate al bebé o determine qué enfoque necesita cada persona. Cada una se resolvió por una de estas tres vías: reescritura como contenido publicado por el centro, reescritura como propuesta dentro de un bloque etiquetado, o eliminación.
+
+- **Cólicos**: el hero deja de prometer explicación y acompañamiento; «Cómo os acompaña el centro» pasa a «Cómo lo plantea esta propuesta»; «Valoración suave del bebé» pasa a «Observación del bebé»; las FAQ devuelven la valoración del caso al profesional sanitario.
+- **Osteopatía**: hero reescrito como servicio publicado; el bloque de enfoque lleva ya la etiqueta de propuesta; «las familias nos consultan» pasa a «se consulta la osteopatía infantil»; la FAQ deja de prometer que en la valoración se explique qué enfoque encaja.
+- **Infantil**: «Tratamos al bebé, acompañamos a la familia» pasa a «La infancia, el área principal del centro»; las tarjetas por etapa describen categorías del catálogo; el equipo se atribuye a lo que la web del centro publica, sin perfiles.
+- **Embarazo y posparto**: fuera «te ayudamos a cuidar tu cuerpo» y «recuperarte a tu ritmo»; los dos bloques pasan a «Servicios para el embarazo» y «Servicios para el posparto»; el enfoque lleva etiqueta de propuesta.
+- **Inicio**: tarjetas de necesidad convertidas en categorías, fuera «Si ya venís con vuestros hijos…» y «Sin compromiso».
+- **Adultos**: eliminada «Cada una la presta un profesional con su propia titulación»; el hero enumera las áreas de la ruta en lugar de prometer alivio. Se mantienen el inventario histórico y su aviso sanitario.
+- **Contacto y formulario**: la interfaz solo afirma lo verificable, «Formulario demostrativo: no envía ni almacena datos». Ningún texto dice que el centro responderá, gestionará citas ni tratará datos. Teléfonos, email, dirección y WhatsApp siguen visibles.
+- **Legal**: ambas páginas pasan a una presentación neutra, sin placeholders ni obligaciones, responsables, plazos o consentimientos inventados. Explican qué deberá incorporarse antes de una publicación real y mantienen el aviso sanitario general.
+
 ## Qué textos clínicos u operativos se suavizaron en la primera pasada
 
 - «Manos expertas» y «ritmo suave» en el hero infantil → descripción sin atribuir una práctica concreta.
@@ -93,8 +106,8 @@ Dominio y grafía definitivos, operatividad de los teléfonos y número de Whats
 ## Resultado de build y verificaciones
 
 - `npm run build` → 12 rutas estáticas generadas sin errores ni avisos.
-- `node scripts/verify-build.mjs` → **0 errores**. Comprueba 12 páginas, 1 H1 por página, cero `href="#"`, `noindex, follow`, cero referencias a Google Fonts, fuentes en disco, rutas de imágenes y WebP, anclas requeridas (incluidas `#herencia`, `#inventario` y `#otros-talleres`), presencia de los datos de contacto en todas las páginas, enlaces `tel:`/`mailto:`, ausencia de enlaces a tiendas sin verificar y una **lista de 27 frases prohibidas** que cubre las contradicciones con la web del centro, las afirmaciones de práctica o resultado y el andamiaje de proyecto («pendiente de validar», «Por validar», «confirmará el centro», «mockup», «maqueta»…).
-- `node scripts/qa-browser-tests.mjs` → **0 errores**. Suma a las pruebas previas: enlaces de contacto, formato online y CTA del Taller Moquitos, dos apps con recurso gráfico propio, catálogos de infantil y adultos, que las cinco rutas de servicio marquen su recorrido con «Propuesta de experiencia para el rediseño», y que ningún `<source>` genere caja en el layout.
+- `node scripts/verify-build.mjs` → **0 errores**. Comprueba 12 páginas, 1 H1 por página, cero `href="#"`, `noindex, follow`, cero referencias a Google Fonts, fuentes en disco, rutas de imágenes y WebP, anclas requeridas (incluidas `#herencia`, `#inventario` y `#otros-talleres`), presencia de los datos de contacto en todas las páginas, enlaces `tel:`/`mailto:`, ausencia de enlaces a tiendas sin verificar y una **lista de 47 frases prohibidas** que cubre las contradicciones con la web del centro, las afirmaciones de práctica, proceso o resultado («os explicamos», «te ayudamos», «valoramos al bebé», «técnicas manuales suaves», «a tu ritmo», «Sin compromiso»…) y el andamiaje de proyecto («pendiente de validar», «Por validar», «confirmará el centro», «mockup», «maqueta»). Comprueba además que las páginas legales no conserven marcadores de plantilla.
+- `node scripts/qa-browser-tests.mjs` → **0 errores**. Suma a las pruebas previas: enlaces de contacto, formato online y CTA del Taller Moquitos, dos apps con recurso gráfico propio, catálogos de infantil y adultos, que las cinco rutas de servicio marquen su recorrido con «Propuesta de experiencia para el rediseño», que el formulario se anuncie como demostrativo y sin almacenamiento, que las páginas legales estén libres de marcadores y adviertan de lo que falta, y que ningún `<source>` genere caja en el layout.
 - QA visual con Playwright en 390 y 1440: sin desbordamiento horizontal, sin errores de consola y sin respuestas 4xx.
 
 ## Últimos cambios
@@ -102,6 +115,7 @@ Dominio y grafía definitivos, operatividad de los teléfonos y número de Whats
 1. Corrección de fidelidad de herencia: recuperación de contacto, taller, apps y catálogos infantil y adulto.
 2. Dos correcciones técnicas de calado: `BUG-17` (el `<source>` de `<Picture>` se convertía en item de grid/flex) y `BUG-18` (las reglas CSS con ámbito `.x img` dejaron de aplicarse tras migrar a `<Picture>`).
 3. Ajuste de fidelidad de contenido (`BUG-19`): reescritura de los reclamos no sustentados y retirada del andamiaje de validación de la interfaz.
+4. Cierre de afirmaciones no verificadas (`BUG-20`): rutas clínicas sin afirmaciones de práctica, formulario y páginas legales reducidos a lo verificable.
 
 Ver `BUGS.md` y `git log`.
 
