@@ -216,7 +216,7 @@ server.listen(PORT, async () => {
 
     // 3. Test Domain copy in Contact and Footer
     const contactDomain = await page.locator('.domain-note').innerText();
-    const expectedDomainCopy = 'El dominio público actual es centro-espai.com. El nombre de marca de esta propuesta es Centro Spai. La grafía definitiva la confirmará el cliente.';
+    const expectedDomainCopy = 'Web actual del centro: centro-espai.com';
     if (!contactDomain.includes(expectedDomainCopy)) {
       console.error('FAIL: Exact domain copy not found in Contact domain note');
       errors++;
@@ -312,7 +312,29 @@ server.listen(PORT, async () => {
     }
     console.log('✓ Inventario adulto heredado presente con sus imágenes');
 
-    // 8. Sin <source> convertido en item de layout (regresión de <Picture>)
+    // 8. La etiqueta de propuesta acompaña a los recorridos de atención
+    for (const route of [
+      'fisioterapia-infantil-burriana',
+      'colicos-del-lactante-burriana',
+      'osteopatia-bebes-burriana',
+      'fisioterapia-adultos-burriana',
+      'embarazo-posparto',
+    ]) {
+      await page.goto(`http://localhost:${PORT}/doblessa-centro-spai/${route}/`, { waitUntil: 'networkidle' });
+      const tags = await page.locator('.proposal-tag').count();
+      if (tags < 1) {
+        console.error(`FAIL: ${route} no marca su recorrido como propuesta de experiencia`);
+        errors++;
+      }
+      const tagText = tags ? await page.locator('.proposal-tag').first().innerText() : '';
+      if (tags && !/Propuesta de experiencia para el rediseño/i.test(tagText)) {
+        console.error(`FAIL: etiqueta de propuesta inesperada en ${route}: "${tagText}"`);
+        errors++;
+      }
+    }
+    console.log('✓ Recorridos de atención marcados como propuesta de experiencia');
+
+    // 9. Sin <source> convertido en item de layout (regresión de <Picture>)
     const sourceBoxes = await page.evaluate(() =>
       [...document.querySelectorAll('picture.spai-picture > source')].filter(
         (el) => el.getBoundingClientRect().width > 0,

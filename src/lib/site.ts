@@ -23,9 +23,9 @@ export const SITE = {
   region: 'Castellón',
   defaultImage: 'images/inicio/hero-centro-spai.jpg',
   /**
-   * Datos heredados de la web original (centro-espai.com, revisada el
-   * 22/09/2026). Se muestran porque están publicados en la fuente; su
-   * operatividad actual la confirmará el centro antes de una web real.
+   * Datos publicados por la web del centro (centro-espai.com, revisada el
+   * 22/09/2026). La trazabilidad y los pendientes viven en GAPS.md, no en
+   * la interfaz.
    */
   address: {
     street: 'Calle San José, 18',
@@ -37,7 +37,7 @@ export const SITE = {
 } as const;
 
 /**
- * Canales de contacto publicados por la web original. No se inventa ningún
+ * Canales de contacto publicados por la web del centro. No se inventa ningún
  * dato: horario y número de WhatsApp no aparecen en la fuente, por eso no se
  * construye ni un horario ni un enlace wa.me.
  */
@@ -57,9 +57,10 @@ export const CONTACT = {
   email: 'info@centro-spai.com',
   whatsapp: {
     label: 'WhatsApp',
-    note: 'Canal de contacto presente en la web original. El número asociado lo confirmará el centro.',
+    display: 'Disponible en el centro',
   },
-  source: 'Datos heredados de la web original; operatividad pendiente de confirmar.',
+  /** Dominio desde el que el centro publica hoy. */
+  currentDomain: 'centro-espai.com',
 } as const;
 
 export const ROUTES = {

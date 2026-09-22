@@ -2,7 +2,7 @@
 
 ## Estado actual
 
-Mockup estático multipágina de alta fidelidad, responsive y publicado en GitHub Pages. Tras la **corrección de fidelidad de herencia** (22/09/2026) el sitio recupera los servicios, talleres, apps, técnicas, imágenes y datos de contacto que sí publicaba la web original (`centro-espai.com`), y reescribe o marca como propuesta los procesos de atención y explicaciones clínicas que no constan en esa fuente.
+Mockup estático multipágina de alta fidelidad, responsive y publicado en GitHub Pages. Tras la **corrección de fidelidad de herencia** y el posterior **ajuste de fidelidad de contenido** (22/09/2026), el sitio recupera todo lo que publica la web del centro (`centro-espai.com`), presenta como propuesta editorial lo que no está sustentado por esa fuente y **saca de la interfaz el andamiaje del proyecto**: ya no hay sellos «Por validar», «pendiente de confirmar» ni menciones a que esto sea una maqueta por validar. En pantalla quedan solo los avisos sanitarios imprescindibles, la aclaración de que formularios y botones son demostrativos y una etiqueta discreta de «Propuesta de experiencia para el rediseño» sobre los recorridos de atención.
 
 Referencias de decisión: `../Recursos/auditoria-herencia-y-sustento-centro-spai.md` (fuente principal), `../Recursos/auditoria-web-centro-espai.md` y `design/inventario-herencia-sitio-original.md` (trazabilidad recurso a recurso).
 
@@ -24,12 +24,12 @@ El detalle de puntos pendientes de validación está en `GAPS.md`; el historial 
 | Ruta | Contenido | Indexación |
 |---|---|---|
 | `/` | Hero pediátrico, selector de audiencia, necesidades, cólicos destacado, confianza (concepto de marca y dos líneas de cita), primera visita, el centro con dirección heredada, adultos y CTA | `noindex, follow` |
-| `/fisioterapia-infantil-burriana/` | Enfoque, servicios por etapa, desarrollo, respiratorio, orientación, **catálogo heredado `#herencia`**, primera visita como propuesta, perfiles pendientes, FAQ | `noindex, follow` |
+| `/fisioterapia-infantil-burriana/` | Enfoque, servicios por etapa, desarrollo, respiratorio, orientación, **catálogo del centro `#herencia`**, primera visita como propuesta, equipo por rol y especialidad, FAQ | `noindex, follow` |
 | `/colicos-del-lactante-burriana/` | Índice, señales, acompañamiento (con **mención histórica a MOVAC**), primera visita como propuesta, cuándo consultar, FAQ | `noindex, follow` |
 | `/osteopatia-bebes-burriana/` | Enfoque prudente, para quién, atención como propuesta, FAQ | `noindex, follow` |
 | `/fisioterapia-adultos-burriana/` | Tratamientos por objetivo, **inventario heredado `#inventario`** (fisioterapia y osteopatía, embarazo y posparto, bienestar y MTC, fisio-estética), proceso como propuesta, puente a infantil, FAQ | `noindex, follow` |
 | `/embarazo-posparto/` | Enfoque, **catálogo heredado** por etapas, proceso como propuesta, aviso sanitario, FAQ | `noindex, follow` |
-| `/el-centro/` | Filosofía, enfoque humano, galería con visor, equipo pendiente, visita con dirección y **dos teléfonos heredados** | `noindex, follow` |
+| `/el-centro/` | Principios de la propuesta, enfoque humano, galería con visor, equipo, visita con dirección y **dos teléfonos del centro** | `noindex, follow` |
 | `/talleres/` | **Taller Moquitos · Online** con CTA «Apúntate al taller», **dos apps con recurso gráfico propio y CTA visual de descarga**, banda de apps, **`#otros-talleres`** (Baby-Nesst, estimulación sensorial, lenguaje y signos, masaje infantil) | `noindex, follow` |
 | `/contacto/` | Formulario demostrativo en 3 pasos, **datos del centro heredados** (dirección, dos teléfonos, email, WhatsApp), mapa ilustrativo | `noindex, follow` |
 | `/politica-de-privacidad/`, `/aviso-legal/` | Estructura legal con placeholders | `noindex, follow` |
@@ -61,12 +61,24 @@ El detalle de puntos pendientes de validación está en `GAPS.md`; el historial 
 
 Trazabilidad completa en `design/inventario-herencia-sitio-original.md`.
 
-## Qué textos clínicos u operativos se han suavizado
+## Ajuste de fidelidad de contenido (segunda pasada)
+
+Regla aplicada: **todo lo que no esté sustentado por la web del centro se presenta como propuesta editorial o se elimina**. Ningún bloque afirma protocolos clínicos, procesos de atención, disponibilidad ni capacidades operativas como hechos actuales.
+
+- **Reclamos de marca**: «Cuidado experto, desde el primer día» se sustituye por el concepto que el propio centro publica, «Bienestar, salud y relajación», en inicio, pie y El centro.
+- **Home**: fuera «fisioterapia y osteopatía suave y personalizada», «os ayudamos a entender», «valoramos al bebé con delicadeza», «os damos tiempo», «sabiendo cómo seguir» y «trato cercano desde la primera llamada». El bloque de confianza pasa a cuatro rasgos comprobables.
+- **Taller Moquitos**: se mantiene el formato online que publica el centro; fuera «lo ha ofrecido en formato presencial y también online» y «se ha impartido a distancia». «Qué se trabaja» pasa a **«Temas del taller»**, sin instrucciones de higiene nasal, posturas ni rutinas.
+- **Apps**: «Centro Spai desarrolló dos aplicaciones…» pasa a «La web original de Centro Spai promocionaba dos aplicaciones vinculadas a cólicos del lactante». Ninguna descripción atribuye funciones, contenido interno ni disponibilidad actual.
+- **Rutas clínicas**: revisadas FAQs, timelines, CTA y textos de apoyo de infantil, cólicos, osteopatía, adultos y embarazo/posparto. Fuera la coordinación de horarios, la ropa que llevar, el consejo de cómo venir a la visita, el seguimiento individual y la elección de tratamiento; se conservan los avisos sanitarios y la derivación a pediatra, matrona o ginecólogo.
+- **Catálogo de adultos**: «Radiofrecuencia corporal y facial» pasa a «Radiofrecuencia», por no constar ese detalle en la documentación del proyecto.
+- **Presentación**: la interfaz se ve terminada. Los pendientes viven en `GAPS.md`, `ESTADO.md` y el inventario, no repetidos por toda la web.
+
+## Qué textos clínicos u operativos se suavizaron en la primera pasada
 
 - «Manos expertas» y «ritmo suave» en el hero infantil → descripción sin atribuir una práctica concreta.
 - «Pautas para casa» (home, infantil, cólicos, osteopatía) → tiempo para preguntas y explicaciones, sin prescribir.
 - Coordinación con pediatría, matrona o ginecología presentada como práctica → ahora el profesional sanitario figura como referencia, no como circuito del centro.
-- «Qué ocurre en la primera cita» / «Así será tu primera cita» / «Cómo es la atención» → «Cómo imaginamos…», con etiqueta visible **«Propuesta de experiencia, pendiente de validar con el centro»** (`.proposal-tag`).
+- «Qué ocurre en la primera cita» / «Así será tu primera cita» / «Cómo es la atención» → «Cómo imaginamos…», con la etiqueta discreta **«Propuesta de experiencia para el rediseño»** (`.proposal-tag`), presente también en inicio y en los principios de El centro.
 - «Te orientamos», «te proponemos», «te avisamos», «te informará de la próxima convocatoria» → el centro como sujeto de la respuesta, sin prometer flujo ni plazo.
 - «Exploramos dónde está el origen» y «para que ganes autonomía» (adultos) → valoración y seguimiento sin promesa de resultado.
 - FAQ de número de sesiones → se explicita que no puede anticiparse desde una web.
@@ -81,13 +93,17 @@ Dominio y grafía definitivos, operatividad de los teléfonos y número de Whats
 ## Resultado de build y verificaciones
 
 - `npm run build` → 12 rutas estáticas generadas sin errores ni avisos.
-- `node scripts/verify-build.mjs` → **0 errores**. Comprueba 12 páginas, 1 H1 por página, cero `href="#"`, `noindex, follow`, cero referencias a Google Fonts, fuentes en disco, rutas de imágenes y WebP, anclas requeridas (incluidas `#herencia`, `#inventario` y `#otros-talleres`), y ahora también: presencia de los datos de contacto heredados en todas las páginas, enlaces `tel:`/`mailto:`, ausencia de frases que contradicen la web original y ausencia de enlaces a tiendas sin verificar.
-- `node scripts/qa-browser-tests.mjs` → **0 errores**. Suma a las pruebas previas: enlaces de contacto heredados, formato online y CTA del Taller Moquitos, dos apps con recurso gráfico propio, catálogos heredados de infantil y adultos, y que ningún `<source>` genere caja en el layout.
+- `node scripts/verify-build.mjs` → **0 errores**. Comprueba 12 páginas, 1 H1 por página, cero `href="#"`, `noindex, follow`, cero referencias a Google Fonts, fuentes en disco, rutas de imágenes y WebP, anclas requeridas (incluidas `#herencia`, `#inventario` y `#otros-talleres`), presencia de los datos de contacto en todas las páginas, enlaces `tel:`/`mailto:`, ausencia de enlaces a tiendas sin verificar y una **lista de 27 frases prohibidas** que cubre las contradicciones con la web del centro, las afirmaciones de práctica o resultado y el andamiaje de proyecto («pendiente de validar», «Por validar», «confirmará el centro», «mockup», «maqueta»…).
+- `node scripts/qa-browser-tests.mjs` → **0 errores**. Suma a las pruebas previas: enlaces de contacto, formato online y CTA del Taller Moquitos, dos apps con recurso gráfico propio, catálogos de infantil y adultos, que las cinco rutas de servicio marquen su recorrido con «Propuesta de experiencia para el rediseño», y que ningún `<source>` genere caja en el layout.
 - QA visual con Playwright en 390 y 1440: sin desbordamiento horizontal, sin errores de consola y sin respuestas 4xx.
 
 ## Últimos cambios
 
-Corrección de fidelidad de herencia (recuperación de contacto, taller, apps, catálogos infantil y adulto, y reescritura de claims), más dos correcciones técnicas de calado: `BUG-17` (el `<source>` de `<Picture>` se convertía en item de grid/flex y descolocaba las imágenes) y `BUG-18` (las reglas CSS con ámbito `.x img` dejaron de aplicarse tras migrar a `<Picture>`). Ver `BUGS.md` y `git log`.
+1. Corrección de fidelidad de herencia: recuperación de contacto, taller, apps y catálogos infantil y adulto.
+2. Dos correcciones técnicas de calado: `BUG-17` (el `<source>` de `<Picture>` se convertía en item de grid/flex) y `BUG-18` (las reglas CSS con ámbito `.x img` dejaron de aplicarse tras migrar a `<Picture>`).
+3. Ajuste de fidelidad de contenido (`BUG-19`): reescritura de los reclamos no sustentados y retirada del andamiaje de validación de la interfaz.
+
+Ver `BUGS.md` y `git log`.
 
 ## Próxima acción
 

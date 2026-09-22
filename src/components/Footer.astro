@@ -38,7 +38,7 @@ const columns = [
         <a href={withBase(ROUTES.home)} class="site-footer__logo" aria-label="Centro Spai, ir al inicio">
           <Picture src="marca/logo-centro-spai.png" alt="" width={346} height={103} loading="lazy" decoding="async" />
         </a>
-        <p class="site-footer__claim">Cuidado experto, <em>desde el primer día.</em></p>
+        <p class="site-footer__claim">Bienestar, salud <em>y relajación.</em></p>
         <p class="site-footer__text">
           Fisioterapia y osteopatía para bebés, niños y familias en Burriana. Y un espacio también para ti.
         </p>
@@ -93,17 +93,15 @@ const columns = [
           </span>
           <span class="site-footer__row">
             <Icon name="chat" size={20} />
-            <span>WhatsApp disponible en el centro</span>
+            <span>{CONTACT.whatsapp.label}: {CONTACT.whatsapp.display.toLowerCase()}</span>
           </span>
         </address>
-        <p class="site-footer__domain-note">
-          El dominio público actual es centro-espai.com. El nombre de marca de esta propuesta es Centro Spai. La grafía definitiva la confirmará el cliente.
-        </p>
+        <p class="site-footer__domain-note">Web actual del centro: {CONTACT.currentDomain}</p>
       </div>
     </div>
 
     <div class="site-footer__bottom">
-      <p>© {year} Centro Spai · Propuesta de rediseño (mockup estático)</p>
+      <p>© {year} Centro Spai</p>
       <ul>
         <li><a href={withBase(ROUTES.privacidad)}>Política de privacidad</a></li>
         <li><a href={withBase(ROUTES.avisoLegal)}>Aviso legal</a></li>

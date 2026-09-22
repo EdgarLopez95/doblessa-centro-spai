@@ -36,7 +36,7 @@ const groups = [
     id: 'movimiento',
     kicker: 'Movimiento y ejercicio',
     title: 'Moverte mejor en tu día a día',
-    text: 'Ejercicio guiado para ganar movilidad, trabajar la postura y sentirte más fuerte, a tu ritmo.',
+    text: 'Pilates y trabajo de movilidad y postura dentro del catálogo del centro.',
     chips: ['Pilates', 'Movilidad', 'Postura'],
     image: {
       src: 'adultos-bienestar/bienestar-y-relax.jpg',
@@ -48,7 +48,7 @@ const groups = [
     id: 'bienestar',
     kicker: 'Bienestar y relax',
     title: 'Un momento para bajar el ritmo',
-    text: 'Terapias orientadas al descanso y al bienestar general. Te explicamos el alcance de cada una en consulta.',
+    text: 'Terapias orientadas al descanso y al bienestar general.',
     chips: ['Terapias de relax', 'Drenaje', 'Medicina tradicional china', 'Fisioestética'],
     image: {
       src: 'adultos-bienestar/terapias-de-relax.png',
@@ -128,7 +128,7 @@ const inventario = [
       'Fisio-estética',
       'Tratamientos reductores y reafirmantes',
       'Indiba',
-      'Radiofrecuencia corporal y facial',
+      'Radiofrecuencia',
       'Vacumterapia',
       'Láser lipolítico',
       'Cavitación',
@@ -140,19 +140,19 @@ const inventario = [
 const faqs = [
   {
     q: '¿Puedo pedir cita para mí si mi hijo ya es paciente del centro?',
-    a: 'Claro. La ruta de adultos es independiente: pides tu propia cita y tienes tu propio seguimiento. Si os viene bien, intentamos coordinar horarios.',
+    a: 'Sí. Centro Spai atiende a bebés y niños y también a adultos, con líneas de cita diferenciadas para cada ruta.',
   },
   {
     q: '¿Cómo sé qué tratamiento necesito?',
-    a: 'No hace falta que lo sepas al pedir cita. Qué enfoque encaja mejor es algo que valora el profesional que te atiende.',
+    a: 'Elegir el tratamiento corresponde al profesional que te atiende, no a esta web.',
   },
   {
-    q: '¿Qué ropa llevo a la sesión?',
-    a: 'Ropa cómoda que te permita moverte. Si vienes a una sesión de ejercicio, mejor ropa deportiva.',
+    q: '¿Qué técnicas aparecen en el catálogo del centro?',
+    a: 'Terapia manual, osteopatía, punción seca, kinesiotaping, masaje, drenaje linfático, reeducación postural, electroterapia, pilates, escoliosis y grupos de espalda, además de bienestar, medicina tradicional china y fisio-estética. El listado completo está en esta página.',
   },
   {
     q: '¿Las terapias de bienestar sustituyen a un tratamiento médico?',
-    a: 'No. Son terapias complementarias orientadas al bienestar. Si tienes una patología o estás en tratamiento, coméntanoslo para valorar qué es adecuado.',
+    a: 'No. Son terapias orientadas al bienestar. Si tienes una patología o estás en tratamiento, consúltalo con tu profesional sanitario.',
   },
 ];
 ---
@@ -202,8 +202,8 @@ const faqs = [
           <h2 id="tratamientos-title">Empieza por <em class="well">lo que buscas</em></h2>
         </div>
         <p class="lead">
-          Hemos agrupado los tratamientos por objetivo. En la primera sesión te ayudamos a elegir, sin catálogos
-          interminables.
+          Hemos agrupado por objetivo los tratamientos que aparecen en el catálogo del centro, para que se lean sin
+          esfuerzo.
         </p>
       </div>
 
@@ -262,8 +262,8 @@ const faqs = [
       </div>
       <p class="scope-note" data-reveal>
         <Icon name="info" size={18} />
-        Las técnicas que aparecen aquí figuraban en la web anterior de Centro Spai. Se muestran como oferta
-        heredada; su vigencia actual la confirmará el centro y no constituyen un compromiso de tratamiento.
+        Las técnicas que aparecen aquí figuran en el catálogo publicado por Centro Spai. No constituyen un
+        compromiso de tratamiento ni una promesa de resultado.
       </p>
     </div>
   </section>
@@ -272,11 +272,11 @@ const faqs = [
   <section class="section surface-well" id="inventario" aria-labelledby="inventario-title">
     <div class="container">
       <div class="section-head" data-reveal>
-        <span class="eyebrow eyebrow--well">Catálogo heredado</span>
-        <h2 id="inventario-title">Tratamientos y técnicas presentes <em class="well">en la web original</em></h2>
+        <span class="eyebrow eyebrow--well">Del catálogo de Centro Spai</span>
+        <h2 id="inventario-title">Tratamientos y técnicas <em class="well">del centro</em></h2>
         <p class="lead">
-          Este es el inventario que Centro Spai tenía publicado para adultos. Se recoge íntegro para no perder la
-          herencia del centro: no describe resultados ni sustituye una valoración profesional.
+          El inventario completo que Centro Spai publica para adultos. No describe resultados ni sustituye una
+          valoración profesional.
         </p>
       </div>
       <div class="inventory">
@@ -314,8 +314,7 @@ const faqs = [
       <p class="inventory__note" data-reveal>
         <Icon name="info" size={20} />
         <span>
-          Inventario heredado de la web anterior. La vigencia de cada técnica, el profesional responsable y su
-          titulación los confirmará el centro antes de una web pública.
+          Listado de técnicas publicadas por el centro. Cada una la presta un profesional con su propia titulación.
         </span>
       </p>
     </div>
@@ -327,7 +326,7 @@ const faqs = [
       <div class="section-head" data-reveal>
         <span class="eyebrow eyebrow--well">Cómo imaginamos la atención</span>
         <h2 id="proceso-title">Un plan claro, <em class="well">desde el primer encuentro</em></h2>
-        <p class="proposal-tag">Propuesta de experiencia, pendiente de validar con el centro</p>
+        <p class="proposal-tag">Propuesta de experiencia para el rediseño</p>
       </div>
       <Timeline
         tone="adultos"
@@ -372,7 +371,7 @@ const faqs = [
     tone="adultos"
     eyebrow="Tu cita"
     title="Dedícate un momento"
-    text="Cuéntanos qué necesitas y el centro te dirá qué cita encaja mejor."
+    text="Cuéntanos qué necesitas al pedir la cita."
   />
 </BaseLayout>
 

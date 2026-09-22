@@ -79,23 +79,14 @@ const breadcrumbs = [
               <span class="info-list__icon" aria-hidden="true"><Icon name="chat" size={22} /></span>
               <div>
                 <span class="info-list__label">{CONTACT.whatsapp.label}</span>
-                <p class="info-list__value info-list__value--plain">Canal disponible en el centro</p>
-                <span class="info-list__hint">{CONTACT.whatsapp.note}</span>
+                <p class="info-list__value info-list__value--plain">{CONTACT.whatsapp.display}</p>
               </div>
             </li>
           </ul>
 
-          <p class="inherited-note">
-            <Icon name="info" size={18} />
-            <span>{CONTACT.source}</span>
-          </p>
-
           <div class="domain-note">
             <Icon name="info" size={20} />
-            <p>
-              El dominio público actual es centro-espai.com. El nombre de marca de esta propuesta es Centro Spai. La
-              grafía definitiva la confirmará el cliente.
-            </p>
+            <p>Web actual del centro: {CONTACT.currentDomain}</p>
           </div>
         </div>
 
@@ -146,8 +137,8 @@ const breadcrumbs = [
       <div>
         <h2 id="privacidad-title" class="privacy__title">Tus datos, con cuidado</h2>
         <p class="muted">
-          Solo pedimos lo necesario para responderte. No solicitamos historia clínica por este canal: los detalles de
-          salud se tratan en consulta, de forma confidencial.
+          Solo pedimos lo necesario para poder responderte. Este formulario no es el canal para detallar información
+          de salud.
         </p>
       </div>
     </div>

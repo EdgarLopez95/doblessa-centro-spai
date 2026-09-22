@@ -50,15 +50,38 @@ const inheritedContact = [
   { label: 'dirección', re: /Calle San José, 18/ },
 ];
 
-// Frases que contradicen la web original o inventan operativa
+// Frases que contradicen la web del centro, inventan operativa o exponen
+// el andamiaje interno del proyecto en la interfaz.
 const forbiddenPhrases = [
+  // Contradicen lo publicado por el centro
   'No hay inscripción online',
-  'Pendiente de confirmar por el centro',
-  'Teléfonos y horario: pendientes de confirmar',
   'te informará de la próxima convocatoria',
   'te avisamos cuando haya',
+  'se ha impartido a distancia',
+  'Centro Spai desarrolló',
+  // Afirman práctica, proceso o resultado no sustentados
   'te orientamos',
   'manos expertas',
+  'suave y personalizada',
+  'os ayudamos a entender',
+  'valoramos al bebé',
+  'trato cercano desde',
+  'Cuidado experto',
+  'coordinar horarios',
+  'Radiofrecuencia corporal',
+  // Andamiaje del proyecto: vive en GAPS.md y ESTADO.md, no en pantalla
+  'pendiente de validar',
+  'pendientes de validar',
+  'pendiente de confirmar',
+  'pendientes de confirmar',
+  'pendientes de revisión',
+  'Por validar',
+  'confirmará el centro',
+  'confirmará el cliente',
+  'confirmará el equipo',
+  'Lo aporta el centro',
+  'mockup',
+  'maqueta',
 ];
 const foundAnchors = new Set();
 

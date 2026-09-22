@@ -192,3 +192,19 @@ Este documento detalla los problemas de usabilidad, accesibilidad, coherencia de
 * **Problema**: Astro limita los estilos al ámbito del componente añadiendo `data-astro-cid-*` a los elementos de su plantilla. Al pasar los `<img>` a `Picture.astro`, la imagen quedó en el ámbito del componente hijo, de modo que reglas como `.workshop__media img`, `.app img`, `.home-hero__media img`, `.brand img` o `.gallery__button img` compilaban a `.x[data-astro-cid-A] img[data-astro-cid-A]` y no encajaban con ninguna imagen.
 * **Impacto**: 25 reglas sin efecto: heros sin recorte, logotipo sin dimensionar, galería y tarjetas con imágenes a tamaño natural dentro de contenedores ya dimensionados.
 * **Corrección**: Conversión de esos selectores a `.x :global(img)` en los bloques `<style>` de los 10 archivos afectados, comprobando en el CSS compilado que las reglas vuelven a emitirse sin el atributo de ámbito sobre `img`.
+
+---
+
+### BUG-19: Afirmaciones no sustentadas y andamiaje de validación visibles en la interfaz
+* **Severidad**: Alta (fidelidad y presentación)
+* **Componentes / Páginas**: las 12 rutas, `Footer.astro`, `Faq.astro`, `LegalPage.astro`, `Timeline.astro` y `src/lib/site.ts`
+* **Problema**: dos cosas convivían mal en pantalla. Por un lado, reclamos y procesos que la web del centro no publica se presentaban como hechos: «Cuidado experto, desde el primer día», «fisioterapia y osteopatía suave y personalizada», «os ayudamos a entender», «valoramos al bebé con delicadeza», «trato cercano desde la primera llamada», «Centro Spai desarrolló dos aplicaciones», «lo ha ofrecido en formato presencial y también online», la coordinación de horarios, la ropa que llevar a la sesión o los consejos para la primera visita. Por otro, el andamiaje interno del proyecto era visible en toda la web: sellos «Por validar», «pendiente de confirmar», «Perfiles pendientes de validar», «Lo aporta el centro», «lo confirmará el cliente», «mockup estático» y «maqueta».
+* **Impacto**: el mockup atribuía al centro protocolos y capacidades que nadie ha validado y, a la vez, se presentaba ante el cliente como un documento de trabajo a medio terminar en lugar de como una propuesta acabada.
+* **Corrección**:
+  * Reescritura de copy en las 12 rutas: lo no sustentado pasa a propuesta editorial explícita o se elimina, y los reclamos de marca se sustituyen por el concepto que el propio centro publica, «Bienestar, salud y relajación».
+  * «Qué se trabaja» del Taller Moquitos pasa a **«Temas del taller»**, sin instrucciones clínicas; las apps se describen solo por lo comprobable.
+  * Los recorridos de atención se mantienen con la etiqueta discreta **«Propuesta de experiencia para el rediseño»** (inicio, El centro y las cinco rutas de servicio).
+  * Se retiran de la interfaz todos los sellos de validación y las menciones a maqueta. En pantalla quedan solo los avisos sanitarios, la aclaración de que formularios y botones son demostrativos, y la línea factual «Web actual del centro: centro-espai.com».
+  * Los marcadores de las páginas legales pasan de `[pendiente de validar]` a huecos neutros (`[Razón social]`, `[NIF]`, `[Domicilio social]`…).
+  * «Radiofrecuencia corporal y facial» pasa a «Radiofrecuencia» por falta de evidencia de ese detalle en la documentación del proyecto.
+  * `verify-build.mjs` amplía su lista a **27 frases prohibidas** y `qa-browser-tests.mjs` comprueba que las cinco rutas de servicio marquen su recorrido como propuesta.
