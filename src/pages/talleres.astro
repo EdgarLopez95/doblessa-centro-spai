@@ -15,7 +15,31 @@ const breadcrumbs = [
   { label: 'Inicio', href: ROUTES.home },
   { label: 'Talleres y recursos', href: path },
 ];
-// noindex hasta disponer de fechas, responsable e inscripción reales (ver seo-propuesto.md)
+// Talleres heredados del catálogo publicado por la web original.
+const talleresHistoricos = [
+  {
+    icon: 'sprout',
+    title: 'Baby-Nesst',
+    text: 'Estimulación del gateo y del desarrollo psicomotor, de 4 a 12 meses.',
+  },
+  {
+    icon: 'baby',
+    title: 'Estimulación sensorial',
+    text: 'Propuestas de estimulación para bebés de 0 a 6 meses.',
+  },
+  {
+    icon: 'chat',
+    title: 'Lenguaje y signos del bebé',
+    text: 'Taller sobre comunicación temprana con el bebé mediante signos.',
+  },
+  {
+    icon: 'hands',
+    title: 'Masaje infantil',
+    text: 'Taller para aprender el masaje infantil y aplicarlo en casa.',
+  },
+] as const;
+
+// noindex mientras el mockup viva en GitHub Pages (ver BUG-08)
 ---
 
 <BaseLayout
@@ -50,7 +74,8 @@ const breadcrumbs = [
       <div class="clinical-note" style="margin-bottom: var(--space-6);" data-reveal>
         <Icon name="info" size={20} />
         <p>
-          Calendario, precio e inscripción del Taller Moquitos, y el estado de las aplicaciones, pendientes de confirmar. Esta página no es una inscripción.
+          Talleres y aplicaciones heredados del catálogo publicado por Centro Spai. En esta maqueta los botones son
+          visuales: todavía no están conectados a un sistema de inscripción o de descarga.
         </p>
       </div>
       <article class="workshop" data-reveal>
@@ -67,7 +92,10 @@ const breadcrumbs = [
         <div class="workshop__body">
           <div class="workshop__meta">
             <span class="tag">Taller para familias</span>
-            <span class="pending">Fechas y modalidad por confirmar</span>
+            <span class="tag tag--online">
+              <Icon name="users" size={16} />
+              Online
+            </span>
           </div>
           <h2 id="moquitos-title">Taller <em>Moquitos</em></h2>
           <p class="lead">
@@ -86,17 +114,37 @@ const breadcrumbs = [
             <div>
               <h3>Para quién</h3>
               <p class="muted">
-                Madres, padres y cuidadores de bebés y niños pequeños. La web actual lo presenta en formato
-                presencial y online.
+                Madres, padres y cuidadores de bebés y niños pequeños. Centro Spai lo ha ofrecido en formato
+                presencial y también online.
+              </p>
+            </div>
+          </div>
+          <div class="workshop__online">
+            <figure class="workshop__online-media">
+              <Picture
+                src="talleres-app/taller-moquitos-online.jpg"
+                alt="Cartel del Taller Moquitos en formato online de Centro Spai"
+                width={851}
+                height={955}
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <div class="workshop__online-body">
+              <h3>Taller Moquitos · Online</h3>
+              <p class="muted">
+                El taller también se ha impartido a distancia, para seguirlo desde casa sin desplazarse al centro.
               </p>
             </div>
           </div>
           <div class="workshop__actions">
-            <a class="btn" href={citaHref('infantil')}>
-              Preguntar por próximas fechas
+            <a class="btn btn--lg" href={`${citaHref('infantil')}&motivo=taller`}>
+              Apúntate al taller
               <Icon name="arrow-right" />
             </a>
-            <p class="workshop__hint">No hay inscripción online: el equipo te informará de la próxima convocatoria.</p>
+            <p class="workshop__hint">
+              Maqueta de presentación: el botón abre el formulario de contacto, que no envía datos.
+            </p>
           </div>
         </div>
       </article>
@@ -110,14 +158,14 @@ const breadcrumbs = [
         <span class="eyebrow">Recursos digitales</span>
         <h2 id="apps-title">Apps sobre <em>cólicos del lactante</em></h2>
         <p>
-          Spai ha desarrollado recursos digitales para acompañar a las familias durante los cólicos, con información
-          y apoyo pensado para usar en casa.
+          Centro Spai desarrolló dos aplicaciones para acompañar a las familias durante los cólicos, con contenido
+          pensado para usar en casa. La web original las presentaba con la llamada «Descarga nuestras apps».
         </p>
         <ul class="app-list">
           <li class="app">
             <Picture
               src="talleres-app/app-centro-spai-pantalla-01.jpg"
-              alt=""
+              alt="Icono de la aplicación No más Cólicos de Centro Spai"
               width={180}
               height={180}
               loading="lazy"
@@ -125,24 +173,49 @@ const breadcrumbs = [
             />
             <div>
               <h3>No más Cólicos</h3>
-              <p>Información y pautas para familias con bebés con cólicos.</p>
+              <p>Información y acompañamiento para familias con bebés con cólicos.</p>
+              <button type="button" class="btn btn--secondary app__cta" data-app-cta>
+                <Icon name="arrow-right" size={18} />
+                Descargar app
+              </button>
             </div>
           </li>
           <li class="app">
-            <span class="app__placeholder" aria-hidden="true"><Icon name="book" size={30} /></span>
+            <Picture
+              src="talleres-app/app-centro-spai-pantalla-02.jpg"
+              alt="Icono de la aplicación Anticólicos de Centro Spai"
+              width={180}
+              height={179}
+              loading="lazy"
+              decoding="async"
+            />
             <div>
               <h3>Anticólicos</h3>
-              <p>Recurso de apoyo para los momentos de llanto.</p>
+              <p>Recurso de apoyo para los momentos de llanto del bebé.</p>
+              <button type="button" class="btn btn--secondary app__cta" data-app-cta>
+                <Icon name="arrow-right" size={18} />
+                Descargar app
+              </button>
             </div>
           </li>
         </ul>
-        <p class="apps__note">
-          <Icon name="info" size={20} />
-          <span>
-            Mostramos las apps como recurso informativo. Su disponibilidad actual está pendiente de confirmar, por eso
-            no incluimos enlaces de descarga.
-          </span>
-        </p>
+        <div class="apps__stores">
+          <Picture
+            src="talleres-app/disponible-en-tiendas-app.png"
+            alt="Distintivo de disponibilidad en tiendas de aplicaciones"
+            width={200}
+            height={44}
+            loading="lazy"
+            decoding="async"
+          />
+          <p class="apps__note" role="status" data-app-note>
+            <Icon name="info" size={20} />
+            <span data-app-note-text>
+              Los enlaces definitivos a App Store y Google Play los facilitará el centro; en la maqueta no se enlaza a
+              una tienda sin verificar.
+            </span>
+          </p>
+        </div>
       </div>
       <figure class="apps__media" data-reveal>
         <Picture
@@ -157,14 +230,61 @@ const breadcrumbs = [
     </div>
   </section>
 
+  <!-- Banner heredado de las apps -->
+  <section class="section section--tight" aria-label="Aplicaciones de Centro Spai">
+    <div class="container">
+      <figure class="apps__banner" data-reveal>
+        <Picture
+          src="talleres-app/app-centro-spai.jpg"
+          alt=""
+          width={1920}
+          height={526}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption class="apps__banner-caption">
+          <span class="apps__banner-title">No más Cólicos · Anticólicos</span>
+          <span class="apps__banner-text">Las dos aplicaciones que Centro Spai publicó para acompañar a las familias.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Talleres históricos -->
+  <section class="section surface-warm" id="otros-talleres" aria-labelledby="otros-talleres-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Catálogo heredado</span>
+        <h2 id="otros-talleres-title">Otros talleres que formaban parte <em>de Centro Spai</em></h2>
+        <p class="lead">
+          Aparecían en la web original del centro. Se recogen aquí como catálogo histórico: su continuidad y su
+          calendario los confirmará el centro.
+        </p>
+      </div>
+      <ul class="heritage-grid">
+        {
+          talleresHistoricos.map((t, i) => (
+            <li class="heritage-card" data-reveal style={`--reveal-i:${i}`}>
+              <span class="heritage-card__icon">
+                <Icon name={t.icon} size={24} />
+              </span>
+              <h3>{t.title}</h3>
+              <p>{t.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
   <!-- Otros temas -->
   <section class="section" aria-labelledby="temas-title">
     <div class="container container--narrow topics" data-reveal>
       <span class="eyebrow">Más adelante</span>
       <h2 id="temas-title">Otros temas que trabajamos <em>con familias</em></h2>
       <p class="muted">
-        Además de las sesiones individuales, el centro orienta a las familias en temas de crianza y cuidado diario.
-        Si te interesa alguno, cuéntanoslo al pedir cita.
+        Además de las sesiones individuales, el centro ha acompañado a las familias en temas de crianza y cuidado
+        diario. Si te interesa alguno, cuéntanoslo al pedir cita.
       </p>
       <Chips
         label="Temas para familias"
@@ -181,8 +301,25 @@ const breadcrumbs = [
   <CtaBand
     tone="infantil"
     title="¿Te interesa un taller?"
-    text="Escríbenos y te avisamos cuando haya una nueva convocatoria o te orientamos con una cita."
+    text="Escríbenos contando qué taller te interesa y el centro te dirá cómo está organizado."
   />
+<script>
+  // CTA visual de descarga: no enlaza a ninguna tienda sin verificar.
+  const note = document.querySelector<HTMLElement>('[data-app-note-text]');
+  const original = note?.textContent ?? '';
+  let timer: number | undefined;
+  document.querySelectorAll<HTMLButtonElement>('[data-app-cta]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!note) return;
+      note.textContent =
+        'Maqueta: el enlace de descarga se activará cuando el centro confirme la ficha de la aplicación en cada tienda.';
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        note.textContent = original;
+      }, 6000);
+    });
+  });
+</script>
 </BaseLayout>
 
 <style>
@@ -200,7 +337,7 @@ const breadcrumbs = [
     background: #e9e1dc;
   }
 
-  .workshop__media img {
+  .workshop__media :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -212,7 +349,7 @@ const breadcrumbs = [
       aspect-ratio: 4 / 3;
     }
 
-    .workshop__media img {
+    .workshop__media :global(img) {
       object-position: 24% 40%;
     }
   }
@@ -273,6 +410,149 @@ const breadcrumbs = [
     max-width: 24rem;
   }
 
+  .tag--online {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--sky-100);
+    color: var(--sky-800);
+  }
+
+  .workshop__online {
+    display: grid;
+    gap: var(--space-4);
+    align-items: center;
+    padding: var(--space-4);
+    border-radius: 18px;
+    background: var(--lilac-100);
+  }
+
+  @media (min-width: 40rem) {
+    .workshop__online {
+      grid-template-columns: 9rem minmax(0, 1fr);
+      gap: var(--space-5);
+    }
+  }
+
+  .workshop__online-media {
+    margin: 0;
+  }
+
+  .workshop__online-media :global(img) {
+    width: 100%;
+    max-width: 8rem;
+    border-radius: 14px;
+    object-fit: cover;
+    aspect-ratio: 851 / 955;
+    filter: brightness(1.22) saturate(1.05);
+  }
+
+  .workshop__online-body h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .app__cta {
+    margin-top: var(--space-3);
+    min-height: 44px;
+  }
+
+  .apps__stores {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .apps__stores :global(img) {
+    width: 10rem;
+    height: auto;
+  }
+
+  .apps__banner {
+    position: relative;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+    background: var(--sky-100);
+  }
+
+  .apps__banner :global(img) {
+    width: 100%;
+    height: clamp(9rem, 14vw, 12rem);
+    object-fit: cover;
+    object-position: 50% 45%;
+  }
+
+  .apps__banner-caption {
+    position: absolute;
+    display: grid;
+    gap: 0.15rem;
+    padding-inline: var(--gutter);
+    text-align: center;
+  }
+
+  .apps__banner-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.875rem);
+    font-weight: 560;
+    color: var(--spai-700);
+  }
+
+  .apps__banner-text {
+    font-size: var(--fs-small);
+    color: var(--ink-900);
+  }
+
+  .heritage-grid {
+    list-style: none;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 40rem) {
+    .heritage-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .heritage-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .heritage-card {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding: var(--space-5);
+    border-radius: var(--radius-card);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+
+  .heritage-card__icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: var(--space-1);
+    border-radius: 14px;
+    background: var(--blush-100);
+    color: var(--spai-700);
+  }
+
+  .heritage-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .heritage-card p {
+    color: var(--text-muted);
+    font-size: var(--fs-small);
+  }
+
   .apps {
     display: grid;
     gap: var(--space-7);
@@ -310,7 +590,7 @@ const breadcrumbs = [
     background: var(--white);
   }
 
-  .app img,
+  .app :global(img),
   .app__placeholder {
     width: 4rem;
     height: 4rem;
@@ -350,7 +630,7 @@ const breadcrumbs = [
     margin: 0;
   }
 
-  .apps__media img {
+  .apps__media :global(img) {
     width: 100%;
   }
 

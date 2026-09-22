@@ -4,12 +4,12 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import DemoForm from '../components/DemoForm.astro';
 import Icon from '../components/Icon.astro';
 import Picture from '../components/Picture.astro';
-import { ROUTES, SITE, img } from '../lib/site';
+import { CONTACT, ROUTES, SITE, img } from '../lib/site';
 
 const path = ROUTES.contacto;
 const title = 'Pide cita en Centro Spai | Fisioterapia en Burriana';
 const description =
-  'Solicita cita infantil o para adultos en Centro Spai, Burriana. Elige el tipo de cita, cuéntanos el motivo y te orientamos.';
+  'Contacto de Centro Spai en Burriana: teléfono de cita infantil, teléfono de tratamientos de adultos, email y dirección.';
 const breadcrumbs = [
   { label: 'Inicio', href: ROUTES.home },
   { label: 'Contacto', href: path },
@@ -24,8 +24,8 @@ const breadcrumbs = [
         <span class="eyebrow">Contacto y cita</span>
         <h1>Pide cita en <em>Centro Spai</em></h1>
         <p class="lead">
-          Elige para quién es la cita y cuéntanos brevemente el motivo. No necesitas explicar toda la historia: te
-          orientamos nosotros.
+          Elige para quién es la cita y cuéntanos brevemente el motivo. No hace falta detallar toda la historia
+          clínica en este formulario.
         </p>
       </div>
     </div>
@@ -50,42 +50,45 @@ const breadcrumbs = [
                   {SITE.address.street}<br />
                   {SITE.address.postalCode} {SITE.address.locality} ({SITE.address.region})
                 </address>
-                <span class="pending">Por validar</span>
               </div>
             </li>
-            <li>
-              <span class="info-list__icon" aria-hidden="true"><Icon name="phone" size={22} /></span>
+            <li class="info-list--phone">
+              <span class="info-list__icon info-list__icon--kids" aria-hidden="true"><Icon name="baby" size={22} /></span>
               <div>
-                <span class="info-list__label">Teléfono</span>
-                <p class="info-list__missing">Pendiente de confirmar por el centro</p>
+                <span class="info-list__label">{CONTACT.infantil.label}</span>
+                <a class="info-list__value" href={`tel:${CONTACT.infantil.tel}`}>{CONTACT.infantil.display}</a>
+                <span class="info-list__hint">{CONTACT.infantil.hint}</span>
+              </div>
+            </li>
+            <li class="info-list--phone">
+              <span class="info-list__icon info-list__icon--well" aria-hidden="true"><Icon name="person" size={22} /></span>
+              <div>
+                <span class="info-list__label">{CONTACT.adultos.label}</span>
+                <a class="info-list__value" href={`tel:${CONTACT.adultos.tel}`}>{CONTACT.adultos.display}</a>
+                <span class="info-list__hint">{CONTACT.adultos.hint}</span>
               </div>
             </li>
             <li>
               <span class="info-list__icon" aria-hidden="true"><Icon name="mail" size={22} /></span>
               <div>
                 <span class="info-list__label">Email</span>
-                <p class="info-list__missing">Pendiente de confirmar por el centro</p>
+                <a class="info-list__value" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
               </div>
             </li>
             <li>
-              <span class="info-list__icon" aria-hidden="true"><Icon name="clock" size={24} /></span>
+              <span class="info-list__icon" aria-hidden="true"><Icon name="chat" size={22} /></span>
               <div>
-                <span class="info-list__label">Horario</span>
-                <p class="info-list__missing">Pendiente de confirmar por el centro</p>
+                <span class="info-list__label">{CONTACT.whatsapp.label}</span>
+                <p class="info-list__value info-list__value--plain">Canal disponible en el centro</p>
+                <span class="info-list__hint">{CONTACT.whatsapp.note}</span>
               </div>
             </li>
           </ul>
 
-          <div class="quick">
-            <p class="quick__title">Llamada y WhatsApp</p>
-            <p class="quick__note">
-              <Icon name="chat" size={20} />
-              <span>
-                En la web publicada habrá acceso directo por teléfono y WhatsApp, con líneas diferenciadas para cita
-                infantil y de adultos, en cuanto el centro confirme sus números.
-              </span>
-            </p>
-          </div>
+          <p class="inherited-note">
+            <Icon name="info" size={18} />
+            <span>{CONTACT.source}</span>
+          </p>
 
           <div class="domain-note">
             <Icon name="info" size={20} />
@@ -117,8 +120,8 @@ const breadcrumbs = [
             </span>
           </div>
           <figcaption id="map-caption" class="map__caption">
-            <strong>Mapa ilustrativo</strong> · {SITE.address.street}, {SITE.address.locality} <span class="pending">Por validar</span>. En la web real se enlazará
-            a la ubicación verificada.
+            <strong>Mapa ilustrativo</strong> · {SITE.address.street}, {SITE.address.locality}. En la web real se
+            enlazará a la ubicación verificada en el mapa.
           </figcaption>
         </figure>
 
@@ -260,6 +263,60 @@ const breadcrumbs = [
     margin-bottom: var(--space-1);
   }
 
+  .info-list__value {
+    display: inline-block;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--spai-700);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    min-height: 2.25rem;
+    line-height: 2.25rem;
+  }
+
+  a.info-list__value:hover {
+    color: var(--spai-500);
+    text-decoration: underline;
+  }
+
+  .info-list__value--plain {
+    font-weight: 650;
+    margin: 0;
+  }
+
+  .info-list__hint {
+    display: block;
+    font-size: var(--fs-small);
+    color: var(--ink-600);
+    line-height: 1.45;
+  }
+
+  .info-list__icon--kids {
+    background: var(--lilac-100);
+    color: var(--spai-700);
+  }
+
+  .info-list__icon--well {
+    background: var(--sage-100);
+    color: var(--sage-800);
+  }
+
+  .inherited-note {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-small);
+    color: var(--ink-600);
+  }
+
+  .inherited-note :global(svg) {
+    flex: none;
+    margin-top: 2px;
+    color: var(--spai-500);
+  }
+
   .info-list__missing {
     color: var(--ink-600);
     font-style: italic;
@@ -364,7 +421,7 @@ const breadcrumbs = [
     background: var(--lilac-100);
   }
 
-  .facade img {
+  .facade :global(img) {
     width: 5.5rem;
     aspect-ratio: 1;
     object-fit: cover;

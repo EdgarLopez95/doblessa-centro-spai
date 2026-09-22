@@ -58,6 +58,85 @@ const groups = [
   },
 ];
 
+/**
+ * Técnicas y tratamientos publicados por la web original. Es un inventario
+ * histórico, no un compromiso de tratamiento ni una promesa de resultado.
+ */
+const inventario = [
+  {
+    label: 'Fisioterapia y osteopatía',
+    image: {
+      src: 'adultos-bienestar/fisioterapia-adultos.png',
+      alt: 'Ilustración de una persona ejercitándose sobre una pelota de fitball',
+    },
+    items: [
+      'Fisioterapia y terapias manuales',
+      'Osteopatía estructural, craneal y visceral',
+      'Terapia miofascial',
+      'Punción seca',
+      'Kinesiotaping',
+      'Masaje',
+      'Drenaje linfático manual',
+      'Reeducación postural',
+      'Electroterapia',
+      'Recuperación de lesiones deportivas',
+      'Pilates terapéutico',
+      'Escoliosis',
+      'Escuela y grupos de espalda',
+    ],
+  },
+  {
+    label: 'Embarazo y posparto',
+    image: {
+      src: 'adultos-bienestar/bienestar-y-relax.jpg',
+      alt: 'Fisioterapeuta acompañando a una paciente durante una valoración',
+    },
+    items: [
+      'Tratamientos para embarazadas',
+      'Pilates para embarazadas',
+      'Osteopatía visceral posparto',
+      'Hipopresivos',
+      'Reeducación del suelo pélvico',
+      'Cicatriz tras cesárea',
+    ],
+    href: ROUTES.embarazo,
+    linkLabel: 'Ver embarazo y posparto',
+  },
+  {
+    label: 'Bienestar y medicina tradicional china',
+    image: {
+      src: 'adultos-bienestar/medicina-tradicional-china.png',
+      alt: 'Ilustración de una sesión de ventosas sobre la espalda',
+    },
+    items: [
+      'Terapias relax',
+      'Medicina tradicional china',
+      'Acupuntura',
+      'Moxibustión',
+      'Auriculoterapia',
+      'Ventosas',
+      'Fitoterapia china',
+    ],
+  },
+  {
+    label: 'Fisio-estética',
+    image: {
+      src: 'adultos-bienestar/fisioterapia-estetica.png',
+      alt: 'Ilustración de una sesión de fisioterapia estética en camilla',
+    },
+    items: [
+      'Fisio-estética',
+      'Tratamientos reductores y reafirmantes',
+      'Indiba',
+      'Radiofrecuencia corporal y facial',
+      'Vacumterapia',
+      'Láser lipolítico',
+      'Cavitación',
+      'Presoterapia',
+    ],
+  },
+] as const;
+
 const faqs = [
   {
     q: '¿Puedo pedir cita para mí si mi hijo ya es paciente del centro?',
@@ -65,7 +144,7 @@ const faqs = [
   },
   {
     q: '¿Cómo sé qué tratamiento necesito?',
-    a: 'No hace falta que lo sepas. Cuéntanos qué te pasa y, tras la valoración, te proponemos el enfoque que mejor encaje contigo.',
+    a: 'No hace falta que lo sepas al pedir cita. Qué enfoque encaja mejor es algo que valora el profesional que te atiende.',
   },
   {
     q: '¿Qué ropa llevo a la sesión?',
@@ -182,18 +261,73 @@ const faqs = [
         </a>
       </div>
       <p class="scope-note" data-reveal>
-        <span class="pending">Por validar</span>
-        Algunas técnicas (radiofrecuencia, punción seca, medicina tradicional china, fisioestética) aparecen porque figuraban en la web anterior. Su vigencia actual la confirmará el centro. No son un compromiso de tratamiento.
+        <Icon name="info" size={18} />
+        Las técnicas que aparecen aquí figuraban en la web anterior de Centro Spai. Se muestran como oferta
+        heredada; su vigencia actual la confirmará el centro y no constituyen un compromiso de tratamiento.
+      </p>
+    </div>
+  </section>
+
+  <!-- Inventario heredado -->
+  <section class="section surface-well" id="inventario" aria-labelledby="inventario-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow eyebrow--well">Catálogo heredado</span>
+        <h2 id="inventario-title">Tratamientos y técnicas presentes <em class="well">en la web original</em></h2>
+        <p class="lead">
+          Este es el inventario que Centro Spai tenía publicado para adultos. Se recoge íntegro para no perder la
+          herencia del centro: no describe resultados ni sustituye una valoración profesional.
+        </p>
+      </div>
+      <div class="inventory">
+        {
+          inventario.map((group, i) => (
+            <section class="inventory__group" data-reveal style={`--reveal-i:${i}`} aria-label={group.label}>
+              <figure class="inventory__media">
+                <Picture
+                  src={group.image.src}
+                  alt={group.image.alt}
+                  width={345}
+                  height={253}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <div class="inventory__body">
+                <h3>{group.label}</h3>
+                <ul class="inventory__list">
+                  {group.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+                {group.href && (
+                  <a class="link-arrow" href={withBase(group.href)}>
+                    {group.linkLabel}
+                    <Icon name="arrow-right" />
+                  </a>
+                )}
+              </div>
+            </section>
+          ))
+        }
+      </div>
+      <p class="inventory__note" data-reveal>
+        <Icon name="info" size={20} />
+        <span>
+          Inventario heredado de la web anterior. La vigencia de cada técnica, el profesional responsable y su
+          titulación los confirmará el centro antes de una web pública.
+        </span>
       </p>
     </div>
   </section>
 
   <!-- Proceso -->
-  <section class="section surface-well" aria-labelledby="proceso-title">
+  <section class="section" aria-labelledby="proceso-title">
     <div class="container">
       <div class="section-head" data-reveal>
-        <span class="eyebrow eyebrow--well">Cómo trabajamos</span>
+        <span class="eyebrow eyebrow--well">Cómo imaginamos la atención</span>
         <h2 id="proceso-title">Un plan claro, <em class="well">desde el primer encuentro</em></h2>
+        <p class="proposal-tag">Propuesta de experiencia, pendiente de validar con el centro</p>
       </div>
       <Timeline
         tone="adultos"
@@ -205,13 +339,13 @@ const faqs = [
           },
           {
             icon: 'clipboard',
-            title: 'Valoramos',
-            text: 'Exploramos cómo te mueves y dónde está el origen de la molestia.',
+            title: 'Valoración',
+            text: 'Una valoración inicial para entender tu situación antes de proponer nada.',
           },
           {
             icon: 'path',
-            title: 'Te acompañamos',
-            text: 'Tratamiento, ejercicios y pautas para que ganes autonomía.',
+            title: 'Seguimiento',
+            text: 'Explicaciones claras sobre qué se hace en cada sesión y por qué.',
           },
         ]}
       />
@@ -238,7 +372,7 @@ const faqs = [
     tone="adultos"
     eyebrow="Tu cita"
     title="Dedícate un momento"
-    text="Cuéntanos qué necesitas y te proponemos la cita más adecuada para ti."
+    text="Cuéntanos qué necesitas y el centro te dirá qué cita encaja mejor."
   />
 </BaseLayout>
 
@@ -288,7 +422,7 @@ const faqs = [
     place-items: center;
   }
 
-  .group__media img {
+  .group__media :global(img) {
     box-shadow: 0 0 0 1px var(--sage-200), var(--shadow-soft);
   }
 
@@ -407,12 +541,90 @@ const faqs = [
 
   .scope-note {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-2) var(--space-3);
+    max-width: 52rem;
     margin-top: var(--space-5);
     font-size: var(--fs-small);
     color: var(--text-muted);
+  }
+
+  .inventory {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 48rem) {
+    .inventory {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .inventory__group {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+    border-radius: var(--radius-panel);
+    background: var(--white);
+    border: 1px solid #dde8df;
+  }
+
+  .inventory__media {
+    margin: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .inventory__media :global(img) {
+    width: 100%;
+    max-width: 11rem;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+    padding: 6%;
+    border-radius: 50%;
+    background: var(--white);
+    box-shadow: 0 0 0 1px var(--sage-200), var(--shadow-soft);
+    filter: brightness(1.055) saturate(1.06);
+  }
+
+  .inventory__body h3 {
+    font-size: 1.375rem;
+    color: var(--sage-800);
+    margin-bottom: var(--space-3);
+  }
+
+  .inventory__list {
+    display: grid;
+    gap: var(--space-2);
+    padding-left: 1.1rem;
+    color: var(--text-muted);
+    font-size: var(--fs-small);
+  }
+
+  .inventory__list li::marker {
+    color: #9fbfa7;
+  }
+
+  .inventory__body .link-arrow {
+    margin-top: var(--space-3);
+    color: var(--sage-800);
+  }
+
+  .inventory__note {
+    display: flex;
+    gap: var(--space-3);
+    max-width: 52rem;
+    margin-top: var(--space-6);
+    font-size: var(--fs-small);
+    color: var(--ink-900);
+  }
+
+  .inventory__note :global(svg) {
+    flex: none;
+    margin-top: 2px;
+    color: var(--sage-800);
   }
 
   .bridge {

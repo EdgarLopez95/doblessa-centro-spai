@@ -151,7 +151,7 @@ const { tone = 'neutral', eyebrow, lead, breadcrumbs, image, note } = Astro.prop
     pointer-events: none;
   }
 
-  .page-hero__media img {
+  .page-hero__media :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -177,7 +177,7 @@ const { tone = 'neutral', eyebrow, lead, breadcrumbs, image, note } = Astro.prop
     padding: var(--space-4);
   }
 
-  .page-hero__media--contain img {
+  .page-hero__media--contain :global(img) {
     --illus-size: 22rem;
     width: var(--illus-size);
     height: auto;
@@ -188,7 +188,7 @@ const { tone = 'neutral', eyebrow, lead, breadcrumbs, image, note } = Astro.prop
       aspect-ratio: auto;
     }
 
-    .page-hero__media--contain img {
+    .page-hero__media--contain :global(img) {
       --illus-size: 15rem;
     }
   }

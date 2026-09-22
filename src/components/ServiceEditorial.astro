@@ -88,7 +88,7 @@ const { id, eyebrow, tone = 'infantil', reverse = false, image, surface = 'kids'
     background: var(--sky-100);
   }
 
-  .editorial__media img {
+  .editorial__media :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -100,7 +100,7 @@ const { id, eyebrow, tone = 'infantil', reverse = false, image, surface = 'kids'
     padding: clamp(1.5rem, 1rem + 3vw, 3.5rem);
   }
 
-  .editorial__media.is-contain img {
+  .editorial__media.is-contain :global(img) {
     --illus-size: 20rem;
     width: var(--illus-size);
     height: auto;

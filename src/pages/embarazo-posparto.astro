@@ -20,20 +20,20 @@ const breadcrumbs = [
 
 const faqs = [
   {
-    q: '¿En qué momento del embarazo puedo venir?',
-    a: 'Puedes consultarnos en cualquier trimestre. Te pediremos que nos cuentes cómo va el embarazo y cualquier indicación de tu matrona o ginecólogo para adaptar la sesión.',
+    q: '¿Qué servicios de embarazo y posparto ha ofrecido el centro?',
+    a: 'En la web de Centro Spai figuraban tratamientos para embarazadas, pilates para embarazadas, osteopatía visceral posparto, hipopresivos, reeducación del suelo pélvico y tratamiento de la cicatriz tras una cesárea. El centro confirmará cuáles se mantienen activos.',
   },
   {
-    q: '¿Cuándo puedo empezar después del parto?',
-    a: 'Depende de cada parto y de cada recuperación. Lo habitual es esperar a la revisión posparto con tu profesional sanitario; en la primera conversación lo valoramos contigo.',
+    q: '¿En qué momento del embarazo o del posparto puedo consultar?',
+    a: 'Es una decisión sanitaria que depende de cada embarazo y de cada parto. Consúltalo con tu matrona o tu especialista y coméntalo también al pedir cita en el centro.',
   },
   {
-    q: '¿Puedo venir con mi bebé?',
-    a: 'Sí. Somos un centro pensado para familias, y entendemos que en los primeros meses el bebé viene contigo. Coméntalo al pedir cita para organizarnos.',
+    q: '¿Puedo acudir con mi bebé?',
+    a: 'Centro Spai atiende a familias y a bebés en el mismo espacio. Coméntalo al pedir cita para que el centro pueda organizarse.',
   },
   {
-    q: '¿Qué tipo de molestias se pueden consultar?',
-    a: 'Molestias de espalda o pelvis, cambios posturales, sensación de pesadez o dudas sobre cómo volver a moverte. Si algo te preocupa, coméntalo: te orientamos aunque no sepas cómo describirlo.',
+    q: '¿Esta página sustituye el seguimiento de mi embarazo?',
+    a: 'No. Es contenido informativo sobre los servicios del centro. El seguimiento del embarazo y del posparto corresponde a tu matrona, a tu ginecólogo o al profesional sanitario que te atiende.',
   },
 ];
 ---
@@ -80,7 +80,7 @@ const faqs = [
       <div class="clinical-note clinical-note--well" role="note" data-reveal>
         <Icon name="info" size={20} />
         <p>
-          <strong>Aviso sanitario:</strong> Contenido informativo sobre fisioterapia en embarazo y posparto pendiente de validación clínica por el equipo del centro. El tratamiento se coordina siempre con el criterio de tu matrona o especialista obstétrico.
+          <strong>Aviso sanitario:</strong> Contenido informativo sobre fisioterapia en embarazo y posparto pendiente de validación clínica por el equipo del centro. Tu matrona, tu ginecólogo o el profesional sanitario que te atiende son siempre la referencia.
         </p>
       </div>
     </div>
@@ -92,8 +92,8 @@ const faqs = [
         persona que atraviesa muchos cambios y merece cuidado.
       </p>
       <p>
-        Te acompañamos con fisioterapia adaptada a tu momento, explicaciones claras y respeto por tus tiempos,
-        siempre en coordinación con el seguimiento de tu matrona o ginecólogo.
+        La propuesta de esta web es una fisioterapia atenta al momento que atraviesas, con explicaciones claras y
+        respeto por tus tiempos, y siempre por detrás del criterio de tu profesional sanitario de referencia.
       </p>
     </div>
   </section>
@@ -102,34 +102,39 @@ const faqs = [
   <section class="section surface-well" id="acompanamiento" aria-labelledby="etapas-title">
     <div class="container">
       <div class="section-head" data-reveal>
-        <span class="eyebrow eyebrow--well">Cómo te acompañamos</span>
+        <span class="eyebrow eyebrow--well">Catálogo heredado</span>
         <h2 id="etapas-title">Dos etapas, <em class="well">un mismo cuidado</em></h2>
+        <p class="lead">
+          Servicios que Centro Spai tenía publicados para esta etapa. Se recogen como oferta histórica: su
+          continuidad y su indicación las confirmará el centro.
+        </p>
       </div>
       <div class="phases">
         <article class="phase" data-reveal>
           <span class="phase__tag">Durante el embarazo</span>
           <h3>Cuidar tu cuerpo mientras cambia</h3>
           <ul class="check-list check-list--well">
+            <li>Tratamientos de fisioterapia para embarazadas.</li>
+            <li>Pilates para embarazadas.</li>
             <li>Molestias de espalda, pelvis o piernas.</li>
             <li>Cambios en la postura y en la forma de moverte.</li>
-            <li>Movimiento y respiración adaptados a cada trimestre.</li>
-            <li>Preparación corporal para el parto, a tu ritmo.</li>
           </ul>
         </article>
         <article class="phase" data-reveal style="--reveal-i:1">
           <span class="phase__tag">Después del parto</span>
           <h3>Recuperarte sin prisas</h3>
           <ul class="check-list check-list--well">
-            <li>Valoración de tu recuperación tras la revisión posparto.</li>
-            <li>Vuelta progresiva al movimiento y al ejercicio.</li>
-            <li>Molestias asociadas a cargar y cuidar al bebé.</li>
-            <li>Pautas para el día a día con tu bebé en brazos.</li>
+            <li>Osteopatía visceral posparto.</li>
+            <li>Hipopresivos.</li>
+            <li>Reeducación del suelo pélvico.</li>
+            <li>Tratamiento de la cicatriz tras una cesárea.</li>
           </ul>
         </article>
       </div>
       <p class="scope" data-reveal>
-        <span class="pending">Por validar</span>
-        Las técnicas concretas y los profesionales que prestan este servicio los confirmará el centro.
+        <Icon name="info" size={18} />
+        Listado heredado de la web original de Centro Spai. Las técnicas concretas, su indicación y los
+        profesionales que las prestan los confirmará el centro.
       </p>
     </div>
   </section>
@@ -140,7 +145,8 @@ const faqs = [
       <div class="section-head section-head--split" data-reveal>
         <div>
           <span class="eyebrow eyebrow--well">Proceso</span>
-          <h2 id="proceso-title">Así será <em class="well">tu primera cita</em></h2>
+          <h2 id="proceso-title">Así imaginamos <em class="well">tu primera cita</em></h2>
+          <p class="proposal-tag">Propuesta de experiencia, pendiente de validar con el centro</p>
         </div>
         <p class="lead">Un espacio tranquilo para hablar, valorar y decidir juntas cómo seguir.</p>
       </div>
@@ -159,8 +165,8 @@ const faqs = [
           },
           {
             icon: 'path',
-            title: 'Plan a tu medida',
-            text: 'Sesiones y pautas sencillas que encajen con tu día a día.',
+            title: 'Decidir juntas',
+            text: 'Una propuesta explicada con claridad, para que decidas cómo seguir.',
           },
         ]}
       />
@@ -195,7 +201,7 @@ const faqs = [
     tone="adultos"
     eyebrow="Tu cita"
     title="Cuidarte también es cuidar de tu familia"
-    text="Pide cita y cuéntanos en qué momento estás. Te orientamos con calma."
+    text="Pide cita contando en qué momento estás, con la calma que necesites."
   />
 </BaseLayout>
 
@@ -256,8 +262,8 @@ const faqs = [
 
   .scope {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
+    max-width: 52rem;
     gap: var(--space-2) var(--space-3);
     margin-top: var(--space-5);
     font-size: var(--fs-small);

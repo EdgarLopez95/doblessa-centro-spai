@@ -20,7 +20,7 @@ const needs = [
   {
     icon: 'sprout',
     title: 'Queremos acompañar cómo se mueve',
-    text: 'Postura, volteo, gateo o primeros pasos: observamos cada etapa con calma y os damos pautas claras.',
+    text: 'Postura, volteo, gateo o primeros pasos: cada etapa tiene su momento y su acompañamiento.',
     href: `${ROUTES.infantil}#desarrollo`,
     linkLabel: 'Desarrollo y movimiento',
   },
@@ -61,14 +61,14 @@ const commitments = [
     text: 'Bebés, niños y familias son el núcleo de nuestro trabajo en fisioterapia y osteopatía.',
   },
   {
-    icon: 'hands',
-    title: 'Atención cuidadosa, ritmo suave',
-    text: 'Cada sesión se adapta a la edad, al momento y a cómo se siente el bebé ese día.',
+    icon: 'heart',
+    title: 'Bienestar, salud y relajación',
+    text: 'El concepto con el que Centro Spai se presenta: cuidar la salud sin renunciar a la calma.',
   },
   {
-    icon: 'chat',
-    title: 'Explicaciones claras',
-    text: 'Os contamos qué observamos y qué podéis hacer en casa, sin tecnicismos ni prisas.',
+    icon: 'phone',
+    title: 'Dos líneas de cita',
+    text: 'Un teléfono para la cita infantil y otro para los tratamientos de adultos.',
   },
   {
     icon: 'home',
@@ -177,7 +177,7 @@ const businessSchema = {
           <h2 id="colicos-title">Cólicos del lactante: <em>no estáis solos</em></h2>
           <p>
             Las semanas de llanto intenso agotan a cualquier familia. En Spai os escuchamos, valoramos al bebé con
-            delicadeza y os acompañamos con pautas que podéis aplicar en casa.
+            delicadeza y os damos tiempo para preguntar todo lo que necesitéis.
           </p>
           <ul class="check-list check-list--warm">
             <li>Llanto intenso que se repite, a menudo en la misma franja del día.</li>
@@ -271,7 +271,6 @@ const businessSchema = {
         <p class="place__address">
           <Icon name="pin" size={20} />
           <span>{SITE.address.street}, {SITE.address.postalCode} {SITE.address.locality}</span>
-          <span class="pending">Por validar</span>
         </p>
         <a class="link-arrow" href={withBase(ROUTES.centro)}>
           Conocer el centro
@@ -323,7 +322,7 @@ const businessSchema = {
 
   <CtaBand
     title="Cuéntanos qué necesitáis"
-    text="Elige el tipo de cita y te orientamos. Sin compromiso y sin necesidad de explicar toda la historia clínica."
+    text="Elige el tipo de cita y cuéntanos lo justo para empezar. Sin compromiso y sin detallar toda la historia clínica."
   />
 </BaseLayout>
 
@@ -374,7 +373,7 @@ const businessSchema = {
     background: #eef0f4;
   }
 
-  .home-hero__media img {
+  .home-hero__media :global(img) {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -442,7 +441,7 @@ const businessSchema = {
       aspect-ratio: 16 / 11;
     }
 
-    .home-hero__media img {
+    .home-hero__media :global(img) {
       object-position: 80% 40%;
     }
 
@@ -553,12 +552,12 @@ const businessSchema = {
     place-items: center;
   }
 
-  .colic__media img {
+  .colic__media :global(img) {
     --illus-size: 24rem;
   }
 
   @media (max-width: 55.99rem) {
-    .colic__media img {
+    .colic__media :global(img) {
       --illus-size: 13rem;
     }
   }
@@ -574,7 +573,7 @@ const businessSchema = {
       max-width: 14rem;
     }
 
-    .colic__media img {
+    .colic__media :global(img) {
       --illus-size: 10.5rem;
     }
   }
@@ -614,7 +613,7 @@ const businessSchema = {
       max-width: 18rem;
     }
 
-    .place__media img {
+    .place__media :global(img) {
       aspect-ratio: 4 / 3;
       object-fit: cover;
       object-position: 50% 20%;
@@ -732,7 +731,7 @@ const businessSchema = {
     background: var(--lilac-100);
   }
 
-  .place__media img {
+  .place__media :global(img) {
     position: relative;
     width: 100%;
     border-radius: var(--radius-panel);
@@ -794,7 +793,7 @@ const businessSchema = {
     background: var(--white);
   }
 
-  .adults__media img {
+  .adults__media :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;

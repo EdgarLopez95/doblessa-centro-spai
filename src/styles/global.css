@@ -125,6 +125,11 @@ picture.spai-picture {
   display: contents;
 }
 
+/* <source> no debe convertirse en item de grid/flex al usar display: contents */
+picture.spai-picture > source {
+  display: none;
+}
+
 img {
   height: auto;
 }
@@ -583,6 +588,29 @@ strong {
 }
 
 /* Nota de validación */
+/* Etiqueta de propuesta: distingue UX propuesta de práctica confirmada */
+.proposal-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: var(--space-2);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background: var(--lilac-100);
+  color: var(--spai-700);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.proposal-tag::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--spai-500);
+}
+
 .pending {
   display: inline-flex;
   align-items: center;

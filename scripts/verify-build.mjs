@@ -37,6 +37,28 @@ const targetAnchors = [
   '#bienestar',
   '#taller-moquitos',
   '#apps',
+  '#herencia',
+  '#inventario',
+  '#otros-talleres',
+];
+
+// Datos de contacto heredados de la web original: deben estar presentes
+const inheritedContact = [
+  { label: 'teléfono infantil', re: /655\s?461\s?568/ },
+  { label: 'teléfono adultos', re: /699\s?952\s?632/ },
+  { label: 'email', re: /info@centro-spai\.com/ },
+  { label: 'dirección', re: /Calle San José, 18/ },
+];
+
+// Frases que contradicen la web original o inventan operativa
+const forbiddenPhrases = [
+  'No hay inscripción online',
+  'Pendiente de confirmar por el centro',
+  'Teléfonos y horario: pendientes de confirmar',
+  'te informará de la próxima convocatoria',
+  'te avisamos cuando haya',
+  'te orientamos',
+  'manos expertas',
 ];
 const foundAnchors = new Set();
 
@@ -76,6 +98,38 @@ for (const file of htmlFiles) {
         console.error(`ERROR [${rel}]: Found forbidden claim word in H2: ${h2}`);
         errors++;
       }
+    }
+
+    // Check 6b: Contacto heredado presente en el pie de todas las páginas
+    for (const item of inheritedContact) {
+      if (!item.re.test(content)) {
+        console.error(`ERROR [${rel}]: Falta el dato heredado (${item.label}) en la página`);
+        errors++;
+      }
+    }
+
+    // Check 6c: Enlaces tel:/mailto: operativos en el mockup
+    if (!/href=["']tel:\+34655461568["']/.test(content) || !/href=["']tel:\+34699952632["']/.test(content)) {
+      console.error(`ERROR [${rel}]: Faltan los enlaces tel: de las dos líneas de cita`);
+      errors++;
+    }
+    if (!/href=["']mailto:info@centro-spai\.com["']/.test(content)) {
+      console.error(`ERROR [${rel}]: Falta el enlace mailto: heredado`);
+      errors++;
+    }
+
+    // Check 6d: Frases que niegan la herencia o inventan operativa
+    for (const phrase of forbiddenPhrases) {
+      if (content.toLowerCase().includes(phrase.toLowerCase())) {
+        console.error(`ERROR [${rel}]: Frase prohibida encontrada: "${phrase}"`);
+        errors++;
+      }
+    }
+
+    // Check 6e: Sin enlaces a tiendas de aplicaciones sin verificar
+    if (/apps\.apple\.com|play\.google\.com|itunes\.apple\.com/i.test(content)) {
+      console.error(`ERROR [${rel}]: Enlace a tienda de aplicaciones no verificado`);
+      errors++;
     }
 
     // Check 7: No fonts.googleapis.com or fonts.gstatic.com

@@ -601,10 +601,18 @@ import { ROUTES, withBase } from '../lib/site';
     };
 
     // Preselección desde la URL (?tipo=adulto | infantil)
-    const fromUrl = new URLSearchParams(window.location.search).get('tipo');
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = params.get('tipo');
     const initial = fromUrl === 'adulto' ? 'adulto' : 'infantil';
     radios.forEach((r) => (r.checked = r.value === initial));
     applyType(initial);
+
+    // Motivo sugerido desde la URL (por ejemplo, el CTA del Taller Moquitos)
+    const motivoParam = params.get('motivo');
+    if (motivoParam === 'taller') {
+      const option = [...select.options].find((o) => /taller/i.test(o.textContent ?? ''));
+      if (option && !option.disabled) select.value = option.value || option.text;
+    }
 
     radios.forEach((r) => r.addEventListener('change', () => r.checked && applyType(r.value)));
 

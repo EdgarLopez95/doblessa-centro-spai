@@ -61,11 +61,11 @@ const redFlags = [
 const faqs = [
   {
     q: '¿La fisioterapia “cura” los cólicos?',
-    a: 'No hablamos de curar. Los cólicos suelen mejorar con el tiempo y cada bebé es distinto. Lo que hacemos es valorar al bebé, aplicar técnicas suaves que pueden ayudarle a estar más cómodo y enseñaros pautas para acompañarle en casa.',
+    a: 'No hablamos de curar. Los cólicos suelen mejorar con el tiempo y cada bebé es distinto. La fisioterapia y la osteopatía infantil trabajan con técnicas manuales suaves; su alcance en cada bebé lo valora el profesional que le atiende, junto a su pediatra.',
   },
   {
     q: '¿Es seguro para un bebé tan pequeño?',
-    a: 'Trabajamos con técnicas manuales muy suaves, adaptadas a la edad y a la respuesta del bebé, y paramos cuando lo necesita. Antes de empezar descartamos con vosotros señales que requieran valoración médica.',
+    a: 'Son técnicas manuales muy suaves, adaptadas a la edad del bebé. Si observáis alguna de las señales de alerta de esta página, la consulta con el pediatra va siempre primero.',
   },
   {
     q: '¿Tengo que ir antes al pediatra?',
@@ -73,7 +73,7 @@ const faqs = [
   },
   {
     q: '¿Qué hago en casa mientras tanto?',
-    a: 'Mantened rutinas tranquilas, contacto piel con piel y turnos para descansar. En la primera visita os enseñaremos posturas y masaje adaptados a vuestro bebé.',
+    a: 'El descanso por turnos y el contacto con el bebé ayudan a sobrellevar estas semanas. Cualquier pauta concreta de postura o masaje conviene aprenderla con un profesional que conozca a vuestro bebé.',
   },
 ];
 ---
@@ -166,9 +166,15 @@ const faqs = [
           <div class="accompany__text">
             <span class="eyebrow">02 · Nuestro papel</span>
             <h2 id="acompanamos-title">Cómo os <em>acompaña el centro</em></h2>
+            <p class="proposal-tag">Propuesta de experiencia, pendiente de validar con el centro</p>
             <p>
-              No existe una solución única para todos los bebés. Por eso empezamos escuchando y observando, y
-              construimos con vosotros un acompañamiento a vuestra medida.
+              No existe una solución única para todos los bebés. La propuesta de esta web parte de escuchar y
+              observar antes de plantear nada.
+            </p>
+            <p class="movac-note">
+              La web original presentaba este abordaje bajo el nombre <strong>MOVAC</strong> (Método Osteopático
+              Visceral Anticólicos). Se menciona como parte de la herencia del centro; su descripción clínica la
+              confirmará el equipo.
             </p>
           </div>
           <ol class="accompany__list">
@@ -181,11 +187,12 @@ const faqs = [
               contacto.
             </li>
             <li>
-              <strong>Técnicas manuales adaptadas.</strong> Maniobras delicadas que pueden ayudarle a estar más
-              cómodo.
+              <strong>Técnicas manuales adaptadas.</strong> El centro trabaja con maniobras delicadas, adaptadas a
+              la edad del bebé.
             </li>
             <li>
-              <strong>Pautas para casa.</strong> Posturas, masaje y rutinas que podéis aplicar entre sesiones.
+              <strong>Tiempo para vuestras preguntas.</strong> Espacio para resolver dudas y para saber cuándo
+              conviene consultar con el pediatra.
             </li>
           </ol>
         </div>
@@ -211,6 +218,7 @@ const faqs = [
         <div class="block__head" data-reveal>
           <span class="eyebrow">03 · Qué esperar</span>
           <h2 id="primera-title">La primera visita, <em>paso a paso</em></h2>
+          <p class="proposal-tag">Propuesta de experiencia, pendiente de validar con el centro</p>
         </div>
         <div class="visit-panel">
           <Timeline
@@ -227,8 +235,8 @@ const faqs = [
               },
               {
                 icon: 'path',
-                title: 'Os llevamos pautas',
-                text: 'Una orientación clara y lo que podéis hacer en casa desde hoy.',
+                title: 'Resolvemos dudas',
+                text: 'Tiempo para preguntar y para entender qué se ha hecho en la sesión.',
               },
             ]}
           />
@@ -399,6 +407,14 @@ const faqs = [
     color: var(--ink-600);
   }
 
+  .movac-note {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-control);
+    background: var(--blush-100);
+    font-size: var(--fs-small);
+    color: var(--ink-900);
+  }
+
   .accompany {
     display: grid;
     gap: var(--space-6);
@@ -479,7 +495,7 @@ const faqs = [
     box-shadow: var(--shadow-soft);
   }
 
-  .resource img {
+  .resource :global(img) {
     width: 4rem;
     height: 4rem;
     border-radius: 14px;

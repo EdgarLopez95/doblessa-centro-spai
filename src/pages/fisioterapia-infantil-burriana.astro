@@ -27,7 +27,7 @@ const stages = [
       {
         icon: 'moon',
         title: 'Cólicos del lactante',
-        text: 'Llanto intenso y difícil de calmar. Valoración suave y pautas para casa.',
+        text: 'Llanto intenso y difícil de calmar. Información y acompañamiento para la familia.',
         href: ROUTES.colicos,
         linkLabel: 'Ver cólicos',
       },
@@ -80,14 +80,63 @@ const stages = [
   },
 ] as const;
 
+/**
+ * Ámbitos publicados por la web original de Centro Spai. Se presentan como
+ * catálogo histórico agrupado, no como oferta clínica vigente ni como
+ * promesa de tratamiento.
+ */
+const herencia = [
+  {
+    icon: 'sprout',
+    label: 'Desarrollo y movimiento',
+    items: [
+      'Lesiones infantiles',
+      'Psicomotricidad',
+      'Estimulación temprana',
+      'Valoración y orientación del desarrollo infantil',
+      'Tortícolis congénita',
+      'Parálisis braquial congénita',
+      'Postura, volteo, gateo y primeros pasos',
+    ],
+  },
+  {
+    icon: 'wind',
+    label: 'Respiratorio y cuidado diario',
+    items: ['Fisioterapia respiratoria infantil', 'Masaje infantil', 'Higiene nasal'],
+  },
+  {
+    icon: 'moon',
+    label: 'Crianza y hábitos',
+    items: [
+      'Dificultades de sueño o insomnio del lactante',
+      'Hábitos alimentarios infantiles',
+      'Rabietas y dificultades de conducta',
+      'Orientación en control de esfínteres',
+      'Enuresis y encopresis',
+      'Celos infantiles',
+    ],
+  },
+  {
+    icon: 'users',
+    label: 'Talleres y actividades',
+    items: [
+      'Taller Moquitos',
+      'Baby-Nesst: gateo y desarrollo psicomotor de 4 a 12 meses',
+      'Estimulación sensorial de 0 a 6 meses',
+      'Taller de lenguaje y signos del bebé',
+      'Taller de masaje infantil',
+    ],
+  },
+] as const;
+
 const faqs = [
   {
     q: '¿Desde qué edad podéis atender a un bebé?',
-    a: 'Atendemos bebés desde sus primeras semanas. En la primera llamada te orientamos sobre si la cita es adecuada para su edad y su situación.',
+    a: 'La web original de Centro Spai presenta atención a bebés desde las primeras semanas. Si la cita encaja con su edad y su situación lo confirma el centro al pedirla.',
   },
   {
     q: '¿Necesito que el pediatra me derive?',
-    a: 'No suele ser necesario para pedir cita. Aun así, si tenéis informes o indicaciones del pediatra, traedlos: nos ayudan a coordinarnos y a entender mejor el caso.',
+    a: 'No suele ser necesario para pedir cita. Aun así, si tenéis informes o indicaciones del pediatra, llevarlos ayuda a entender mejor el caso.',
   },
   {
     q: '¿Qué debo llevar a la primera sesión?',
@@ -95,11 +144,11 @@ const faqs = [
   },
   {
     q: '¿Puedo estar presente durante la sesión?',
-    a: 'Sí. La familia participa en la sesión: os explicamos lo que hacemos y os enseñamos pautas para continuar en casa.',
+    a: 'La propuesta de esta web es que la familia esté presente y pueda preguntar durante la sesión. El centro confirmará cómo lo organiza en cada caso.',
   },
   {
     q: '¿Cuántas sesiones hacen falta?',
-    a: 'Depende de cada bebé y de cómo evoluciona. Tras la valoración os damos una orientación honesta, sin comprometeros a un número cerrado de sesiones.',
+    a: 'No es algo que se pueda anticipar desde una web ni prometer de antemano: depende de cada bebé y corresponde valorarlo al profesional que le atiende.',
   },
 ];
 ---
@@ -118,7 +167,7 @@ const faqs = [
   <PageHero
     tone="infantil"
     eyebrow="Ruta infantil · Bebés y niños"
-    lead="Tratamos a los más pequeños con manos expertas y un ritmo suave, y acompañamos a la familia para que sepa cómo ayudarle también en casa."
+    lead="Fisioterapia y osteopatía pensadas para los más pequeños, con tiempo para la familia y para sus preguntas."
     breadcrumbs={breadcrumbs}
     image={{
       src: 'infantil/fisioterapia-para-bebes.jpg',
@@ -147,7 +196,7 @@ const faqs = [
       <div class="clinical-note" role="note" data-reveal>
         <Icon name="info" size={20} />
         <p>
-          <strong>Aviso sanitario:</strong> Información y contenidos divulgativos sobre fisioterapia pediátrica pendientes de validación clínica definitiva por el equipo del centro. Cada valoración es individualizada y coordinada con pediatría.
+          <strong>Aviso sanitario:</strong> Información divulgativa sobre fisioterapia pediátrica pendiente de validación clínica por el equipo del centro. No sustituye la valoración del pediatra ni de otro profesional sanitario.
         </p>
       </div>
     </div>
@@ -218,8 +267,7 @@ const faqs = [
         <h2>Cada etapa, <em>a su ritmo</em></h2>
         <p>
           Cada bebé tiene su tiempo. Cuando a la familia le surgen dudas sobre cómo se mueve, cómo se sostiene o cómo
-          avanza hacia el gateo y la marcha, observamos con calma y os proponemos juegos y posturas que favorecen su
-          movimiento.
+          avanza hacia el gateo y la marcha, el centro acompaña ese proceso con observación, juego y movimiento.
         </p>
         <Chips label="Temas habituales" items={['Postura y control de cabeza', 'Volteo y gateo', 'Primeros pasos', 'Psicomotricidad']} />
       </ServiceEditorial>
@@ -268,13 +316,55 @@ const faqs = [
     </div>
   </section>
 
+  <!-- Catálogo heredado de la web original -->
+  <section class="section surface-warm" id="herencia" aria-labelledby="herencia-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Catálogo heredado</span>
+        <h2 id="herencia-title">Servicios y talleres que formaban parte <em>de Centro Spai</em></h2>
+        <p class="lead">
+          Ámbitos que aparecían en la web original del centro, agrupados para que se lean con claridad. Algunos son
+          temas de acompañamiento a la familia y otros requieren valoración sanitaria: su vigencia y su alcance
+          actual los confirmará el centro.
+        </p>
+      </div>
+      <div class="heritage-grid">
+        {
+          herencia.map((group, i) => (
+            <section class="heritage-group" data-reveal style={`--reveal-i:${i}`} aria-label={group.label}>
+              <h3 class="heritage-group__title">
+                <span class="heritage-group__icon">
+                  <Icon name={group.icon} size={22} />
+                </span>
+                {group.label}
+              </h3>
+              <ul class="heritage-group__list">
+                {group.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+      <p class="heritage-note" data-reveal>
+        <Icon name="info" size={20} />
+        <span>
+          Este listado documenta la oferta publicada históricamente, no un diagnóstico ni un compromiso de
+          tratamiento. Para cualquier problema de salud del bebé, la referencia es siempre su pediatra.
+        </span>
+      </p>
+    </div>
+  </section>
+
   <!-- Primera visita -->
   <section class="section surface-kids" aria-labelledby="visita-title">
     <div class="container">
       <div class="section-head section-head--split" data-reveal>
         <div>
           <span class="eyebrow">Primera visita</span>
-          <h2 id="visita-title">Qué ocurre en <em>la primera cita</em></h2>
+          <h2 id="visita-title">Cómo imaginamos <em>la primera cita</em></h2>
+          <p class="proposal-tag">Propuesta de experiencia, pendiente de validar con el centro</p>
         </div>
         <p class="lead">Una sesión tranquila, con tiempo para escuchar y para resolver vuestras dudas.</p>
       </div>
@@ -293,7 +383,7 @@ const faqs = [
           {
             icon: 'path',
             title: 'Acompañamiento',
-            text: 'Os explicamos lo que vemos, os proponemos un plan y os llevamos pautas claras para casa.',
+            text: 'Un espacio para preguntar sin prisa y salir de la consulta entendiendo lo que se ha hecho.',
           },
         ]}
       />
@@ -348,7 +438,7 @@ const faqs = [
   <CtaBand
     tone="infantil"
     title="¿Hablamos de vuestro bebé?"
-    text="Cuéntanos qué os preocupa y te orientamos sobre la cita más adecuada."
+    text="Escríbenos contando qué os preocupa y el centro os dirá qué cita encaja mejor."
   />
 </BaseLayout>
 
@@ -452,6 +542,78 @@ const faqs = [
     font-size: var(--fs-small);
     font-weight: 650;
     color: var(--ink-600);
+  }
+
+  .heritage-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 48rem) {
+    .heritage-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 72rem) {
+    .heritage-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .heritage-group {
+    padding: var(--space-5);
+    border-radius: var(--radius-card);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+
+  .heritage-group__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 1.25rem;
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-3);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .heritage-group__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 12px;
+    background: var(--blush-100);
+    color: var(--spai-700);
+  }
+
+  .heritage-group__list {
+    display: grid;
+    gap: var(--space-2);
+    padding-left: 1.1rem;
+    color: var(--text-muted);
+    font-size: var(--fs-small);
+  }
+
+  .heritage-group__list li::marker {
+    color: var(--spai-300);
+  }
+
+  .heritage-note {
+    display: flex;
+    gap: var(--space-3);
+    max-width: 52rem;
+    margin-top: var(--space-6);
+    font-size: var(--fs-small);
+    color: var(--ink-900);
+  }
+
+  .heritage-note :global(svg) {
+    flex: none;
+    margin-top: 2px;
+    color: var(--spai-500);
   }
 
   .team {

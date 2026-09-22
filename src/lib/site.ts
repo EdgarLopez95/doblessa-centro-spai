@@ -23,17 +23,43 @@ export const SITE = {
   region: 'Castellón',
   defaultImage: 'images/inicio/hero-centro-spai.jpg',
   /**
-   * Dirección tomada de la documentación de investigación, marcada allí
-   * como "validar antes de publicar". Teléfonos, email y horario NO están
-   * verificados, por eso no se muestran como datos reales.
+   * Datos heredados de la web original (centro-espai.com, revisada el
+   * 22/09/2026). Se muestran porque están publicados en la fuente; su
+   * operatividad actual la confirmará el centro antes de una web real.
    */
   address: {
     street: 'Calle San José, 18',
     postalCode: '12530',
     locality: 'Burriana',
     region: 'Castellón',
-    verified: false,
+    inherited: true,
   },
+} as const;
+
+/**
+ * Canales de contacto publicados por la web original. No se inventa ningún
+ * dato: horario y número de WhatsApp no aparecen en la fuente, por eso no se
+ * construye ni un horario ni un enlace wa.me.
+ */
+export const CONTACT = {
+  infantil: {
+    label: 'Cita infantil',
+    display: '655 461 568',
+    tel: '+34655461568',
+    hint: 'Bebés, niños y familias',
+  },
+  adultos: {
+    label: 'Citas tratamientos adultos',
+    display: '699 952 632',
+    tel: '+34699952632',
+    hint: 'Adultos, embarazo, posparto y bienestar',
+  },
+  email: 'info@centro-spai.com',
+  whatsapp: {
+    label: 'WhatsApp',
+    note: 'Canal de contacto presente en la web original. El número asociado lo confirmará el centro.',
+  },
+  source: 'Datos heredados de la web original; operatividad pendiente de confirmar.',
 } as const;
 
 export const ROUTES = {

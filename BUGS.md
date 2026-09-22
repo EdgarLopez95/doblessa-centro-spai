@@ -129,3 +129,66 @@ Este documento detalla los problemas de usabilidad, accesibilidad, coherencia de
   * Se configuraron reglas `@font-face` con `font-display: swap` y la ruta canónica `/doblessa-centro-spai/fonts/` en `src/styles/global.css`.
   * Se eliminaron los enlaces a Google Fonts de `BaseLayout.astro` sustituyéndolos por preloads locales con `crossorigin`.
   * Cero peticiones externas a servicios de Google Fonts en todo el sitio.
+
+---
+
+### BUG-12: Datos de contacto de la web original ocultos sin motivo suficiente
+* **Severidad**: Alta (fidelidad y conversión)
+* **Componentes**: `src/pages/contacto.astro`, `src/components/Footer.astro`, `src/pages/el-centro.astro`, `src/pages/index.astro`
+* **Problema**: El mockup mostraba «Pendiente de confirmar por el centro» en teléfono, email y horario, y un sello «Por validar» sobre la dirección, pese a que la web original publica dos teléfonos diferenciados, email, dirección y widget de WhatsApp.
+* **Impacto**: La propuesta parecía menos capaz que la web que venía a sustituir y bloqueaba la vía de conversión principal del negocio local.
+* **Corrección**: Datos centralizados en `CONTACT` (`src/lib/site.ts`) y recuperados en Contacto, pie y El centro: cita infantil `655 461 568` y tratamientos de adultos `699 952 632` con enlaces `tel:`, `info@centro-spai.com` con `mailto:`, y la dirección sin sello de invalidación. WhatsApp se representa como canal heredado sin construir un enlace `wa.me`, porque el número no consta en la fuente. El horario no se muestra porque la fuente no lo publica.
+
+---
+
+### BUG-13: La página de talleres contradecía a la web original
+* **Severidad**: Alta (fidelidad)
+* **Componente / Página**: `src/pages/talleres.astro`
+* **Problema**: El mockup afirmaba «No hay inscripción online: el equipo te informará de la próxima convocatoria», mientras que la web original presenta el Taller Moquitos en formato online con la llamada «Apúntate aquí».
+* **Impacto**: Se negaba públicamente un servicio existente y se describía un flujo de aviso que el centro nunca ha documentado.
+* **Corrección**: Se eliminó la negación, se añadió el distintivo `Taller Moquitos · Online` con el cartel heredado `taller-moquitos-online.jpg` y la CTA «Apúntate al taller», que abre el formulario demostrativo con el motivo preseleccionado (`?tipo=infantil&motivo=taller`). El aviso de maqueta explica que los botones aún no están conectados, sin desmentir el taller.
+
+---
+
+### BUG-14: Apps heredadas presentadas como no disponibles y con recursos sin usar
+* **Severidad**: Alta (fidelidad)
+* **Componente / Página**: `src/pages/talleres.astro`
+* **Problema**: *Anticólicos* se mostraba con un icono genérico de relleno, se afirmaba que no se podía descargar y quedaban sin usar `app-centro-spai.jpg`, `app-centro-spai-pantalla-02.jpg` y `disponible-en-tiendas-app.png`.
+* **Impacto**: Dos productos digitales propios del centro aparecían devaluados frente a la web original, que los promociona con «Descarga nuestras apps».
+* **Corrección**: Las dos apps se presentan con el mismo peso y su icono real, con CTA visual «Descargar app» que informa de que el enlace se activará cuando el centro confirme la ficha en cada tienda. Se añaden el distintivo de tiendas y una banda promocional con rótulo. No se enlaza a App Store ni Google Play sin verificar.
+
+---
+
+### BUG-15: Oferta histórica infantil y adulta reducida en exceso
+* **Severidad**: Alta (fidelidad)
+* **Componentes / Páginas**: `fisioterapia-infantil-burriana.astro`, `fisioterapia-adultos-burriana.astro`, `embarazo-posparto.astro`, `talleres.astro`
+* **Problema**: La simplificación editorial dejó fuera servicios publicados: lesiones infantiles, estimulación temprana, tortícolis congénita, parálisis braquial, hábitos y conducta, control de esfínteres, Baby-Nesst, estimulación sensorial, lenguaje y signos, y en adultos kinesiotaping, electroterapia, reeducación postural, lesiones deportivas, escoliosis, hipopresivos, suelo pélvico, cicatriz de cesárea, acupuntura, moxibustión, ventosas, fitoterapia y el bloque de fisio-estética.
+* **Impacto**: El cliente podía percibir que el rediseño le hacía perder catálogo.
+* **Corrección**: Secciones de catálogo heredado agrupadas por necesidad — `#herencia` en infantil, `#inventario` en adultos (con `medicina-tradicional-china.png` y `fisioterapia-estetica.png`, hasta entonces sin uso), `#otros-talleres` en talleres y las dos etapas de embarazo/posparto. Se presentan como ámbitos publicados históricamente, sin prometer que todos sigan activos ni convertir diagnósticos en claims de tratamiento.
+
+---
+
+### BUG-16: Procesos de atención y afirmaciones clínicas no sustentados por la fuente
+* **Severidad**: Alta (deontológica)
+* **Componentes / Páginas**: `Timeline.astro` y las seis landings de servicio
+* **Problema**: El sitio describía como práctica actual cosas que la web original no documenta: «manos expertas», «ritmo suave», «pautas para casa», coordinación con pediatría o matrona, cómo es la primera cita, «te orientamos», «te avisamos», «te proponemos un plan» o «para que ganes autonomía».
+* **Impacto**: Riesgo de atribuir al centro protocolos y compromisos operativos que nadie ha validado.
+* **Corrección**: 29 sustituciones de copy. Los recorridos de atención se mantienen como propuesta de UX pero se etiquetan visiblemente con `.proposal-tag` («Propuesta de experiencia, pendiente de validar con el centro»); las promesas de respuesta pasan a fórmulas sin compromiso de flujo ni plazo; las FAQs dejan de describir circuitos internos y remiten al profesional sanitario. Se conservan los avisos sanitarios y las señales de «cuándo consultar». Se añade la mención histórica a **MOVAC** en cólicos, sin descripción clínica.
+
+---
+
+### BUG-17: El `<source>` de `<Picture>` se convertía en item de grid y descolocaba las imágenes
+* **Severidad**: Alta (maquetación)
+* **Componentes**: `src/components/Picture.astro`, `src/styles/global.css`
+* **Problema**: `picture.spai-picture` usa `display: contents`, así que sus hijos pasan a ser items del contenedor padre. El `<source type="image/webp">` computaba `display: block` y ocupaba la primera celda del grid, empujando la imagen real a la columna siguiente. Medido en `/talleres/`: la tarjeta de app repartía `426px` para el `<source>` y `86px` para el contenido.
+* **Impacto**: Iconos y fotos aparecían fuera de su columna, con tamaños erróneos, en cualquier contenedor de tipo grid o flex que usara `<Picture>`.
+* **Corrección**: Regla `picture.spai-picture > source { display: none; }` en `global.css` y en el estilo del componente. Se añadió una prueba en `qa-browser-tests.mjs` que falla si algún `<source>` genera caja.
+
+---
+
+### BUG-18: Las reglas CSS con ámbito dejaron de aplicarse a las imágenes tras migrar a `<Picture>`
+* **Severidad**: Alta (maquetación)
+* **Componentes**: 10 archivos entre páginas y componentes
+* **Problema**: Astro limita los estilos al ámbito del componente añadiendo `data-astro-cid-*` a los elementos de su plantilla. Al pasar los `<img>` a `Picture.astro`, la imagen quedó en el ámbito del componente hijo, de modo que reglas como `.workshop__media img`, `.app img`, `.home-hero__media img`, `.brand img` o `.gallery__button img` compilaban a `.x[data-astro-cid-A] img[data-astro-cid-A]` y no encajaban con ninguna imagen.
+* **Impacto**: 25 reglas sin efecto: heros sin recorte, logotipo sin dimensionar, galería y tarjetas con imágenes a tamaño natural dentro de contenedores ya dimensionados.
+* **Corrección**: Conversión de esos selectores a `.x :global(img)` en los bloques `<style>` de los 10 archivos afectados, comprobando en el CSS compilado que las reglas vuelven a emitirse sin el atributo de ámbito sobre `img`.

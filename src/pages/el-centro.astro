@@ -4,7 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import Gallery from '../components/Gallery.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Icon from '../components/Icon.astro';
-import { ROUTES, SITE, citaHref, withBase } from '../lib/site';
+import { CONTACT, ROUTES, SITE, citaHref, withBase } from '../lib/site';
 
 const path = ROUTES.centro;
 const title = 'El centro | Centro Spai, fisioterapia y bienestar en Burriana';
@@ -30,7 +30,7 @@ const principles = [
   },
   {
     title: 'Una cita debe ser fácil',
-    text: 'Pedir ayuda no debería ser otra fuente de estrés. Te orientamos desde el primer mensaje.',
+    text: 'Pedir ayuda no debería ser otra fuente de estrés: que la cita sea fácil es uno de los objetivos de esta propuesta.',
   },
 ];
 
@@ -164,8 +164,9 @@ const gallery = [
       </div>
       <Gallery images={gallery} label="Galería de instalaciones de Centro Spai" />
       <p class="photo-note" data-reveal>
-        <span class="pending">Por validar</span>
-        Fotografías actuales del cliente; se recomienda una sesión fotográfica nueva antes de publicar.
+        <Icon name="info" size={18} />
+        Fotografías heredadas de la web original de Centro Spai. Antes de publicar conviene una sesión fotográfica
+        actualizada del espacio.
       </p>
     </div>
   </section>
@@ -187,13 +188,23 @@ const gallery = [
         <p class="visit__row">
           <Icon name="pin" size={22} />
           <span>
-            {SITE.address.street} <span class="pending">Por validar</span><br />
+            {SITE.address.street}<br />
             {SITE.address.postalCode} {SITE.address.locality} ({SITE.address.region})
           </span>
         </p>
         <p class="visit__row">
-          <Icon name="clock" size={22} />
-          <span>Horario pendiente de confirmar con el centro</span>
+          <Icon name="baby" size={22} />
+          <span>
+            <span class="visit__label">{CONTACT.infantil.label}</span>
+            <a href={`tel:${CONTACT.infantil.tel}`}>{CONTACT.infantil.display}</a>
+          </span>
+        </p>
+        <p class="visit__row">
+          <Icon name="person" size={22} />
+          <span>
+            <span class="visit__label">{CONTACT.adultos.label}</span>
+            <a href={`tel:${CONTACT.adultos.tel}`}>{CONTACT.adultos.display}</a>
+          </span>
         </p>
         <a class="btn btn--block" href={withBase(ROUTES.contacto)}>Contacto y cómo llegar</a>
       </div>
@@ -319,6 +330,27 @@ const gallery = [
     display: flex;
     gap: var(--space-3);
     margin: 0;
+  }
+
+  .visit__label {
+    display: block;
+    font-size: var(--fs-small);
+    color: var(--ink-600);
+  }
+
+  .visit__row a {
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .visit__row a:hover {
+    text-decoration: underline;
+  }
+
+  .photo-note :global(svg) {
+    flex: none;
+    margin-top: 2px;
+    color: var(--spai-500);
   }
 
   .visit__row :global(svg) {

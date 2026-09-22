@@ -232,6 +232,99 @@ server.listen(PORT, async () => {
       console.log('✓ Domain copy verified in Footer');
     }
 
+    // 4. Contacto heredado de la web original operativo en el mockup
+    const telInfantil = await page.locator('a[href="tel:+34655461568"]').count();
+    const telAdultos = await page.locator('a[href="tel:+34699952632"]').count();
+    const mail = await page.locator('a[href="mailto:info@centro-spai.com"]').count();
+    if (telInfantil < 1 || telAdultos < 1 || mail < 1) {
+      console.error(`FAIL: Faltan enlaces heredados en Contacto (infantil:${telInfantil}, adultos:${telAdultos}, email:${mail})`);
+      errors++;
+    } else {
+      console.log('✓ Teléfonos y email heredados enlazados en Contacto');
+    }
+
+    // 5. Taller Moquitos: formato online y CTA de inscripción de maqueta
+    await page.goto(`http://localhost:${PORT}/doblessa-centro-spai/talleres/`, { waitUntil: 'networkidle' });
+    const tallerHtml = await page.locator('#taller-moquitos').innerText();
+    if (!/Taller Moquitos · Online/i.test(tallerHtml)) {
+      console.error('FAIL: No aparece el formato online del Taller Moquitos');
+      errors++;
+    } else {
+      console.log('✓ Taller Moquitos muestra el formato online heredado');
+    }
+
+    const ctaTaller = await page.locator('#taller-moquitos a.btn', { hasText: 'Apúntate al taller' }).count();
+    if (ctaTaller < 1) {
+      console.error('FAIL: Falta la CTA «Apúntate al taller»');
+      errors++;
+    } else {
+      console.log('✓ CTA «Apúntate al taller» presente');
+    }
+
+    if (/no hay inscripción online/i.test(tallerHtml)) {
+      console.error('FAIL: Sigue apareciendo la negación de inscripción online');
+      errors++;
+    } else {
+      console.log('✓ Sin frases que contradigan la web original en Talleres');
+    }
+
+    // 6. Las dos apps heredadas con el mismo peso visual
+    const appCards = await page.locator('#apps .app').count();
+    const appImages = await page.locator('#apps .app img').count();
+    if (appCards !== 2 || appImages !== 2) {
+      console.error(`FAIL: Se esperaban 2 apps con imagen propia (tarjetas:${appCards}, imágenes:${appImages})`);
+      errors++;
+    } else {
+      console.log('✓ No más Cólicos y Anticólicos con recurso gráfico propio');
+    }
+
+    const storeLinks = await page.locator('a[href*="play.google.com"], a[href*="apps.apple.com"]').count();
+    if (storeLinks > 0) {
+      console.error('FAIL: Hay enlaces a tiendas de aplicaciones sin verificar');
+      errors++;
+    } else {
+      console.log('✓ Sin enlaces a tiendas sin verificar');
+    }
+
+    // 7. Catálogos heredados de infantil y adultos
+    await page.goto(`http://localhost:${PORT}/doblessa-centro-spai/fisioterapia-infantil-burriana/`, { waitUntil: 'networkidle' });
+    const herencia = await page.locator('#herencia').innerText();
+    for (const item of ['Tortícolis congénita', 'Parálisis braquial', 'Baby-Nesst', 'Enuresis']) {
+      if (!herencia.includes(item)) {
+        console.error(`FAIL: Falta "${item}" en el catálogo heredado infantil`);
+        errors++;
+      }
+    }
+    console.log('✓ Catálogo infantil heredado presente');
+
+    await page.goto(`http://localhost:${PORT}/doblessa-centro-spai/fisioterapia-adultos-burriana/`, { waitUntil: 'networkidle' });
+    const inventario = await page.locator('#inventario').innerText();
+    for (const item of ['Kinesiotaping', 'Acupuntura', 'Hipopresivos', 'Presoterapia', 'Electroterapia']) {
+      if (!inventario.includes(item)) {
+        console.error(`FAIL: Falta "${item}" en el inventario heredado de adultos`);
+        errors++;
+      }
+    }
+    const invImgs = await page.locator('#inventario .inventory__media img').count();
+    if (invImgs !== 4) {
+      console.error(`FAIL: Se esperaban 4 imágenes en el inventario, hay ${invImgs}`);
+      errors++;
+    }
+    console.log('✓ Inventario adulto heredado presente con sus imágenes');
+
+    // 8. Sin <source> convertido en item de layout (regresión de <Picture>)
+    const sourceBoxes = await page.evaluate(() =>
+      [...document.querySelectorAll('picture.spai-picture > source')].filter(
+        (el) => el.getBoundingClientRect().width > 0,
+      ).length,
+    );
+    if (sourceBoxes > 0) {
+      console.error(`FAIL: ${sourceBoxes} elementos <source> generan caja y descolocan el layout`);
+      errors++;
+    } else {
+      console.log('✓ Ningún <source> genera caja en el layout');
+    }
+
     await browser.close();
   } catch (err) {
     console.error('Unexpected error in tests:', err);

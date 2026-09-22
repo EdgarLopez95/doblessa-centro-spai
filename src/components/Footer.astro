@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import Picture from './Picture.astro';
-import { ROUTES, SITE, citaHref, withBase } from '../lib/site';
+import { CONTACT, ROUTES, SITE, citaHref, withBase } from '../lib/site';
 
 const year = 2026;
 const columns = [
@@ -69,16 +69,33 @@ const columns = [
           <span class="site-footer__row">
             <Icon name="pin" size={20} />
             <span>
-              {SITE.address.street} <span class="site-footer__pending">Por validar</span><br />
+              {SITE.address.street}<br />
               {SITE.address.postalCode} {SITE.address.locality} ({SITE.address.region})
             </span>
           </span>
           <span class="site-footer__row">
-            <Icon name="phone" size={20} />
-            <span>Teléfonos y horario: pendientes de confirmar</span>
+            <Icon name="baby" size={20} />
+            <span>
+              {CONTACT.infantil.label}<br />
+              <a class="site-footer__contact" href={`tel:${CONTACT.infantil.tel}`}>{CONTACT.infantil.display}</a>
+            </span>
+          </span>
+          <span class="site-footer__row">
+            <Icon name="person" size={20} />
+            <span>
+              {CONTACT.adultos.label}<br />
+              <a class="site-footer__contact" href={`tel:${CONTACT.adultos.tel}`}>{CONTACT.adultos.display}</a>
+            </span>
+          </span>
+          <span class="site-footer__row">
+            <Icon name="mail" size={20} />
+            <a class="site-footer__contact" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          </span>
+          <span class="site-footer__row">
+            <Icon name="chat" size={20} />
+            <span>WhatsApp disponible en el centro</span>
           </span>
         </address>
-        <span class="site-footer__pending">Datos por validar con el centro</span>
         <p class="site-footer__domain-note">
           El dominio público actual es centro-espai.com. El nombre de marca de esta propuesta es Centro Spai. La grafía definitiva la confirmará el cliente.
         </p>
@@ -142,7 +159,7 @@ const columns = [
     margin-bottom: var(--space-4);
   }
 
-  .site-footer__logo img {
+  .site-footer__logo :global(img) {
     height: 52px;
     width: auto;
   }
@@ -225,6 +242,11 @@ const columns = [
     flex: none;
     margin-top: 2px;
     color: var(--blush-300);
+  }
+
+  .site-footer__contact {
+    font-weight: 700;
+    letter-spacing: 0.01em;
   }
 
   .site-footer__pending {
