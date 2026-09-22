@@ -105,6 +105,19 @@ const forbiddenPhrases = [
   'para poder responderte',
   'Lo usaremos solo',
   'conectará con el equipo',
+  // Restos detectados en la última auditoría: no deben prometer atención
+  // clínica, resultados, disponibilidad ni orientación que la fuente no publica.
+  'Acompañamiento profesional para familias con cólicos',
+  'Consulta una primera cita',
+  'enfoque suave y respetuoso',
+  'cómo es la atención y habla con el equipo',
+  'Acompañamiento de fisioterapia durante el embarazo',
+  'recuperación posparto',
+  'Algunos bebés se relajan e incluso se duermen',
+  'Puedes comentarlo al pedir la cita',
+  'Molestias de espalda, pelvis o piernas',
+  'Cambios en la postura y en la forma de moverte',
+  'prefiero que me orientéis',
 ];
 
 // Marcadores de plantilla que no deben quedar en las páginas legales
