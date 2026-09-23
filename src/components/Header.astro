@@ -2,6 +2,7 @@
 import Icon from './Icon.astro';
 import Picture from './Picture.astro';
 import { NAV, ROUTES, citaHref, isActive, withBase, type Tone } from '../lib/site';
+import type { IconName } from './Icon.astro';
 
 interface Props {
   currentPath: string;
@@ -10,6 +11,13 @@ interface Props {
 
 const { currentPath, tone } = Astro.props;
 const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil' ? 'Pedir cita infantil' : 'Pedir cita';
+const dropdownIcons: Record<string, IconName> = {
+  'Fisioterapia infantil': 'baby',
+  'Cólicos del lactante': 'moon',
+  'Osteopatía para bebés': 'hands',
+  'Fisioterapia para adultos': 'spine',
+  'Embarazo y posparto': 'leaf',
+};
 ---
 
 <header class="site-header" data-header>
@@ -49,7 +57,11 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
                             class:list={['nav-dropdown__link', { 'is-active': isActive(currentPath, [child.href]) }]}
                             aria-current={isActive(currentPath, [child.href]) ? 'page' : undefined}
                           >
-                            {child.label}
+                            <span class="nav-dropdown__link-icon">
+                              <Icon name={dropdownIcons[child.label] ?? 'arrow-right'} size={20} />
+                            </span>
+                            <span class="nav-dropdown__label">{child.label}</span>
+                            <Icon name="arrow-right" size={17} class="nav-dropdown__arrow" />
                           </a>
                         </li>
                       ))}
@@ -447,8 +459,8 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
     position: absolute;
     top: calc(100% + 6px);
     left: 0;
-    min-width: 15rem;
-    padding: var(--space-2);
+    width: min(26rem, calc(100vw - 2rem));
+    padding: var(--space-3);
     background: var(--white);
     border: 1px solid var(--line);
     border-radius: var(--radius-card);
@@ -460,38 +472,74 @@ const ctaLabel = tone === 'adultos' ? 'Pedir cita adultos' : tone === 'infantil'
     display: none;
   }
 
-  .nav-dropdown__list {
+  .nav-desktop .nav-dropdown__list {
     list-style: none;
     display: grid;
-    gap: 2px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
     padding: 0;
     margin: 0;
+  }
+
+  .nav-dropdown__list > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   .nav-dropdown__link {
     display: flex;
     align-items: center;
-    min-height: 44px;
-    padding: 0.5rem 0.85rem;
-    border-radius: 8px;
+    gap: 0.65rem;
+    min-height: 68px;
+    padding: 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
     font-size: 0.9375rem;
     font-weight: 600;
     color: var(--ink-900);
     text-decoration: none;
     transition:
       background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
       color var(--dur-fast) var(--ease-out);
   }
 
-  .nav-dropdown__link:hover {
+  .nav-dropdown__link-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 10px;
     background: var(--lilac-100);
+    color: var(--spai-700);
+  }
+
+  .nav-dropdown__label {
+    white-space: nowrap;
+  }
+
+  .nav-dropdown__arrow {
+    flex: none;
+    margin-left: auto;
+    color: var(--spai-500);
+  }
+
+  .nav-dropdown__link:hover {
+    background: var(--lilac-50);
+    border-color: var(--lilac-300);
     color: var(--spai-700);
   }
 
   .nav-dropdown__link.is-active {
     background: var(--lilac-50);
+    border-color: var(--lilac-300);
     color: var(--spai-700);
     font-weight: 700;
+  }
+
+  .nav-dropdown__link.is-active .nav-dropdown__link-icon {
+    background: var(--spai-700);
+    color: var(--white);
   }
 </style>
 

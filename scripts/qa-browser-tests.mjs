@@ -159,6 +159,22 @@ server.listen(PORT, async () => {
           console.log('✓ Desktop dropdown renders Cólicos del lactante accessible in 1 click');
         }
 
+        // El menú de escritorio debe tener tarjetas amplias, iconos y títulos legibles.
+        const dropdownPanel = page.locator('[data-dropdown]').first().locator('[data-dropdown-panel]');
+        const panelWidth = await dropdownPanel.evaluate((el) => el.getBoundingClientRect().width);
+        const cardIcons = await dropdownPanel.locator('.nav-dropdown__link-icon').count();
+        const allLabelsNoWrap = await dropdownPanel.locator('.nav-dropdown__label').evaluateAll((labels) =>
+          labels.every((label) => window.getComputedStyle(label).whiteSpace === 'nowrap'),
+        );
+        if (panelWidth < 400 || cardIcons !== dropLinks.length || !allLabelsNoWrap) {
+          console.error(
+            `FAIL: Dropdown desktop sin jerarquía suficiente (ancho:${panelWidth}, iconos:${cardIcons}, etiquetas-sin-salto:${allLabelsNoWrap})`,
+          );
+          errors++;
+        } else {
+          console.log('✓ Desktop dropdown uses spacious icon cards with unbroken labels');
+        }
+
         // Test Escape on desktop dropdown
         await page.keyboard.press('Escape');
         const dropClosed = await infantilToggle.getAttribute('aria-expanded');
