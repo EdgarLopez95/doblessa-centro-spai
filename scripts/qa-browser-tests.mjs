@@ -311,7 +311,43 @@ server.listen(PORT, async () => {
       console.log('✓ Teléfonos y email heredados enlazados en Contacto');
     }
 
-    // 5. Taller Moquitos: formato online y CTA de inscripción de maqueta
+    // 5. Las pestañas de una ruta aterrizan en la barra de ruta del destino,
+    // no en el hero que la precede.
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(`http://localhost:${PORT}/doblessa-centro-spai/fisioterapia-infantil-burriana/`, { waitUntil: 'networkidle' });
+    await page.locator('.route-nav').getByRole('link', { name: 'Cólicos del lactante' }).click();
+    await page.waitForURL(/colicos-del-lactante-burriana/);
+    await page.waitForFunction(() => {
+      const header = document.querySelector('.site-header')?.getBoundingClientRect();
+      const routeNav = document.querySelector('.route-nav')?.getBoundingClientRect();
+      return (
+        window.location.hash === '#ruta-de-servicios' &&
+        window.scrollY > 100 &&
+        !!header &&
+        !!routeNav &&
+        routeNav.top >= header.bottom - 2 &&
+        routeNav.top <= header.bottom + 24
+      );
+    });
+    const routeLanding = await page.evaluate(() => {
+      const header = document.querySelector('.site-header')?.getBoundingClientRect();
+      const routeNav = document.querySelector('.route-nav')?.getBoundingClientRect();
+      return { scrollY: window.scrollY, headerBottom: header?.bottom ?? 0, routeTop: routeNav?.top ?? Infinity };
+    });
+    if (
+      routeLanding.scrollY < 100 ||
+      routeLanding.routeTop < routeLanding.headerBottom - 2 ||
+      routeLanding.routeTop > routeLanding.headerBottom + 24
+    ) {
+      console.error(
+        `FAIL: La pestaña de ruta no aterriza bajo la cabecera (scroll:${routeLanding.scrollY}, nav:${routeLanding.routeTop}, header:${routeLanding.headerBottom})`,
+      );
+      errors++;
+    } else {
+      console.log('✓ Route tabs land below the sticky header instead of at the page hero');
+    }
+
+    // 6. Taller Moquitos: formato online y CTA de inscripción de maqueta
     await page.goto(`http://localhost:${PORT}/doblessa-centro-spai/talleres/`, { waitUntil: 'networkidle' });
     const tallerHtml = await page.locator('#taller-moquitos').innerText();
     if (!/Taller Moquitos · Online/i.test(tallerHtml)) {
@@ -336,7 +372,7 @@ server.listen(PORT, async () => {
       console.log('✓ Sin frases que contradigan la web original en Talleres');
     }
 
-    // 6. Las dos apps heredadas con el mismo peso visual
+    // 7. Las dos apps heredadas con el mismo peso visual
     const appCards = await page.locator('#apps .app').count();
     const appImages = await page.locator('#apps .app img').count();
     if (appCards !== 2 || appImages !== 2) {

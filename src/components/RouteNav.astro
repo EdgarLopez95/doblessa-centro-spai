@@ -9,9 +9,10 @@ interface Props {
 }
 
 const { currentPath, tone, label, items } = Astro.props;
+const routeTarget = 'ruta-de-servicios';
 ---
 
-<nav class:list={['route-nav', `route-nav--${tone}`]} aria-label={label}>
+<nav id={routeTarget} class:list={['route-nav', `route-nav--${tone}`]} aria-label={label}>
   <div class="container route-nav__inner">
     <span class="route-nav__label" aria-hidden="true">{label}</span>
     <ul>
@@ -20,7 +21,7 @@ const { currentPath, tone, label, items } = Astro.props;
           const current = isActive(withBase(currentPath), [item.href]);
           return (
             <li>
-              <a href={withBase(item.href)} aria-current={current ? 'page' : undefined}>
+              <a href={`${withBase(item.href)}#${routeTarget}`} aria-current={current ? 'page' : undefined}>
                 {item.label}
               </a>
             </li>
@@ -30,6 +31,42 @@ const { currentPath, tone, label, items } = Astro.props;
     </ul>
   </div>
 </nav>
+
+<script>
+  const routeTarget = 'ruta-de-servicios';
+
+  const alignRouteTarget = () => {
+    if (window.location.hash !== `#${routeTarget}`) return;
+    document.getElementById(routeTarget)?.scrollIntoView({ block: 'start' });
+  };
+
+  // El navegador puede resolver el hash antes de que el hero termine de
+  // componer sus recursos. Realineamos al terminar la navegación y si el hero
+  // cambia de tamaño, para conservar las pestañas en su contexto.
+  if (window.location.hash === `#${routeTarget}`) {
+    const hero = document.querySelector('.page-hero');
+    const observer = hero && new ResizeObserver(alignRouteTarget);
+
+    observer?.observe(hero);
+    alignRouteTarget();
+
+    if (document.readyState === 'complete') {
+      requestAnimationFrame(() => requestAnimationFrame(alignRouteTarget));
+    } else {
+      window.addEventListener(
+        'load',
+        () => requestAnimationFrame(() => requestAnimationFrame(alignRouteTarget)),
+        { once: true },
+      );
+    }
+
+    window.addEventListener(
+      'pageshow',
+      () => requestAnimationFrame(() => requestAnimationFrame(alignRouteTarget)),
+      { once: true },
+    );
+  }
+</script>
 
 <style>
   .route-nav {
