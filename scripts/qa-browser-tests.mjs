@@ -166,9 +166,27 @@ server.listen(PORT, async () => {
         const allLabelsNoWrap = await dropdownPanel.locator('.nav-dropdown__label').evaluateAll((labels) =>
           labels.every((label) => window.getComputedStyle(label).whiteSpace === 'nowrap'),
         );
-        if (panelWidth < 400 || cardIcons !== dropLinks.length || !allLabelsNoWrap) {
+        const dropdownColumns = await dropdownPanel.locator('.nav-dropdown__list').evaluate((list) =>
+          getComputedStyle(list).gridTemplateColumns.split(' ').filter(Boolean).length,
+        );
+        const arrowsFitInsideCards = await dropdownPanel.locator('.nav-dropdown__link').evaluateAll((cards) =>
+          cards.every((card) => {
+            const arrow = card.querySelector('.nav-dropdown__arrow');
+            if (!arrow) return false;
+            const cardRect = card.getBoundingClientRect();
+            const arrowRect = arrow.getBoundingClientRect();
+            return arrowRect.left >= cardRect.left && arrowRect.right <= cardRect.right;
+          }),
+        );
+        if (
+          panelWidth < 400 ||
+          cardIcons !== dropLinks.length ||
+          !allLabelsNoWrap ||
+          dropdownColumns !== 1 ||
+          !arrowsFitInsideCards
+        ) {
           console.error(
-            `FAIL: Dropdown desktop sin jerarquía suficiente (ancho:${panelWidth}, iconos:${cardIcons}, etiquetas-sin-salto:${allLabelsNoWrap})`,
+            `FAIL: Dropdown desktop sin jerarquía suficiente (ancho:${panelWidth}, iconos:${cardIcons}, etiquetas-sin-salto:${allLabelsNoWrap}, columnas:${dropdownColumns}, flechas-visibles:${arrowsFitInsideCards})`,
           );
           errors++;
         } else {
