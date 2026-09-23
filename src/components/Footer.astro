@@ -22,7 +22,7 @@ const columns = [
     ],
   },
   {
-    title: 'Spai',
+    title: 'Centro Spai',
     links: [
       { label: 'El centro', href: ROUTES.centro },
       { label: 'Contacto y cita', href: ROUTES.contacto },
@@ -65,8 +65,14 @@ const columns = [
         }
       </div>
 
-      <section class="site-footer__contact-panel" aria-labelledby="footer-contact-title">
-        <h2 id="footer-contact-title" class="site-footer__title">Dónde estamos</h2>
+    </div>
+
+    <section class="site-footer__contact-strip" aria-labelledby="footer-contact-title">
+      <div class="site-footer__contact-intro">
+        <h2 id="footer-contact-title" class="site-footer__title">Contacto y ubicación</h2>
+        <p class="site-footer__domain-note">Web actual del centro: {CONTACT.currentDomain}</p>
+      </div>
+      <div class="site-footer__contact-content">
         <address class="site-footer__address">
           <div class="site-footer__contact-item">
             <span class="site-footer__contact-icon"><Icon name="pin" size={18} /></span>
@@ -91,16 +97,14 @@ const columns = [
           </div>
           <div class="site-footer__contact-item">
             <span class="site-footer__contact-icon"><Icon name="mail" size={18} /></span>
-            <span class="site-footer__contact-copy"><a class="site-footer__contact" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></span>
-          </div>
-          <div class="site-footer__contact-item">
-            <span class="site-footer__contact-icon"><Icon name="chat" size={18} /></span>
-            <span class="site-footer__contact-copy">{CONTACT.whatsapp.label}: {CONTACT.whatsapp.display.toLowerCase()}</span>
+            <span class="site-footer__contact-copy">
+              <a class="site-footer__contact" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+              <span class="site-footer__whatsapp"><Icon name="chat" size={15} />{CONTACT.whatsapp.label}: {CONTACT.whatsapp.display.toLowerCase()}</span>
+            </span>
           </div>
         </address>
-        <p class="site-footer__domain-note">Web actual del centro: {CONTACT.currentDomain}</p>
-      </section>
-    </div>
+      </div>
+    </section>
 
     <div class="site-footer__bottom">
       <p>© {year} Centro Spai</p>
@@ -117,7 +121,7 @@ const columns = [
     position: relative;
     background: var(--spai-700);
     color: #efe9f6;
-    padding-block: clamp(3.25rem, 5vw, 4.75rem) var(--space-4);
+    padding-block: clamp(2.75rem, 4.5vw, 4rem) var(--space-4);
   }
 
   .site-footer::before {
@@ -151,8 +155,8 @@ const columns = [
 
   @media (min-width: 64rem) {
     .site-footer__top {
-      grid-template-columns: minmax(14rem, 0.95fr) minmax(27rem, 1.7fr) minmax(19rem, 1.05fr);
-      gap: clamp(2rem, 3.5vw, 4.5rem);
+      grid-template-columns: minmax(17rem, 0.9fr) minmax(0, 1.8fr);
+      gap: clamp(3rem, 6vw, 7rem);
     }
 
     .site-footer__brand,
@@ -206,6 +210,16 @@ const columns = [
     }
   }
 
+  @media (min-width: 64rem) {
+    .site-footer__navigation {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .site-footer__navigation .site-footer__col:nth-child(3) {
+      grid-column: auto;
+    }
+  }
+
   .site-footer__btn-outline {
     --btn-bg: transparent;
     --btn-fg: var(--white);
@@ -248,21 +262,38 @@ const columns = [
     outline-color: var(--white);
   }
 
-  .site-footer__contact-panel {
-    padding: var(--space-4);
-    border: 1px solid rgb(255 255 255 / 0.18);
-    border-radius: var(--radius-card);
-    background: rgb(255 255 255 / 0.06);
+  .site-footer__contact-strip {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding-block: var(--space-4);
+    border-block: 1px solid rgb(255 255 255 / 0.18);
   }
 
-  .site-footer__contact-panel .site-footer__title {
-    margin-bottom: var(--space-3);
+  @media (min-width: 64rem) {
+    .site-footer__contact-strip {
+      grid-template-columns: minmax(10rem, 0.55fr) minmax(0, 2.45fr);
+      align-items: center;
+      column-gap: var(--space-6);
+    }
+  }
+
+  .site-footer__contact-intro .site-footer__title {
+    margin-bottom: var(--space-1);
   }
 
   .site-footer__address {
     font-style: normal;
     display: grid;
+    gap: var(--space-2);
     color: #efe9f6;
+  }
+
+  @media (min-width: 64rem) {
+    .site-footer__address {
+      grid-template-columns: minmax(14rem, 1.35fr) repeat(2, minmax(10.5rem, 0.95fr)) minmax(15rem, 1.25fr);
+      gap: 0;
+    }
   }
 
   .site-footer__contact-item {
@@ -270,7 +301,7 @@ const columns = [
     grid-template-columns: 2rem minmax(0, 1fr);
     gap: var(--space-2);
     align-items: start;
-    padding-block: 0.7rem;
+    padding-block: 0.5rem;
     line-height: 1.5;
     border-top: 1px solid rgb(255 255 255 / 0.14);
   }
@@ -282,6 +313,24 @@ const columns = [
 
   .site-footer__contact-item:last-child {
     padding-bottom: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .site-footer__contact-item {
+      min-height: 3.5rem;
+      padding: 0 var(--space-3);
+      border-top: 0;
+      border-left: 1px solid rgb(255 255 255 / 0.14);
+    }
+
+    .site-footer__contact-item:first-child {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .site-footer__contact-item:last-child {
+      padding-right: 0;
+    }
   }
 
   .site-footer__contact-icon {
@@ -298,15 +347,27 @@ const columns = [
     min-width: 0;
   }
 
+  .site-footer__whatsapp {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.35rem;
+    color: #ddd3ea;
+    font-size: var(--fs-small);
+  }
+
+  .site-footer__whatsapp :global(svg) {
+    flex: none;
+    color: var(--blush-300);
+  }
+
   .site-footer__contact {
     font-weight: 700;
     letter-spacing: 0.01em;
   }
 
   .site-footer__domain-note {
-    margin-top: var(--space-4);
-    padding-top: var(--space-3);
-    border-top: 1px solid rgb(255 255 255 / 0.14);
+    margin: 0;
     font-size: 0.8125rem;
     line-height: 1.45;
     color: #ddd3ea;
@@ -318,9 +379,9 @@ const columns = [
     align-items: center;
     justify-content: space-between;
     gap: var(--space-3) var(--space-5);
-    margin-top: var(--space-6);
-    padding-top: var(--space-4);
-    border-top: 1px solid rgb(255 255 255 / 0.18);
+    margin-top: var(--space-4);
+    padding-top: 0;
+    border-top: 0;
     font-size: var(--fs-small);
     color: #ddd3ea;
   }

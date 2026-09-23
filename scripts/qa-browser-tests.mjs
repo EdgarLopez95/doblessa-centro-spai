@@ -266,16 +266,17 @@ server.listen(PORT, async () => {
       console.log('✓ Domain copy verified in Footer');
     }
 
-    // El footer de escritorio debe jerarquizar marca, navegación y contacto,
-    // con cada icono anclado a su bloque de información.
+    // En escritorio, el footer separa navegación principal y datos de contacto
+    // en dos bandas: evita un panel lateral desproporcionado.
+    await page.setViewportSize({ width: 1440, height: 900 });
     const footerNavigation = page.locator('.site-footer__navigation');
-    const footerContactPanel = page.locator('.site-footer__contact-panel');
-    const contactItems = footerContactPanel.locator('.site-footer__contact-item');
-    const contactIcons = footerContactPanel.locator('.site-footer__contact-icon');
+    const footerContactStrip = page.locator('.site-footer__contact-strip');
+    const contactItems = footerContactStrip.locator('.site-footer__contact-item');
+    const contactIcons = footerContactStrip.locator('.site-footer__contact-icon');
     const footerNavigationLayout = await footerNavigation.evaluate((el) => {
       const columns = getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length;
       const groups = [...el.querySelectorAll('.site-footer__col')].map((group) => group.getBoundingClientRect());
-      return { columns, secondAndThirdAligned: Math.abs(groups[1]?.x - groups[2]?.x) < 2 };
+      return { columns, allGroupsTopAligned: groups.every((group) => Math.abs(group.y - groups[0]?.y) < 2) };
     });
     const footerLayout = await page.locator('.site-footer__top').evaluate((el) => ({
       columns: getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length,
@@ -283,20 +284,20 @@ server.listen(PORT, async () => {
     }));
     if (
       (await footerNavigation.count()) !== 1 ||
-      (await footerContactPanel.count()) !== 1 ||
-      (await contactItems.count()) !== 5 ||
-      (await contactIcons.count()) !== 5 ||
-      footerLayout.columns !== 3 ||
+      (await footerContactStrip.count()) !== 1 ||
+      (await contactItems.count()) !== 4 ||
+      (await contactIcons.count()) !== 4 ||
+      footerLayout.columns !== 2 ||
       footerLayout.gap < 24 ||
-      footerNavigationLayout.columns !== 2 ||
-      !footerNavigationLayout.secondAndThirdAligned
+      footerNavigationLayout.columns !== 3 ||
+      !footerNavigationLayout.allGroupsTopAligned
     ) {
       console.error(
-        `FAIL: Footer desktop sin jerarquía compacta (nav:${await footerNavigation.count()}, panel:${await footerContactPanel.count()}, filas:${await contactItems.count()}, iconos:${await contactIcons.count()}, columnas:${footerLayout.columns}, navegación:${footerNavigationLayout.columns}, grupos-alineados:${footerNavigationLayout.secondAndThirdAligned}, gap:${footerLayout.gap})`,
+        `FAIL: Footer desktop sin dos bandas equilibradas (nav:${await footerNavigation.count()}, contacto:${await footerContactStrip.count()}, bloques:${await contactItems.count()}, iconos:${await contactIcons.count()}, columnas:${footerLayout.columns}, navegación:${footerNavigationLayout.columns}, grupos-alineados:${footerNavigationLayout.allGroupsTopAligned}, gap:${footerLayout.gap})`,
       );
       errors++;
     } else {
-      console.log('✓ Footer desktop groups brand, navigation and aligned contact details');
+      console.log('✓ Footer desktop separates navigation and contact information into balanced bands');
     }
 
     // 4. Contacto heredado de la web original operativo en el mockup
