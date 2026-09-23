@@ -248,6 +248,39 @@ server.listen(PORT, async () => {
       console.log('✓ Domain copy verified in Footer');
     }
 
+    // El footer de escritorio debe jerarquizar marca, navegación y contacto,
+    // con cada icono anclado a su bloque de información.
+    const footerNavigation = page.locator('.site-footer__navigation');
+    const footerContactPanel = page.locator('.site-footer__contact-panel');
+    const contactItems = footerContactPanel.locator('.site-footer__contact-item');
+    const contactIcons = footerContactPanel.locator('.site-footer__contact-icon');
+    const footerNavigationLayout = await footerNavigation.evaluate((el) => {
+      const columns = getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length;
+      const groups = [...el.querySelectorAll('.site-footer__col')].map((group) => group.getBoundingClientRect());
+      return { columns, secondAndThirdAligned: Math.abs(groups[1]?.x - groups[2]?.x) < 2 };
+    });
+    const footerLayout = await page.locator('.site-footer__top').evaluate((el) => ({
+      columns: getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length,
+      gap: Number.parseFloat(getComputedStyle(el).columnGap),
+    }));
+    if (
+      (await footerNavigation.count()) !== 1 ||
+      (await footerContactPanel.count()) !== 1 ||
+      (await contactItems.count()) !== 5 ||
+      (await contactIcons.count()) !== 5 ||
+      footerLayout.columns !== 3 ||
+      footerLayout.gap < 24 ||
+      footerNavigationLayout.columns !== 2 ||
+      !footerNavigationLayout.secondAndThirdAligned
+    ) {
+      console.error(
+        `FAIL: Footer desktop sin jerarquía compacta (nav:${await footerNavigation.count()}, panel:${await footerContactPanel.count()}, filas:${await contactItems.count()}, iconos:${await contactIcons.count()}, columnas:${footerLayout.columns}, navegación:${footerNavigationLayout.columns}, grupos-alineados:${footerNavigationLayout.secondAndThirdAligned}, gap:${footerLayout.gap})`,
+      );
+      errors++;
+    } else {
+      console.log('✓ Footer desktop groups brand, navigation and aligned contact details');
+    }
+
     // 4. Contacto heredado de la web original operativo en el mockup
     const telInfantil = await page.locator('a[href="tel:+34655461568"]').count();
     const telAdultos = await page.locator('a[href="tel:+34699952632"]').count();

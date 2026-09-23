@@ -48,56 +48,58 @@ const columns = [
         </div>
       </div>
 
-      {
-        columns.map((col) => (
-          <nav class="site-footer__col" aria-label={col.title}>
-            <h2 class="site-footer__title">{col.title}</h2>
-            <ul>
-              {col.links.map((l) => (
-                <li>
-                  <a href={withBase(l.href)}>{l.label}</a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        ))
-      }
+      <div class="site-footer__navigation" aria-label="Navegación del pie de página">
+        {
+          columns.map((col) => (
+            <nav class="site-footer__col" aria-label={col.title}>
+              <h2 class="site-footer__title">{col.title}</h2>
+              <ul>
+                {col.links.map((l) => (
+                  <li>
+                    <a href={withBase(l.href)}>{l.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))
+        }
+      </div>
 
-      <div class="site-footer__col">
-        <h2 class="site-footer__title">Dónde estamos</h2>
+      <section class="site-footer__contact-panel" aria-labelledby="footer-contact-title">
+        <h2 id="footer-contact-title" class="site-footer__title">Dónde estamos</h2>
         <address class="site-footer__address">
-          <span class="site-footer__row">
-            <Icon name="pin" size={20} />
-            <span>
+          <div class="site-footer__contact-item">
+            <span class="site-footer__contact-icon"><Icon name="pin" size={18} /></span>
+            <span class="site-footer__contact-copy">
               {SITE.address.street}<br />
               {SITE.address.postalCode} {SITE.address.locality} ({SITE.address.region})
             </span>
-          </span>
-          <span class="site-footer__row">
-            <Icon name="baby" size={20} />
-            <span>
+          </div>
+          <div class="site-footer__contact-item">
+            <span class="site-footer__contact-icon"><Icon name="baby" size={18} /></span>
+            <span class="site-footer__contact-copy">
               {CONTACT.infantil.label}<br />
               <a class="site-footer__contact" href={`tel:${CONTACT.infantil.tel}`}>{CONTACT.infantil.display}</a>
             </span>
-          </span>
-          <span class="site-footer__row">
-            <Icon name="person" size={20} />
-            <span>
+          </div>
+          <div class="site-footer__contact-item">
+            <span class="site-footer__contact-icon"><Icon name="person" size={18} /></span>
+            <span class="site-footer__contact-copy">
               {CONTACT.adultos.label}<br />
               <a class="site-footer__contact" href={`tel:${CONTACT.adultos.tel}`}>{CONTACT.adultos.display}</a>
             </span>
-          </span>
-          <span class="site-footer__row">
-            <Icon name="mail" size={20} />
-            <a class="site-footer__contact" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-          </span>
-          <span class="site-footer__row">
-            <Icon name="chat" size={20} />
-            <span>{CONTACT.whatsapp.label}: {CONTACT.whatsapp.display.toLowerCase()}</span>
-          </span>
+          </div>
+          <div class="site-footer__contact-item">
+            <span class="site-footer__contact-icon"><Icon name="mail" size={18} /></span>
+            <span class="site-footer__contact-copy"><a class="site-footer__contact" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></span>
+          </div>
+          <div class="site-footer__contact-item">
+            <span class="site-footer__contact-icon"><Icon name="chat" size={18} /></span>
+            <span class="site-footer__contact-copy">{CONTACT.whatsapp.label}: {CONTACT.whatsapp.display.toLowerCase()}</span>
+          </div>
         </address>
         <p class="site-footer__domain-note">Web actual del centro: {CONTACT.currentDomain}</p>
-      </div>
+      </section>
     </div>
 
     <div class="site-footer__bottom">
@@ -115,7 +117,7 @@ const columns = [
     position: relative;
     background: var(--spai-700);
     color: #efe9f6;
-    padding-block: var(--space-8) var(--space-5);
+    padding-block: clamp(3.25rem, 5vw, 4.75rem) var(--space-4);
   }
 
   .site-footer::before {
@@ -128,7 +130,8 @@ const columns = [
 
   .site-footer__top {
     display: grid;
-    gap: var(--space-7) var(--space-6);
+    align-items: start;
+    gap: var(--space-6);
     grid-template-columns: 1fr;
   }
 
@@ -140,21 +143,27 @@ const columns = [
     .site-footer__brand {
       grid-column: 1 / -1;
     }
+
+    .site-footer__navigation {
+      grid-column: 1 / -1;
+    }
   }
 
   @media (min-width: 64rem) {
     .site-footer__top {
-      grid-template-columns: 1.6fr repeat(3, minmax(0, 0.8fr)) 1.1fr;
+      grid-template-columns: minmax(14rem, 0.95fr) minmax(27rem, 1.7fr) minmax(19rem, 1.05fr);
+      gap: clamp(2rem, 3.5vw, 4.5rem);
     }
 
-    .site-footer__brand {
+    .site-footer__brand,
+    .site-footer__navigation {
       grid-column: auto;
     }
   }
 
   .site-footer__logo {
     display: inline-block;
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
   }
 
   .site-footer__logo :global(img) {
@@ -177,8 +186,24 @@ const columns = [
 
   .site-footer__text {
     max-width: 30rem;
-    margin-bottom: var(--space-5);
+    margin-bottom: var(--space-4);
     color: #ddd3ea;
+  }
+
+  .site-footer__navigation {
+    display: grid;
+    align-content: start;
+    gap: var(--space-5) var(--space-4);
+  }
+
+  @media (min-width: 40rem) {
+    .site-footer__navigation {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    }
+
+    .site-footer__navigation .site-footer__col:nth-child(3) {
+      grid-column: 2;
+    }
   }
 
   .site-footer__btn-outline {
@@ -197,9 +222,9 @@ const columns = [
     font-family: var(--font-body);
     font-size: 0.875rem;
     font-weight: 700;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.035em;
     color: var(--blush-300);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-2);
   }
 
   .site-footer__col ul {
@@ -209,7 +234,7 @@ const columns = [
   .site-footer a:not(.btn) {
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
+    min-height: 38px;
     color: var(--white);
     text-decoration: none;
   }
@@ -223,23 +248,54 @@ const columns = [
     outline-color: var(--white);
   }
 
+  .site-footer__contact-panel {
+    padding: var(--space-4);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    border-radius: var(--radius-card);
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .site-footer__contact-panel .site-footer__title {
+    margin-bottom: var(--space-3);
+  }
+
   .site-footer__address {
     font-style: normal;
     display: grid;
-    gap: var(--space-3);
     color: #efe9f6;
   }
 
-  .site-footer__row {
-    display: flex;
-    gap: var(--space-3);
+  .site-footer__contact-item {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: var(--space-2);
+    align-items: start;
+    padding-block: 0.7rem;
     line-height: 1.5;
+    border-top: 1px solid rgb(255 255 255 / 0.14);
   }
 
-  .site-footer__row :global(svg) {
-    flex: none;
-    margin-top: 2px;
+  .site-footer__contact-item:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .site-footer__contact-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .site-footer__contact-icon {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.1);
     color: var(--blush-300);
+  }
+
+  .site-footer__contact-copy {
+    min-width: 0;
   }
 
   .site-footer__contact {
@@ -247,18 +303,10 @@ const columns = [
     letter-spacing: 0.01em;
   }
 
-  .site-footer__pending {
-    display: inline-block;
-    margin-top: var(--space-3);
-    padding: 0.15rem 0.6rem;
-    border: 1px solid rgb(255 255 255 / 0.35);
-    border-radius: var(--radius-pill);
-    font-size: 0.8125rem;
-    color: #efe9f6;
-  }
-
   .site-footer__domain-note {
-    margin-top: var(--space-3);
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid rgb(255 255 255 / 0.14);
     font-size: 0.8125rem;
     line-height: 1.45;
     color: #ddd3ea;
@@ -270,7 +318,7 @@ const columns = [
     align-items: center;
     justify-content: space-between;
     gap: var(--space-3) var(--space-5);
-    margin-top: var(--space-8);
+    margin-top: var(--space-6);
     padding-top: var(--space-4);
     border-top: 1px solid rgb(255 255 255 / 0.18);
     font-size: var(--fs-small);
